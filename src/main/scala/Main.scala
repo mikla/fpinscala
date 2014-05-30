@@ -5,8 +5,8 @@ object Main extends App {
   println(justList.setHead(5))
   println(List.drop(justList, 3))
 
-  val dropWhileList = Cons(-1, Cons(-2, Cons(3, Nil)))
-  println(List.dropWhile[Int](dropWhileList, x => x < 0))
+  val dropWhileList: List[Int] = List(-1, -2, 3)
+  println(List.dropWhile(dropWhileList)(x => x < 0))
 
   val l1 = List(1, 2, 3, 4)
   val l2 = List(5, 6, 7, 8)

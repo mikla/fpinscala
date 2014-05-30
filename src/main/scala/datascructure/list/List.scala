@@ -40,10 +40,10 @@ object List {
     }
   }
 
-  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = {
+  def dropWhile[A](l: List[A])(f: A => Boolean): List[A] = {
     l match {
       case Nil => Nil
-      case Cons(x, xs) => if (f(x)) dropWhile(xs, f) else l
+      case Cons(x, xs) => if (f(x)) dropWhile(xs)(f) else l
     }
   }
 
