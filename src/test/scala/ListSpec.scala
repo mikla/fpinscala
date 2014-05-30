@@ -1,12 +1,22 @@
 import org.scalatest.FlatSpec
-import datastructure.list.{List}
+import datastructure.list.{Cons, List, Nil}
 
 class ListSpec extends FlatSpec {
 
-  "One set" should "be added into the end of another" in {
-
-
-//    assert(List.append(l1, l2).removeFirst())
+  "List folding sum" should "return sum of alements" in {
+    val lst = List(1, 2, 3, 4, 5, 6)
+    assert(List.foldRight(lst, 0)(_ + _) == 21)
   }
+
+  "List folding product" should "return sum of alements" in {
+    val lst = List(1, 2, 3, 4, 5, 6)
+    assert(List.foldRight(lst, 1)(_ * _) == 720)
+  }
+
+  "Passing Nil:List[Int]" should "return exactly the same list" in {
+    println(List.foldRight(Cons(1, Cons(2, Nil)), Nil: List[Int])(Cons (_, _)))
+  }
+
+
 
 }
