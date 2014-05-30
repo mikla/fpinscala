@@ -7,6 +7,6 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "org.scalacheck" %% "scalacheck" % "1.11.4" % "test"
+  "org.scalacheck" %% "scalacheck" % "1.11.4" % "test",
+  "org.scalatest" % "scalatest_2.11" % "2.1.7" % "test"
 )
-
