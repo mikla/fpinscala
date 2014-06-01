@@ -75,5 +75,14 @@ object List {
     }
   }
 
+  def length[A](list: List[A]): Int = {
+    def len(lst: List[A], acc: Int): Int = {
+      lst match {
+        case Nil => acc
+        case Cons(x, xs) => len(xs, acc + 1)
+      }
+    }
+    len(list, 0)
+  }
 
 }

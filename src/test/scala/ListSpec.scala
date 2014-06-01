@@ -18,5 +18,11 @@ class ListSpec extends FlatSpec {
   }
 
 
+  "Checking length method" should "return size of List" in {
+    val lst = List(1, 2, 3, 4, 5, 6)
+    assert(List.length(lst) == 6)
+  }
+
+
 
 }
