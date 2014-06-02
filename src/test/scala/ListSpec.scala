@@ -27,6 +27,11 @@ class ListSpec extends FlatSpec {
     println(List.foldRight(Cons(1, Cons(2, Nil)), Nil: List[Int])(Cons (_, _)))
   }
 
+  "foldLeft Nil:List[Int]" should "return reversed list" in {
+    val newList = List.foldLeft2(Cons(1, Cons(2, Nil)), Nil: List[Int])((x, y) => Cons (y, x))
+    assert(newList.head == 2)
+  }
+
   "Checking length method" should "return size of List" in {
     val lst = List(1, 2, 3, 4, 5, -6)
     assert(List.length(lst) == 6)

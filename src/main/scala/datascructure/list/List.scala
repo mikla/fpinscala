@@ -5,11 +5,13 @@ import scala.annotation.tailrec
 sealed trait List[+A] {
   def removeFirst(): List[A]
   def setHead[B >: A](e: B): List[B]
+  def head: A
 }
 
 case object Nil extends List[Nothing] {
   def removeFirst(): Nothing = throw new Exception("Nil.removeFirst")
   def setHead[B >: Nothing](e: B): List[B] = throw new Exception("Nil.setHead")
+  override def head: Nothing = throw new Exception("Nil.head")
 }
 
 case class Cons[+A](head: A, tail: List[A]) extends List[A] {
@@ -87,6 +89,10 @@ object List {
     }
     foldy(as, z)
   }
+
+  def foldLeft2[A, B](as: List[A], z: B)(f: (B, A) => B): B = {
+    foldRight(List.reverse(as), z)((x, y) => f(y, x))
+ }
 
   def length[A](list: List[A]): Int = {
     foldLeft(list, 0)((x, y) => x + 1)
