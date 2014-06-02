@@ -1,5 +1,7 @@
 package datastructure.list
 
+import scala.annotation.tailrec
+
 sealed trait List[+A] {
   def removeFirst(): List[A]
   def setHead[B >: A](e: B): List[B]
@@ -73,6 +75,24 @@ object List {
       case Nil => z
       case Cons(x, xs) => f(x, foldRight(xs, z)(f))
     }
+  }
+
+  def foldLeft[A, B](as: List[A], z: B)(f: (B, A) => B): B = {
+    as match {
+      case Nil => z
+      case Cons(x, xs) => f(foldLeft(xs, z)(f), x)
+    }
+  }
+
+  def foldLeftTail[A, B](as: List[A], z: B)(f: (B, A) => B): B = {
+    @tailrec
+    def foldy(lst: List[A], acc: B): B = {
+      lst match {
+        case Nil => acc
+        case Cons(x, xs) => foldy(xs, f(acc, x))
+      }
+    }
+    foldy(as, z)
   }
 
   def length[A](list: List[A]): Int = {

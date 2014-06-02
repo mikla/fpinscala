@@ -13,6 +13,17 @@ class ListSpec extends FlatSpec {
     assert(List.foldRight(lst, 1)(_ * _) == 720)
   }
 
+  "List.foldLeft folding product" should "return sum of alements" in {
+    val lst = List(1, 2, 3, 4, 5, 6)
+    assert(List.foldLeft(lst, 1)(_ * _) == 720)
+  }
+
+
+  "List.foldLeftTail folding product" should "return sum of alements" in {
+    val lst = List(1, 2, 3, 4, 5, 6)
+    assert(List.foldLeftTail(lst, 1)(_ * _) == 720)
+  }
+
   "Passing Nil:List[Int]" should "return exactly the same list" in {
     println(List.foldRight(Cons(1, Cons(2, Nil)), Nil: List[Int])(Cons (_, _)))
   }
