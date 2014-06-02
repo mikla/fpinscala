@@ -92,4 +92,8 @@ object List {
     foldLeft(list, 0)((x, y) => x + 1)
   }
 
+  def reverse[A](list: List[A]): List[A] = {
+    foldLeft(list, Nil: List[A])((x, y) => Cons(y, x))
+  }
+
 }

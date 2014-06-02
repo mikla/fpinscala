@@ -15,5 +15,6 @@ object Main extends App {
   val initList = List(1, 2, 3, 4)
   println(List.init(initList))
 
+  println(List.reverse(initList))
 
 }
