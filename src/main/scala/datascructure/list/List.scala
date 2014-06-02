@@ -78,13 +78,6 @@ object List {
   }
 
   def foldLeft[A, B](as: List[A], z: B)(f: (B, A) => B): B = {
-    as match {
-      case Nil => z
-      case Cons(x, xs) => f(foldLeft(xs, z)(f), x)
-    }
-  }
-
-  def foldLeftTail[A, B](as: List[A], z: B)(f: (B, A) => B): B = {
     @tailrec
     def foldy(lst: List[A], acc: B): B = {
       lst match {
@@ -96,13 +89,7 @@ object List {
   }
 
   def length[A](list: List[A]): Int = {
-    def len(lst: List[A], acc: Int): Int = {
-      lst match {
-        case Nil => acc
-        case Cons(x, xs) => len(xs, acc + 1)
-      }
-    }
-    len(list, 0)
+    foldLeft(list, 0)((x, y) => x + 1)
   }
 
 }
