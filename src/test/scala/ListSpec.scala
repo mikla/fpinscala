@@ -41,4 +41,12 @@ class ListSpec extends FlatSpec {
     assert(List.length(Nil) == 0)
   }
 
+
+  "foldRightViaFoldLeft" should "return exactly the same list" in {
+    assert(List.foldRightViaFoldLeft(Cons(1, Cons(2, Nil)), Nil: List[Int])(Cons (_, _)).head == 1)
+  }
+
+  "foldLeft via foldRight" should "return exactly the same list" in {
+    assert(List.foldLeftViaFoldRight(Cons(1, Cons(2, Nil)), Nil: List[Int])((x, y) => Cons (y, x)).head == 2)
+  }
 }

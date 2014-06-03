@@ -1,6 +1,7 @@
 package datastructure.list
 
 import scala.annotation.tailrec
+import datascructure.list.util.PrDef
 
 sealed trait List[+A] {
   def removeFirst(): List[A]
@@ -92,7 +93,15 @@ object List {
 
   def foldLeft2[A, B](as: List[A], z: B)(f: (B, A) => B): B = {
     foldRight(List.reverse(as), z)((x, y) => f(y, x))
- }
+  }
+
+  def foldRightViaFoldLeft[A, B](as: List[A], z: B)(f: (A, B) => B): B = {
+    foldLeft(as, (b: B) => b)((g, a) => b => g(f(a, b)))(z)
+  }
+
+  def foldLeftViaFoldRight[A, B](as: List[A], z: B)(f: (B, A) => B): B = {
+    foldRight(as, (b: B) => b)((a, g) => b => g(f(b, a)))(z)
+  }
 
   def length[A](list: List[A]): Int = {
     foldLeft(list, 0)((x, y) => x + 1)
