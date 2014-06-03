@@ -49,4 +49,19 @@ class ListSpec extends FlatSpec {
   "foldLeft via foldRight" should "return exactly the same list" in {
     assert(List.foldLeftViaFoldRight(Cons(1, Cons(2, Nil)), Nil: List[Int])((x, y) => Cons (y, x)).head == 2)
   }
+
+  "appending list to the end" should "return concatenated list" in {
+    val list1 = List(1, 2)
+    val list2 = List(3, 4)
+    val newList = List.append(list1, list2)
+    assert(newList.head == 1 && List.length(newList) == 4)
+  }
+
+  "appending via foldLeft list to the end " should "return concatenated list" in {
+    val list1 = List(1, 2)
+    val list2 = List(3, 4)
+    val newList = List.appendViaFoldRight(list1, list2)
+    assert(newList.head == 1 && List.length(newList) == 4)
+  }
+
 }

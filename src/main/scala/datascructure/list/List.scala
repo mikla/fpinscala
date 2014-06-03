@@ -62,6 +62,10 @@ object List {
     }
   }
 
+  def appendViaFoldRight[A](l1: List[A], l2: List[A]): List[A] = {
+    foldRight(l1, l2)((x, y) => Cons(x, y))
+  }
+
   /**
    * returns all of the elements but the last
    */
@@ -95,6 +99,9 @@ object List {
     foldRight(List.reverse(as), z)((x, y) => f(y, x))
   }
 
+  /**
+   * http://stackoverflow.com/questions/17136794/foldleft-using-foldright-in-scala
+   */
   def foldRightViaFoldLeft[A, B](as: List[A], z: B)(f: (A, B) => B): B = {
     foldLeft(as, (b: B) => b)((g, a) => b => g(f(a, b)))(z)
   }
