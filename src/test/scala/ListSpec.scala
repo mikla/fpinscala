@@ -76,4 +76,10 @@ class ListSpec extends FlatSpec {
     assert(newList.head == 2 && List.length(newList) == 3)
   }
 
+  "toStringEach" should "return List[String]" in {
+    val lst = List(1.0, 2.0, 3.0)
+    val newList = List.toStringEach(lst)
+    assert(newList.head.toDouble == "1".toDouble)
+  }
+
 }

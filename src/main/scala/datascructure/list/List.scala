@@ -126,7 +126,11 @@ object List {
    */
   def incEach(list: List[Int]): List[Int] = {
     def inc(x: Int): Int = x + 1
-    List.foldRight(list, Nil: List[Int])((x: Int, y: List[Int]) => Cons(inc(x), y))
+    List.foldRight(list, Nil: List[Int])((x, y) => Cons(inc(x), y))
+  }
+
+  def toStringEach(list: List[Double]): List[String] = {
+    List.foldRight(list, Nil: List[String])((x, y) => Cons(x.toString, y))
   }
 
 }
