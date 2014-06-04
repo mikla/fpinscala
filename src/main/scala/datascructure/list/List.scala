@@ -1,7 +1,6 @@
 package datastructure.list
 
 import scala.annotation.tailrec
-import datascructure.list.util.PrDef
 
 sealed trait List[+A] {
   def removeFirst(): List[A]
@@ -120,6 +119,14 @@ object List {
 
   def concat[T](list: List[List[T]]): List[T] = {
     foldLeft(list, (b: List[T]) => b)((g, a) => b => g(List.foldRight(a, b)((x, y) => Cons(x, y))))(Nil)
+  }
+
+  /**
+   * Write a function that transforms a list of integers by adding  1 to  each  element.
+   */
+  def incEach(list: List[Int]): List[Int] = {
+    def inc(x: Int): Int = x + 1
+    List.foldRight(list, Nil: List[Int])((x: Int, y: List[Int]) => Cons(inc(x), y))
   }
 
 }

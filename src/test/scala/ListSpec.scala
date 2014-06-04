@@ -70,4 +70,10 @@ class ListSpec extends FlatSpec {
     assert(List.length(ans) == 7 && ans.head == 1)
   }
 
+  "incEach" should "return incremented by 1 List" in {
+    val lst = List(1, 2, 3)
+    val newList = List.incEach(lst)
+    assert(newList.head == 2 && List.length(newList) == 3)
+  }
+
 }
