@@ -24,7 +24,7 @@ class ListSpec extends FlatSpec {
   }
 
   "Passing Nil:List[Int]" should "return exactly the same list" in {
-    println(List.foldRight(Cons(1, Cons(2, Nil)), Nil: List[Int])(Cons (_, _)))
+    List.foldRight(Cons(1, Cons(2, Nil)), Nil: List[Int])(Cons (_, _))
   }
 
   "foldLeft Nil:List[Int]" should "return reversed list" in {
@@ -62,6 +62,12 @@ class ListSpec extends FlatSpec {
     val list2 = List(3, 4)
     val newList = List.appendViaFoldRight(list1, list2)
     assert(newList.head == 1 && List.length(newList) == 4)
+  }
+
+  "concat List[List[T]]" should "return List[T]" in {
+    val lst = List(List(1, 2, 3), List(4), List(5,6,7))
+    val ans = List.concat(lst)
+    assert(List.length(ans) == 7 && ans.head == 1)
   }
 
 }

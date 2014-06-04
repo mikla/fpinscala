@@ -118,4 +118,8 @@ object List {
     foldLeft(list, Nil: List[A])((x, y) => Cons(y, x))
   }
 
+  def concat[T](list: List[List[T]]): List[T] = {
+    foldLeft(list, (b: List[T]) => b)((g, a) => b => g(List.foldRight(a, b)((x, y) => Cons(x, y))))(Nil)
+  }
+
 }
