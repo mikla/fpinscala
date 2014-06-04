@@ -129,8 +129,15 @@ object List {
     List.foldRight(list, Nil: List[Int])((x, y) => Cons(inc(x), y))
   }
 
+  /**
+   * Write a function that turns each value in a  List[Double] into a String
+   */
   def toStringEach(list: List[Double]): List[String] = {
     List.foldRight(list, Nil: List[String])((x, y) => Cons(x.toString, y))
+  }
+
+  def map[A, B](list: List[A])(f: A => B): List[B] = {
+    List.foldRight(list, Nil: List[B])((x, y) => Cons(f(x), y))
   }
 
 }

@@ -82,4 +82,12 @@ class ListSpec extends FlatSpec {
     assert(newList.head.toDouble == "1".toDouble)
   }
 
+
+  "List.map " should "return List[B] where f applied  to each element" in {
+    val lst = List(1, 2, 3)
+    val newList = List.map(lst)(_ * 2)
+    assert(newList.head == 2)
+  }
+
+
 }
