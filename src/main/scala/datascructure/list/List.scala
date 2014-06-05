@@ -150,4 +150,8 @@ object List {
     List.foldRight(l, Nil: List[B])((x, y) => List.foldRight(f(x), y)(Cons(_, _)))
   }
 
+  def filterViaFlatMap[A](list: List[A])(f: A => Boolean): List[A] = {
+    List.flatMap(list)(x => if (f(x)) Cons(x, Nil) else Nil)
+  }
+
 }
