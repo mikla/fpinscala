@@ -89,5 +89,10 @@ class ListSpec extends FlatSpec {
     assert(newList.head == 2)
   }
 
+  "List.filter " should "removes elements from a list filter unless they satisfy a given predicate." in {
+    val lst = List(0, 1, 2, 3, -1)
+    val newList = List.filter(lst)(_ > 0)
+    assert(newList.head == 1)
+  }
 
 }
