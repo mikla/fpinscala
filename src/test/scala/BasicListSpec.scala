@@ -16,5 +16,10 @@ class BasicListSpec extends FlatSpec {
     assert(newList.head == 1)
   }
 
+  "flatMap" should "return List[T]" in {
+    val list = List(1, 2, 3)
+    val newList = list.flatMap(x => List(x, x))
+    assert(newList.head == 1 && newList.length == 6)
+  }
 
 }

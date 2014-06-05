@@ -146,4 +146,8 @@ object List {
     )
   }
 
+  def flatMap[A, B](l: List[A])(f: A => List[B]): List[B] = {
+    List.foldRight(l, Nil: List[B])((x, y) => List.foldRight(f(x), y)(Cons(_, _)))
+  }
+
 }

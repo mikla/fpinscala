@@ -95,4 +95,10 @@ class ListSpec extends FlatSpec {
     assert(newList.head == 1)
   }
 
+  "List.flatMap " should "and that list should be\ninserted into the final resulting list" in {
+    val lst = List(1, 2, 3)
+    val newList = List.flatMap(lst)(x => List(x, x))
+    assert(newList.head == 1 && List.length(newList) == 6)
+  }
+
 }
