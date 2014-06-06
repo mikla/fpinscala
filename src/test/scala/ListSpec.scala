@@ -108,4 +108,40 @@ class ListSpec extends FlatSpec {
     assert(newList.head == 1)
   }
 
+  "hasSubsequence List(1, 2, 3, 4) and List(3, 4)" should "returns true" in {
+    val list = List(1, 2, 3, 4)
+    assert(List.hasSubsequence(list, List(3, 4)))
+  }
+
+  "hasSubsequence List(1, 2, 3, 1, 2, 3, 4) and List(1, 2, 3, 4)" should "returns true" in {
+    val list = List(1, 2, 3, 1, 2, 3, 4)
+    assert(List.hasSubsequence(list, List(1, 2, 3, 4)))
+  }
+
+  "hasSubsequence List(1, 2, 3, 1, 2, 3, 4) and List(5, 6)" should "returns false" in {
+    val list = List(1, 2, 3, 1, 2, 3, 4)
+    assert(!List.hasSubsequence(list, List(5, 6)))
+  }
+
+  "hasSubsequence List(1, 2) and List(5, 6, 7)" should "returns false" in {
+    val list = List(1, 2)
+    assert(!List.hasSubsequence(list, List(5, 6, 7)))
+  }
+
+  "hasSubsequence Nil and Nil" should "returns false" in {
+    assert(List.hasSubsequence(Nil, Nil))
+  }
+
+  "hasSubsequence List(1, 2) and Nil" should "returns false" in {
+    assert(List.hasSubsequence(List(1, 2), Nil))
+  }
+
+  "hasSubsequence Nil and List(1, 2)" should "returns false" in {
+    assert(!List.hasSubsequence(Nil, List(1, 2)))
+  }
+
+  "hasSubsequence List(0, 1, 2, 1, 2, 1, 2) and Nil" should "returns false" in {
+    assert(List.hasSubsequence(List(0, 1, 2, 1, 2, 1), List(1, 2)))
+  }
+
 }

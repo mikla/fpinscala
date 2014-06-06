@@ -6,12 +6,14 @@ sealed trait List[+A] {
   def removeFirst(): List[A]
   def setHead[B >: A](e: B): List[B]
   def head: A
+  def tail: List[A]
 }
 
 case object Nil extends List[Nothing] {
   def removeFirst(): Nothing = throw new Exception("Nil.removeFirst")
   def setHead[B >: Nothing](e: B): List[B] = throw new Exception("Nil.setHead")
   override def head: Nothing = throw new Exception("Nil.head")
+  def tail: List[Nothing] = throw new Exception("Nil.tail")
 }
 
 case class Cons[+A](head: A, tail: List[A]) extends List[A] {
@@ -152,6 +154,26 @@ object List {
 
   def filterViaFlatMap[A](list: List[A])(f: A => Boolean): List[A] = {
     List.flatMap(list)(x => if (f(x)) Cons(x, Nil) else Nil)
+  }
+
+  def hasSubsequence[A](list: List[A], sub: List[A]): Boolean = {
+    def sub1(l: List[A], s: List[A], acc: Boolean): Boolean = {
+      l match {
+        case Cons(x, xs) =>
+          s match {
+            case Cons(sHead, sTail) =>
+              if (x == s.head) sub1(xs, s.tail, acc = true)
+              else if (acc) sub1(l, sub, acc = false) else sub1(xs, sub, acc = false)
+            case Nil => true
+          }
+        case Nil =>
+          s match {
+            case Nil => true
+            case _ => false
+          }
+      }
+    }
+    sub1(list, sub, acc = false)
   }
 
 }
