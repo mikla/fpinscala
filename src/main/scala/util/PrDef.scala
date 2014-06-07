@@ -1,4 +1,5 @@
-package datascructure.list.util
+package util
+
 
 object PrDef {
 
