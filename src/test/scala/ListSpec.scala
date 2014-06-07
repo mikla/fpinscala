@@ -128,7 +128,7 @@ class ListSpec extends FlatSpec {
     assert(!List.hasSubsequence(list, List(5, 6, 7)))
   }
 
-  "hasSubsequence Nil and Nil" should "returns false" in {
+  "hasSubsequence Nil and Nil" should "return true" in {
     assert(List.hasSubsequence(Nil, Nil))
   }
 
@@ -140,8 +140,24 @@ class ListSpec extends FlatSpec {
     assert(!List.hasSubsequence(Nil, List(1, 2)))
   }
 
-  "hasSubsequence List(0, 1, 2, 1, 2, 1, 2) and Nil" should "returns false" in {
+  "hasSubsequence List(0, 1, 2, 1, 2, 1, 2) and List(1, 2)" should "return true" in {
     assert(List.hasSubsequence(List(0, 1, 2, 1, 2, 1), List(1, 2)))
+  }
+
+  "startsWith List(0, 1, 2, 1, 2, 1, 2) and List(1, 2)" should "returns false" in {
+    assert(!List.startsWith(List(0, 1, 2, 1, 2, 1), List(1, 2)))
+  }
+
+  "startsWith List(0, 1, 2, 1, 2, 1, 2) and List(0, 1)" should "returns true" in {
+    assert(List.startsWith(List(0, 1, 2, 1, 2, 1), List(0, 1)))
+  }
+
+  "startsWith Nil and List(0, 1)" should "returns false" in {
+    assert(!List.startsWith(Nil, List(0, 1)))
+  }
+
+  "startsWith List(1, 2) and Nil" should "returns false" in {
+    assert(List.startsWith(List(1, 2), Nil))
   }
 
 }

@@ -22,4 +22,10 @@ class BasicListSpec extends FlatSpec {
     assert(newList.head == 1 && newList.length == 6)
   }
 
+  "startsWith List(1, 2) and Nil" should "return ?" in {
+    val list = List(1, 2)
+    print(list.startsWith(Nil))
+    assert(list.startsWith(Nil))
+  }
+
 }

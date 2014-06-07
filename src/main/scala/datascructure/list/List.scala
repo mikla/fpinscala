@@ -156,7 +156,32 @@ object List {
     List.flatMap(list)(x => if (f(x)) Cons(x, Nil) else Nil)
   }
 
-  def hasSubsequence[A](list: List[A], sub: List[A]): Boolean = {
+  def startsWith[A](l: List[A], s: List[A]): Boolean = {
+    def stWith[A](list: List[A], sub: List[A]): Boolean = {
+      list match {
+        case Cons(listHead, listTail) =>
+          sub match {
+            case Cons(subHead, subTail) =>
+              if (subHead == listHead) stWith(listTail, subTail)
+              else false
+            case Nil => true
+          }
+        case Nil =>
+          sub match {
+            case Nil => true
+            case _  => false
+          }
+      }
+    }
+    stWith(l, s)
+  }
+
+  /**
+   * This is realization with accumulator. The difference with hasSubsequence is hasSubsequenceAcc(List(1, 2), Nil) returns false.
+   * Whereas hasSubsequence(List(1, 2), Nil) returns true
+   *
+   */
+  def hasSubsequenceAcc[A](list: List[A], sub: List[A]): Boolean = {
     def sub1(l: List[A], s: List[A], acc: Boolean): Boolean = {
       l match {
         case Cons(x, xs) =>
@@ -174,6 +199,16 @@ object List {
       }
     }
     sub1(list, sub, acc = false)
+  }
+
+  def hasSubsequence[A](list: List[A], sub: List[A]): Boolean = {
+    if (startsWith(list, sub)) true
+    else
+      list match {
+        case Cons(x, xs) => hasSubsequence(xs, sub)
+        case Nil => false
+      }
+
   }
 
 }

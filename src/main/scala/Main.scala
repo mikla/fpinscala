@@ -17,4 +17,6 @@ object Main extends App {
 
   println(List.reverse(initList))
 
+  println(List.startsWith(List(1,2,3,4), List(1,2,3,4)))
+
 }
