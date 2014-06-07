@@ -54,8 +54,8 @@ object List {
   }
 
   /**
-    * Adds all the elements of one list to another
-    */
+   * Adds all the elements of one list to another
+   */
   def append[A](l1: List[A], l2: List[A]): List[A] = {
     l1 match {
       case Nil => l2
@@ -140,7 +140,7 @@ object List {
 
   def map[A, B](list: List[A])(f: A => B): List[B] = {
     List.foldRight(list, Nil: List[B])((x, y) => Cons(f(x), y))
-   }
+  }
 
   def filter[A](l: List[A])(f: A => Boolean): List[A] = {
     List.foldRight(l, Nil: List[A])((x, y) =>
