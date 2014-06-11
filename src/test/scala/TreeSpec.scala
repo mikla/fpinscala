@@ -5,7 +5,7 @@ class TreeSpec extends FlatSpec {
 
   "Tree.size" should "return sum of alements" in {
     val tree = Branch(Branch(Branch(Leaf(1), Leaf(2)), Leaf(3)), Leaf(4))
-    assert(Tree.size(tree) == 7)
+    assert(Tree.size(tree) == 4)
   }
 
   "List folding sum" should "return sum of alements" in {
@@ -13,7 +13,5 @@ class TreeSpec extends FlatSpec {
     assert(Tree.foldLeft(tree, 0)(_ + _) == 8)
     assert(Tree.foldLeft(tree, 0)(_ - _) == -8)
   }
-
-
 
 }

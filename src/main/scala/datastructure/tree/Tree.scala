@@ -8,33 +8,22 @@ case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
 
 object Tree {
 
-  def size[A](tree: Tree[A]): Int = {
-    tree match {
-      case Leaf(_) => 1
-      case Branch(left, right) => size(left) + size(right) + 1
-    }
-  }
-
   def foldLeft[A, B](tree: Tree[A], z: B)(f: (B, A) => B) = {
-    def loop(left: Tree[A], queue: Tree[A], acc: B): B = {
+    def loop(left: Tree[A], queue: List[Tree[A]], acc: B): B = {
       left match {
         case Leaf(v) =>
+          val accVal = f(acc, v)
           queue match {
-            case Leaf(b) => f(f(acc, b),v)
-            case Branch(ll, rr) => loop(ll, rr, f(acc, v))
+            case Nil => accVal
+            case x :: xs => loop(x, xs, accVal)
           }
-        case Branch(l, r) => loop(l, Branch(r, queue), acc)
+        case Branch(l, r) => loop(l, r :: queue, acc)
       }
     }
-
-    tree match {
-      case Leaf(v) => f(z, v)
-      case Branch(l, r) => loop(l, r, z)
-    }
-
+    loop(tree, Nil, z)
   }
 
-  def sizeTail[A](tree: Tree[A]): Int = {
+  def size[A](tree: Tree[A]): Int = {
     Tree.foldLeft(tree, 0)((x, y) => x + 1)
   }
 
