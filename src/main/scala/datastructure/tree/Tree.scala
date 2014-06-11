@@ -25,6 +25,8 @@ object Tree {
 
   def size[A](tree: Tree[A]): Int = Tree.foldLeft(tree, 0)((x, y) => x + 1)
 
-  def maximum(tree: Tree[Int]): Int = Tree.foldLeft(tree, Int.MinValue)(_ max _)
+  def reduce[A, B](tree: Tree[A])(f: (B, A) => B): B = ???
+
+  def maximum[T: Ordering](tree: Tree[Ordering[T]]): Int = ???
 
 }
