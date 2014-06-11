@@ -15,4 +15,27 @@ object Tree {
     }
   }
 
+  def foldLeft[A, B](tree: Tree[A], z: B)(f: (B, A) => B) = {
+    def loop(left: Tree[A], queue: Tree[A], acc: B): B = {
+      left match {
+        case Leaf(v) =>
+          queue match {
+            case Leaf(b) => f(f(acc, b),v)
+            case Branch(ll, rr) => loop(ll, rr, f(acc, v))
+          }
+        case Branch(l, r) => loop(l, Branch(r, queue), acc)
+      }
+    }
+
+    tree match {
+      case Leaf(v) => f(z, v)
+      case Branch(l, r) => loop(l, r, z)
+    }
+
+  }
+
+  def sizeTail[A](tree: Tree[A]): Int = {
+    Tree.foldLeft(tree, 0)((x, y) => x + 1)
+  }
+
 }

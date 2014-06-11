@@ -19,4 +19,7 @@ object Main extends App {
 
   println(List.startsWith(List(1,2,3,4), List(1,2,3,4)))
 
+  val divideList = List(1, 2, 3)
+  println(List.foldLeft(divideList, 1)((a, b) => a / b))
+
 }
