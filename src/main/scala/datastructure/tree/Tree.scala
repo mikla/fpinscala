@@ -23,8 +23,8 @@ object Tree {
     loop(tree, Nil, z)
   }
 
-  def size[A](tree: Tree[A]): Int = {
-    Tree.foldLeft(tree, 0)((x, y) => x + 1)
-  }
+  def size[A](tree: Tree[A]): Int = Tree.foldLeft(tree, 0)((x, y) => x + 1)
+
+  def maximum(tree: Tree[Int]): Int = Tree.foldLeft(tree, Int.MinValue)(_ max _)
 
 }

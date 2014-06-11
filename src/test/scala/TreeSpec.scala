@@ -14,4 +14,9 @@ class TreeSpec extends FlatSpec {
     assert(Tree.foldLeft(tree, 0)(_ - _) == -8)
   }
 
+  "List.maximum element" should "return 7" in {
+    val tree = Branch(Branch(Leaf(-4), Leaf(-7)), Leaf(-3))
+    assert(Tree.maximum(tree) == -3)
+  }
+
 }
