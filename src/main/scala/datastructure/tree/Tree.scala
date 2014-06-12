@@ -39,6 +39,6 @@ object Tree {
     loop(tree, Nil, identity)
   }
 
-//  def maximum[T: Ordering](tree: Tree[T]): Int = reduce(tree)(_ max _)
+  def maximum[T: Ordering](tree: Tree[T]): T = Tree.reduce(tree)((x, y) => implicitly[Ordering[T]].max(x, y))
 
 }
