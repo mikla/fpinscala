@@ -25,8 +25,20 @@ object Tree {
 
   def size[A](tree: Tree[A]): Int = Tree.foldLeft(tree, 0)((x, y) => x + 1)
 
-  def reduce[A, B](tree: Tree[A])(f: (B, A) => B): B = ???
+  def reduce[B >: A, A](tree: Tree[A])(f: (B, B) => B): B = {
+    def loop(left: Tree[A], queue: List[Tree[A]], acc: B => B): B = {
+      left match {
+        case Leaf(v) =>
+          queue match {
+            case Nil => acc(v)
+            case x :: xs => loop(x, xs, f(acc(v), _))
+          }
+        case Branch(l, r) => loop(l, r :: queue, acc)
+      }
+    }
+    loop(tree, Nil, identity)
+  }
 
-  def maximum[T: Ordering](tree: Tree[Ordering[T]]): Int = ???
+//  def maximum[T: Ordering](tree: Tree[T]): Int = reduce(tree)(_ max _)
 
 }

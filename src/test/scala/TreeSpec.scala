@@ -19,4 +19,10 @@ class TreeSpec extends FlatSpec {
 //    assert(Tree.maximum(tree) == -3)
   }
 
+
+  "List.reduce element" should "return 7" in {
+    val tree = Branch(Branch(Branch(Leaf(-4), Leaf(-7)), Leaf(-3)),Branch(Leaf(7), Leaf(7)))
+    assert(Tree.reduce(tree)(_ + _) == 0)
+  }
+
 }
