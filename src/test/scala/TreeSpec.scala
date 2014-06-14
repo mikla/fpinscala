@@ -24,4 +24,9 @@ class TreeSpec extends FlatSpec {
     assert(Tree.reduce(tree)(_ + _) == 0)
   }
 
+  "List.depth element" should "return 5" in {
+    val tree = Branch(Branch(Branch(Leaf(-4), Branch(Leaf(4), Branch(Leaf(4), Leaf(4)))), Leaf(-3)), Branch(Leaf(7), Leaf(3)))
+    assert(Tree.depth(tree) == 5)
+  }
+
 }

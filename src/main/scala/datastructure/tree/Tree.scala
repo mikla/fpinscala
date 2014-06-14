@@ -41,4 +41,19 @@ object Tree {
 
   def maximum[T: Ordering](tree: Tree[T]): T = Tree.reduce(tree)((x, y) => implicitly[Ordering[T]].max(x, y))
 
+  def depth[A](tree: Tree[A]): Int = {
+    def loop(left: Tree[A], queue: List[(Int, Tree[A])], loopDepth: Int, maxAcc: Int): Int = {
+      left match {
+        case Leaf(v) =>
+          queue match {
+            case Nil => maxAcc
+            case x :: xs =>
+              val (leafAcc, leafLeft) = x
+              loop(leafLeft, xs, leafAcc, Ordering[Int].max(maxAcc, leafAcc))
+          }
+        case Branch(l, r) => loop(l, (loopDepth + 1, r) :: queue, loopDepth + 1, maxAcc)
+      }
+    }
+    loop(tree, Nil, 0, 0)
+  }
 }
