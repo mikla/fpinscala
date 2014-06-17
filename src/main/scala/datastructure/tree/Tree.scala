@@ -56,4 +56,19 @@ object Tree {
     }
     loop(tree, Nil, 0, 0)
   }
+
+  def toString[A](tree: Tree[A]): String = {
+    tree match {
+      case Leaf(v) => s"Leaf($v)"
+      case Branch(left, right) => s"Branch(${toString(left)},${toString(right)})"
+    }
+  }
+
+  def map[A, B](tree: Tree[A])(f: A => B): Tree[B] = {
+    tree match {
+      case Leaf(v) => Leaf(f(v))
+      case Branch(left, right) => Branch(map(left)(f), map(right)(f))
+    }
+  }
 }
+

@@ -8,25 +8,31 @@ class TreeSpec extends FlatSpec {
     assert(Tree.size(tree) == 4)
   }
 
-  "List folding sum" should "return sum of alements" in {
+  "Tree folding sum" should "return sum of alements" in {
     val tree = Branch(Branch(Leaf(4), Leaf(7)), Leaf(-3))
     assert(Tree.foldLeft(tree, 0)(_ + _) == 8)
     assert(Tree.foldLeft(tree, 0)(_ - _) == -8)
   }
 
-  "List.maximum element" should "return 7" in {
+  "Tree.maximum element" should "return 7" in {
     val tree = Branch(Branch(Leaf(-4), Leaf(-7)), Leaf(-3))
     assert(Tree.maximum(tree) == -3)
   }
 
-  "List.reduce element" should "return 7" in {
+  "Tree.reduce element" should "return 7" in {
     val tree = Branch(Branch(Branch(Leaf(-4), Leaf(-7)), Leaf(-3)),Branch(Leaf(7), Leaf(7)))
     assert(Tree.reduce(tree)(_ + _) == 0)
   }
 
-  "List.depth element" should "return 5" in {
+  "Tree.depth element" should "return 5" in {
     val tree = Branch(Branch(Branch(Leaf(-4), Branch(Leaf(4), Branch(Leaf(4), Leaf(4)))), Leaf(-3)), Branch(Leaf(7), Leaf(3)))
     assert(Tree.depth(tree) == 5)
+  }
+
+  "Tree.map" should "return 5" in {
+    val tree = Branch(Branch(Branch(Leaf(-4), Branch(Leaf(4), Branch(Leaf(4), Leaf(4)))), Leaf(-3)), Branch(Leaf(7), Leaf(3)))
+    val transformedTree = Tree.map(tree)(_ + 1)
+    assert(Tree.foldLeft(transformedTree, 0)(_ - _) == -22)
   }
 
 }
