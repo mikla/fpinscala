@@ -24,4 +24,11 @@ object Ch3Exercises {
     a.flatMap(aa => b map (bb => f(aa, bb)))
   }
 
+  /**
+   * EXERCISE 4
+   */
+  def sequence[A](a: List[Option[A]]): Option[List[A]] = {
+    a.foldRight(Some(Nil): Option[List[A]])((x, acc) => map2(x, acc)(_ :: _))
+  }
+
 }
