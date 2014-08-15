@@ -31,4 +31,8 @@ object Ch3Exercises {
     a.foldRight(Some(Nil): Option[List[A]])((x, acc) => map2(x, acc)(_ :: _))
   }
 
+  def traverse[A, B](list: List[A])(f: A => Option[B]): Option[List[B]] = {
+    None
+  }
+
 }
