@@ -39,7 +39,11 @@ object Ch3Exercises {
       else loop(map2(f(rest.head), acc)(_ :: _), rest.tail)
 
     }
-    loop(Some(Nil): Option[List[B]], list)
+    loop(Some(Nil): Option[List[B]], list) map (_.reverse)
+  }
+
+  def traverse2[A, B](list: List[A])(f: A => Option[B]): Option[List[B]] = {
+    list.foldLeft((b: Option[List[B]]) => b)((g, a) => b => g(map2(f(a), b)(_ :: _)))(Some(Nil: List[B]))
   }
 
 }
