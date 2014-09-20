@@ -1,5 +1,7 @@
 package exception
 
+
+
 object Ch3Exercises {
 
   def variance(xs: Seq[Double]): OptionType[Double] = {
@@ -32,7 +34,12 @@ object Ch3Exercises {
   }
 
   def traverse[A, B](list: List[A])(f: A => Option[B]): Option[List[B]] = {
-    None
+    def loop(acc: Option[List[B]], rest: List[A]): Option[List[B]] = {
+      if (rest.isEmpty) acc
+      else loop(map2(f(rest.head), acc)(_ :: _), rest.tail)
+
+    }
+    loop(Some(Nil): Option[List[B]], list)
   }
 
 }
