@@ -15,7 +15,6 @@ class Ch3Spec extends FlatSpec {
 
   "traverse test 3" should "return List" in {
     val res = Ch3Exercises.traverse2(List(1, 2, 4))(r => if (r == 2) None else Some(r))
-    println(res)
     assert(res == None)
   }
 
