@@ -47,4 +47,21 @@ object Ch3Exercises {
     list.foldLeft((b: Option[List[B]]) => b)((g, a) => b => g(map2(f(a), b)(_ :: _)))(Some(Nil: List[B]))
   }
 
+  /**
+   * EXERCISE 4.7
+   * Implement sequence and traverse for Either. These should return the  first  error that’s encountered, if there is one.
+   */
+  def map2[E, A, B, C](a: Either[E, A], b: Either[E, B])(f: (A, B) => Either[E, C]): Either[E, C] = {
+    a match {
+      case Left(v) => Left(v)
+      case Right(v) => b match {
+        case Left(v1) => Left(v1)
+        case Right(v1) => f(v, v1)
+      }
+    }
+  }
+
+  def sequence[E, A](es: List[Either[E, A]]): Either[E, List[A]] = ???
+  def traverse[E, A, B](es: List[A])(f: (A) => Either[E, B]): Either[E, List[B]] = ???
+
 }
