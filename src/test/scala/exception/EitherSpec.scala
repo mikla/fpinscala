@@ -26,9 +26,12 @@ class EitherSpec extends FlatSpec {
     assert(Ch3Exercises.sequence(List(Right(1), Left("err"), Right(3))) == Left("err"))
   }
 
-  "Either Traverse" should "List(1, 2, 3)" in {
+  "Either Traverse" should "Right(List(1, 2, 3))" in {
+    assert(Ch3Exercises.traverseEither(List(1, 2, 3))(Right(_)) == Right(List(1, 2, 3)))
+  }
 
-//    Ch3Exercises.traverse(List(1, 2, 3))((x) => Right(x))
+  "Either Traverse Err" should "Left(err)" in {
+    assert(Ch3Exercises.traverseEither(List(1, 2, 3))(x => if (x == 1) Left("err") else Right(x)) == Left("err"))
   }
 
 }
