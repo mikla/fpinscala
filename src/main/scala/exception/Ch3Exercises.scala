@@ -65,7 +65,7 @@ object Ch3Exercises {
     es.foldRight(Right(Nil): Either[E, List[A]])((x, acc) => map2(x, acc)(_ :: _))
   }
 
-  def traverse[E, A, B](es: List[A])(f: (A) => Either[E, B]): Either[E, List[B]] = {
+  def traverseEither[E, A, B](es: List[A])(f: (A) => Either[E, B]): Either[E, List[B]] = {
     es.foldLeft((b: Either[E, List[B]]) => b)((g, a) => b => g(map2(f(a), b)(_ :: _)))(Right(Nil): Either[E, List[B]])
   }
 
