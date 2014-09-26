@@ -1,5 +1,7 @@
 package laziness
 
+import scala.concurrent.Future
+
 sealed trait Stream[+A] {
   def headOption: Option[A] = this match {
     case Empty => None
@@ -15,6 +17,20 @@ sealed trait Stream[+A] {
     }
     loop(() => this, List.empty).reverse
   }
+
+  def take(n: Int): Stream[A] = {
+    def loop(stream: () => Stream[A], iter: Int, acc: Stream[A]): Stream[A] = {
+      if (iter < n)
+        stream() match {
+          case Empty => throw new Exception("not enough elements in stream")
+          case Cons(h, t) => loop(t, iter + 1, Cons(h, () => acc))
+        }
+      else acc
+    }
+    loop(() => this, 0, Empty)
+  }
+
+  def drop(n: Int): Stream[A] = ???
 }
 
 case object Empty extends Stream[Nothing]
