@@ -13,4 +13,12 @@ class StreamSpec extends FlatSpec {
     assert(Stream(1, 2, 3, 4, 5, 6).take(3).toList == List(1, 2, 3))
   }
 
+  "Stream.drop(n)" should "List(4, 5, 6)" in {
+    assert(Stream(1, 2, 3, 4, 5, 6).drop(3).toList == List(4, 5, 6))
+  }
+
+  "Stream.reverse" should "Stream(3, 2, 1)" in {
+    assert(Stream(1, 2, 3).reverse.toList == Stream(3, 2, 1).toList)
+  }
+
 }

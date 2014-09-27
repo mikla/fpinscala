@@ -8,6 +8,11 @@ sealed trait Stream[+A] {
     case Cons(h, t) => Some(h())
   }
 
+  def tail: Stream[A] = this match {
+    case Empty => throw new Exception("Stream.tail is empty")
+    case Cons(h, t) => t()
+  }
+
   def toList: List[A] = {
     def loop(stream: () => Stream[A], acc: List[A]): List[A] = {
       stream() match {
@@ -27,10 +32,29 @@ sealed trait Stream[+A] {
         }
       else acc
     }
-    loop(() => this, 0, Empty)
+    loop(() => this, 0, Empty).reverse
   }
 
-  def drop(n: Int): Stream[A] = ???
+  def drop(n: Int): Stream[A] = {
+    def loop(stream: Stream[A], iter: Int, acc: Stream[A]): Stream[A] = {
+      if (iter < n) loop(stream.tail, iter + 1, acc)
+      else stream match {
+        case Empty => acc
+        case Cons(h, t) => loop(stream.tail, iter + 1, Cons(h, () => acc))
+      }
+    }
+    loop(this, 0, Empty).reverse
+  }
+
+  def reverse: Stream[A] = {
+    def loop(stream: () => Stream[A], acc: Stream[A]): Stream[A] = {
+      stream() match {
+        case Empty => acc
+        case Cons(h, t) => loop(t, Cons(h, () => acc))
+      }
+    }
+    loop(() => this, Empty)
+  }
 }
 
 case object Empty extends Stream[Nothing]
