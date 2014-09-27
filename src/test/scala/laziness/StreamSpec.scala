@@ -44,4 +44,12 @@ class StreamSpec extends FlatSpec {
   "Stream.forAll" should "false" in {
     assert(!Stream(1, 1, 3).forAll(_ == 1))
   }
+
+  "Stream.headOptionViaFoldRIght" should "Some(1)" in {
+    assert(Stream(1, 2, 3).headOptionViaFoldRight == Some(1))
+  }
+
+  "Stream.headOptionViaFoldRIght" should "None" in {
+    assert(Empty.headOptionViaFoldRight == None)
+  }
 }

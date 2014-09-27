@@ -6,6 +6,9 @@ sealed trait Stream[+A] {
     case Cons(h, t) => Some(h())
   }
 
+  def headOptionViaFoldRight: Option[A] =
+    this.foldRight(None: Option[A])((a, b) => Some(a))
+
   def tail: Stream[A] = this match {
     case Empty => throw new Exception("Stream.tail is empty")
     case Cons(h, t) => t()
