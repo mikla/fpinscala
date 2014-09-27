@@ -25,4 +25,19 @@ class StreamSpec extends FlatSpec {
     assert(Stream(1, 1, 3).takeWhile(_ == 1).toList == Stream(1, 1).toList)
   }
 
+  "Stream.exists" should "true" in {
+    assert(Stream(1, 1, 3).exists(_ == 3))
+  }
+
+  "Stream.exists" should "false" in {
+    assert(!Stream(1, 1, 3).exists(_ == 4))
+  }
+
+  "Stream.forAll" should "true" in {
+    assert(Stream(1, 1, 1).forAll(_ == 1))
+  }
+
+  "Stream.forAll" should "false" in {
+    assert(!Stream(1, 1, 3).forAll(_ == 1))
+  }
 }

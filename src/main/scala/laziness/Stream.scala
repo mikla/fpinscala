@@ -64,6 +64,34 @@ sealed trait Stream[+A] {
     loop(this, Empty)
   }
 
+  def exists(p: A => Boolean): Boolean = {
+    def loop(stream: Stream[A]): Boolean = {
+      stream match {
+        case Empty => false
+        case Cons(h, t) => p(h()) || loop(t())
+      }
+    }
+    loop(this)
+  }
+
+  def exists2(p: A => Boolean): Boolean = this match {
+    case Cons(h, t) => p(h()) || t().exists2(p)
+    case _ => false
+  }
+
+  def exists3(p: A => Boolean): Boolean =
+    foldRight(false)((a, b) => p(a) || b)
+
+  def foldRight[B](z: => B)(f: (A, => B) => B): B = this match {
+    case Cons(h, t) => f(h(), t().foldRight(z)(f))
+    case _ => z
+  }
+
+  def forAll(p: A => Boolean): Boolean = this match {
+    case Cons(h, t) => p(h()) && t().forAll(p)
+    case _ => true
+  }
+
 }
 
 case object Empty extends Stream[Nothing]
