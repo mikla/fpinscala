@@ -1,7 +1,5 @@
 package laziness
 
-import scala.concurrent.Future
-
 sealed trait Stream[+A] {
   def headOption: Option[A] = this match {
     case Empty => None
@@ -55,6 +53,17 @@ sealed trait Stream[+A] {
     }
     loop(() => this, Empty)
   }
+
+  def takeWhile(p: A => Boolean): Stream[A] = {
+    def loop(stream: Stream[A], acc: Stream[A]): Stream[A] = {
+      stream.headOption.map { h =>
+        if (p(h)) loop(stream.tail, Cons(() => h, () => acc))
+        else acc
+      } getOrElse Empty
+    }
+    loop(this, Empty)
+  }
+
 }
 
 case object Empty extends Stream[Nothing]

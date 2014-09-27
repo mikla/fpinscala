@@ -21,4 +21,8 @@ class StreamSpec extends FlatSpec {
     assert(Stream(1, 2, 3).reverse.toList == Stream(3, 2, 1).toList)
   }
 
+  "Stream.takeWhile" should "Stream(1, 1)" in {
+    assert(Stream(1, 1, 3).takeWhile(_ == 1).toList == Stream(1, 1).toList)
+  }
+
 }
