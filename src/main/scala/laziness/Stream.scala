@@ -64,6 +64,10 @@ sealed trait Stream[+A] {
     loop(this, Empty)
   }
 
+  def takeWhileViaFoldRight(p: A => Boolean): Stream[A] = {
+    this.foldRight(Empty: Stream[A])((a, b) => if (p(a)) Cons(() => a, () => b) else b)
+  }
+
   def exists(p: A => Boolean): Boolean = {
     def loop(stream: Stream[A]): Boolean = {
       stream match {
