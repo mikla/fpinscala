@@ -52,4 +52,13 @@ class StreamSpec extends FlatSpec {
   "Stream.headOptionViaFoldRIght" should "None" in {
     assert(Empty.headOptionViaFoldRight == None)
   }
+
+  "Stream.map" should "Stream(11, 12)" in {
+    assert(Stream(1, 2).map(_ + 10).toList == List(11, 12))
+  }
+
+  "Stream.map" should "Empty" in {
+    assert(Empty.asInstanceOf[Stream[Int]].map(_ + 10) == Empty)
+  }
+
 }

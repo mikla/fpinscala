@@ -99,6 +99,9 @@ sealed trait Stream[+A] {
     case _ => true
   }
 
+  def map[B >: A](f: A => B): Stream[B] =
+    this.foldRight(Empty: Stream[B])((a, b) => Cons(() => f(a), () => b))
+
 }
 
 case object Empty extends Stream[Nothing]
