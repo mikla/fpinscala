@@ -136,5 +136,7 @@ object Stream {
     constantStream
   }
 
+  def from(n: Int): Stream[Int] = ???
+
 }
 
