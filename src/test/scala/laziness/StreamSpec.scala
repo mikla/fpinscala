@@ -75,4 +75,11 @@ class StreamSpec extends FlatSpec {
     assert(fMapRes.head == 1 && fMapRes.size == 6)
   }
 
+  "Stream.append" should "Stream(1, 2, 3, 4, 5, 6)" in {
+    val s = Stream(1, 2, 3)
+    val s2 = Stream(4, 5, 6)
+    val res = s.append(s2).toList
+    assert(res.head == 1 && res.size == 6)
+  }
+
 }
