@@ -4,8 +4,7 @@ object Ch5Ex extends App {
 
   def lazyFetch(calc: Boolean, value: => Int): Int = {
     lazy val c = value
-//    if (calc) c + c else 0
-    0
+    if (calc) c + c else 0
   }
 
   lazyFetch(true, {
@@ -18,4 +17,8 @@ object Ch5Ex extends App {
 
   Stream(elem1, elem2, elem3)
   val s = Cons(elem1, () => Cons(elem2, () => Cons(elem3, () => Empty)))
+
+  // Infinite streams
+  val ones: Stream[Int] = Stream.cons(1, ones)
+
 }
