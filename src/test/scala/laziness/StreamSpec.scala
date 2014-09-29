@@ -69,4 +69,10 @@ class StreamSpec extends FlatSpec {
     assert(Stream(1, 2, 3, 4).filter(_ > 10) == Empty)
   }
 
+  "Stream.flatMap" should "Stream(1, 1, 2, 2, 3, 3)" in {
+    val s = Stream(1, 2, 3)
+    val fMapRes = s.flatMap(x => Stream(x, x)).toList
+    assert(fMapRes.head == 1 && fMapRes.size == 6)
+  }
+
 }
