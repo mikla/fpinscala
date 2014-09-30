@@ -20,5 +20,7 @@ object Ch5Ex extends App {
 
   // Infinite streams
   val ones: Stream[Int] = Stream.cons(1, ones)
+  val infiniteStream = Stream.from(3).take(3).toList
+  val infiniteStreamConstant = Stream.constant(3).take(3).toList
 
 }
