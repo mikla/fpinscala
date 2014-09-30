@@ -135,5 +135,10 @@ object Stream {
 
   def from(n: Int): Stream[Int] = Stream.cons(n, from(n + 1))
 
+  def fibs: Stream[Int] = {
+    def loop(x: Int, y: Int): Stream[Int] = Stream.cons(x + y, loop(y, x + y))
+    Stream(0, 1).append(loop(0, 1))
+  }
+
 }
 
