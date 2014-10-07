@@ -65,6 +65,10 @@ class StreamSpec extends FlatSpec {
     assert(Empty.asInstanceOf[Stream[Int]].map(_ + 10) == Empty)
   }
 
+  "Stream.mapViaUnfold" should "Empty" in {
+    assert(Empty.asInstanceOf[Stream[Int]].mapViaUnfold(_ + 10) == Empty)
+  }
+
   "Stream.filter" should "Stream(2, 4)" in {
     assert(Stream(1, 2, 3, 4).filter(_ % 2 == 0).toList == List(2, 4))
   }
