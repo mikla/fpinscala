@@ -86,6 +86,10 @@ class StreamSpec extends FlatSpec {
     assert(Stream.from(3).take(3).toList == List(3, 4, 5))
   }
 
+  "Stream.fromViaUnfold" should "Steam(3, 4, 5)" in {
+    assert(Stream.fromViaUnfold(3).take(3).toList == List(3, 4, 5))
+  }
+
   "Stream.constant" should "Stream(1, 1)" in {
     assert(Stream.constant(1).take(2).toList == List(1, 1))
   }

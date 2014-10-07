@@ -147,6 +147,8 @@ object Stream {
     }))
   }
 
+  def fromViaUnfold(n: Int): Stream[Int] = unfold(n)(s => Some(s, s + 1))
+
   def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = f(z) match {
     case Some((elem, next)) => Stream.cons(elem, unfold(next)(f))
     case _ => Empty
