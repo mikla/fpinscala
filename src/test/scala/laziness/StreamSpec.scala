@@ -94,6 +94,10 @@ class StreamSpec extends FlatSpec {
     assert(Stream.fibs.take(6).toList == List(0, 1, 1, 2, 3, 5))
   }
 
+  "Stream.fibsViaUnfold" should "Stream(0, 1, 1, 2, 3, 5)" in {
+    assert(Stream.fibsViaUnfold.take(6).toList == List(0, 1, 1, 2, 3, 5))
+  }
+
   "Stream.unfold" should "Stream(1, 2, 3)" in {
     assert(Stream.unfold(1)(s => Some(s, s + 1)).take(3).toList == List(1, 2, 3))
   }
