@@ -13,6 +13,10 @@ class StreamSpec extends FlatSpec {
     assert(Stream(1, 2, 3, 4, 5, 6).take(3).toList == List(1, 2, 3))
   }
 
+  "Stream.takeViaUnfold(n)" should "List(1, 2, 3)" in {
+    assert(Stream(1, 2, 3, 4, 5, 6).takeViaUnfold(3).toList == List(1, 2, 3))
+  }
+
   "Stream.drop(n)" should "List(4, 5, 6)" in {
     assert(Stream(1, 2, 3, 4, 5, 6).drop(3).toList == List(4, 5, 6))
   }
