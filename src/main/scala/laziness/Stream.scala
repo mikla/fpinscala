@@ -26,12 +26,10 @@ sealed trait Stream[+A] {
     loop(() => this, 0, Empty).reverse
   }
 
-  def takeViaUnfold(n: Int): Stream[A] = Stream.unfold((this, 0))(s =>
-    if (s._2 < n) s._1 match {
-      case Cons(h, t) => Some(h(), (t(), s._2 + 1))
-      case _ => None
-    } else None
-  )
+  def takeViaUnfold(n: Int): Stream[A] = Stream.unfold((this, 0)) {
+    case (Cons(h, t), taken) if taken < n => Some(h(), (t(), taken + 1))
+    case _ => None
+  }
 
   def reverse: Stream[A] = {
     def loop(stream: () => Stream[A], acc: Stream[A]): Stream[A] = {
