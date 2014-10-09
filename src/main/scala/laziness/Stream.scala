@@ -67,6 +67,11 @@ sealed trait Stream[+A] {
     loop(this, Empty)
   }
 
+  def takeWhileViaUnfold(p: A => Boolean): Stream[A] = Stream.unfold(this) {
+    case Cons(h, t) if p(h()) => Some(h(), t())
+    case _ => None
+  }
+
   def headOption: Option[A] = this match {
     case Empty => None
     case Cons(h, t) => Some(h())
