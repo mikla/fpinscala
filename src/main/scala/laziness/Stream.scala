@@ -134,6 +134,13 @@ sealed trait Stream[+A] {
     case _ => None
   }
 
+  def zipAll[B](s: Stream[B]): Stream[(Option[A], Option[B])] = Stream.unfold((this, s)) {
+    case (Cons(h, t), Cons(hh, tt)) => Some(((Some(h()), Some(hh())), (t(), tt())))
+    case (Empty, Cons(hh, tt)) => Some((Option.empty[A], Some(hh())), (Stream.empty[A], tt()))
+    case (Cons(h, t), Empty) => Some((Some(h()), Option.empty[B]), (t(), Stream.empty[B]))
+    case _ => None
+  }
+
 }
 
 case object Empty extends Stream[Nothing]

@@ -133,4 +133,10 @@ class StreamSpec extends FlatSpec {
   "Stream.zipWith" should "Stream(2)" in {
     assert(Stream(1, 2).zipWith(Stream(1))((x, y) => x + y).toList == List(2))
   }
+
+  "Stream.zipAll" should "Stream(2)" in {
+    val st1 = Stream(1, 2, 3)
+    val st2 = Stream(2)
+    assert(st1.zipAll(st2).toList == List((Some(1), Some(2)), (Some(2), None), (Some(3), None)))
+  }
 }
