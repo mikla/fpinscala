@@ -129,6 +129,11 @@ sealed trait Stream[+A] {
     case Cons(h, t) => Cons(h, () => t().append(s2))
   }
 
+  def zipWith[B, C](s2: Stream[B])(f: (A, B) => C): Stream[C] = Stream.unfold((this, s2)) {
+    case (Cons(h, t), Cons(hh, tt)) => Some(f(h(), hh()), (t(), tt()))
+    case _ => None
+  }
+
 }
 
 case object Empty extends Stream[Nothing]

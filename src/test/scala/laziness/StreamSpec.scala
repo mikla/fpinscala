@@ -125,4 +125,12 @@ class StreamSpec extends FlatSpec {
   "Stream.unfold" should "Stream(1, 2, 3)" in {
     assert(Stream.unfold(1)(s => Some(s, s + 1)).take(3).toList == List(1, 2, 3))
   }
+
+  "Stream.zipWith" should "Stream(10, 11, 12)" in {
+    assert(Stream(1, 2, 3).zipWith(Stream.constant(10))((x, y) => x + y).toList == List(11, 12, 13))
+  }
+
+  "Stream.zipWith" should "Stream(2)" in {
+    assert(Stream(1, 2).zipWith(Stream(1))((x, y) => x + y).toList == List(2))
+  }
 }
