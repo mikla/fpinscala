@@ -139,4 +139,12 @@ class StreamSpec extends FlatSpec {
     val st2 = Stream(2)
     assert(st1.zipAll(st2).toList == List((Some(1), Some(2)), (Some(2), None), (Some(3), None)))
   }
+
+  "Stream.startsWIth" should "true" in {
+    assert(Stream(1, 2, 3).startsWith(Stream(1, 2)))
+  }
+
+  "Stream.startsWIth" should "false" in {
+    assert(!Stream(1, 2, 3).startsWith(Stream(2, 3)))
+  }
 }
