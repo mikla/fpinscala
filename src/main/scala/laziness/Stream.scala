@@ -162,6 +162,11 @@ sealed trait Stream[+A] {
     }
   }
 
+  def tails: Stream[Stream[A]] = Stream.unfold(this) {
+    case Empty => None
+    case s => Some((s, s drop 1))
+  } append Stream(Empty)
+
 }
 
 case object Empty extends Stream[Nothing]

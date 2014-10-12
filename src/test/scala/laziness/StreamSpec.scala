@@ -147,4 +147,11 @@ class StreamSpec extends FlatSpec {
   "Stream.startsWIth" should "false" in {
     assert(!Stream(1, 2, 3).startsWith(Stream(2, 3)))
   }
+
+  "Stream.tails" should "Stream(Stream(1, 2, 3), Stream(2, 3), Stream(3), Empty)" in {
+    val tails = Stream(1, 2, 3).tails
+    tails.forAll(s => {
+      println(s.toList); true
+    })
+  }
 }
