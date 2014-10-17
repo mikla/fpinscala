@@ -1,4 +1,6 @@
-import datastructure.tree.{Leaf, Branch, Tree}
+package datastructure
+
+import datastructure.tree.{Branch, Leaf, Tree}
 import org.scalatest.FlatSpec
 
 class TreeSpec extends FlatSpec {

@@ -1,3 +1,5 @@
+package datastructure
+
 import org.scalatest.FlatSpec
 
 class BasicListSpec extends FlatSpec {

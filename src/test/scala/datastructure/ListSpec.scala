@@ -1,5 +1,7 @@
-import org.scalatest.FlatSpec
+package datastructure
+
 import datastructure.list.{Cons, List, Nil}
+import org.scalatest.FlatSpec
 
 class ListSpec extends FlatSpec {
 
