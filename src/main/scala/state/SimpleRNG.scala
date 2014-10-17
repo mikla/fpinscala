@@ -14,4 +14,9 @@ object SimpleRNG {
     val (value, rngState) = rng.nextInt
     if (value < 0) (-(value + 1), rngState) else (value, rngState)
   }
+
+  def double(rng: RNG): (Double, RNG) = {
+    val (value, rngState) = nonNegativeInt(rng)
+    (value / (Int.MaxValue.toDouble + 1), rngState)
+  }
 }
