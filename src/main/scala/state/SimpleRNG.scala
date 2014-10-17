@@ -38,4 +38,14 @@ object SimpleRNG {
     ((d1, d2, d3), r3)
   }
 
+  def ints(count: Int)(rng: RNG): (List[Int], RNG) = {
+    def loop(acc: List[Int], size: Int, rngState: RNG): (List[Int], RNG) = {
+      if (size < count) {
+        val (i, rngState_) = rngState.nextInt
+        loop(i :: acc, size + 1, rngState_)
+      } else (acc, rngState)
+    }
+    loop(List.empty, 0, rng)
+  }
+
 }

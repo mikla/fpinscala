@@ -22,6 +22,11 @@ class StateSpec extends FlatSpec {
     println(double3Res)
   }
 
+  "ints" should "List of random Ints" in {
+    val rands = SimpleRNG.ints(2)(new SimpleRNG(10))
+    assert((rands._1(0) != rands._1(1)) && rands._1.size == 2)
+  }
+
 }
 
 
