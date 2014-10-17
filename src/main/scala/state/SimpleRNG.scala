@@ -19,4 +19,23 @@ object SimpleRNG {
     val (value, rngState) = nonNegativeInt(rng)
     (value / (Int.MaxValue.toDouble + 1), rngState)
   }
+
+  def intDouble(rng: RNG): ((Int, Double), RNG) = {
+    val (i1, r1) = nonNegativeInt(rng)
+    val (d1, r2) = double(r1)
+    ((i1, d1), r2)
+  }
+
+  def doubleInt(rng: RNG): ((Double, Int), RNG) = {
+    val r = intDouble(rng)
+    (r._1.swap, r._2)
+  }
+
+  def double3(rng: RNG): ((Double, Double, Double), RNG) = {
+    val (d1, r1) = double(rng)
+    val (d2, r2) = double(r1)
+    val (d3, r3) = double(r2)
+    ((d1, d2, d3), r3)
+  }
+
 }

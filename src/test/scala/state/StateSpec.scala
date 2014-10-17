@@ -13,6 +13,15 @@ class StateSpec extends FlatSpec {
     assert(value >=0 && value < 1)
   }
 
+  "SimpleRNG intDouble/doubleInt/double3" should "randoms " in {
+    val intDoubleRes = SimpleRNG.intDouble(new SimpleRNG(12))
+    val doubleIntRes = SimpleRNG.doubleInt(new SimpleRNG(13))
+    val double3Res = SimpleRNG.double3(new SimpleRNG(14))
+    println(intDoubleRes)
+    println(doubleIntRes)
+    println(double3Res)
+  }
+
 }
 
 
