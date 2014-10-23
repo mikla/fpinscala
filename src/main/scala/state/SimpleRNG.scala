@@ -10,6 +10,9 @@ case class SimpleRNG(seed: Long) extends RNG {
 }
 
 object SimpleRNG {
+
+  type Rand[A] = RNG => (A, RNG)
+
   def nonNegativeInt(rng: RNG): (Int, RNG) = {
     val (value, rngState) = rng.nextInt
     if (value < 0) (-(value + 1), rngState) else (value, rngState)
@@ -46,6 +49,11 @@ object SimpleRNG {
       } else (acc, rngState)
     }
     loop(List.empty, 0, rng)
+  }
+
+  def map[A, B](s: Rand[A])(f: A => B): Rand[B] = rng => {
+    val (a, rng2) = s(rng)
+    (f(a), rng2)
   }
 
 }
