@@ -8,5 +8,6 @@ resolvers ++= Seq(
 
 libraryDependencies ++= Seq(
   "org.scalacheck" %% "scalacheck" % "1.11.4" % "test",
-  "org.scalatest" % "scalatest_2.11" % "2.1.7" % "test"
+  "org.scalatest" % "scalatest_2.11" % "2.1.7" % "test",
+  "com.typesafe.akka" %% "akka-actor" % "2.4-SNAPSHOT"
 )
