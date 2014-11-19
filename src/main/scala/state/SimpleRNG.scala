@@ -59,4 +59,11 @@ object SimpleRNG {
   def nonNegativeEven: Rand[Int] = map(nonNegativeInt)(i => i - i % 2)
 
   def nonNegativeViaMap: Rand[Double] = map(nonNegativeInt)(_ / (Int.MaxValue.toDouble + 1))
+
+  def map2[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = rng => {
+    val (a, r1) = ra(rng)
+    val (b, r2) = rb(r1)
+    (f(a, b), r2)
+  }
+
 }
