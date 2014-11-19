@@ -1,7 +1,4 @@
-import java.lang
-
 import scala.collection.mutable.ArrayBuffer
-import scala.actors._
 
 object Main extends App {
 
@@ -55,7 +52,7 @@ object Main extends App {
   }
 
   object UpperCase {
-    def unapply(s: String): Boolean = s.toUpperCase == s
+    def unapply(s: String): Boolean = s == s
   }
 
   object StartsWithM {
@@ -65,24 +62,6 @@ object Main extends App {
   "mikla@gmail.com" match {
     case Email(v1 @ UpperCase(), v2) => println(v1)
     case _ => println("")
-  }
-
-  object SillyActor extends Actor {
-    def act() {
-      for (i <- 1 to 5) {
-        println("I'm acting!")
-        Thread.sleep(1000)
-      }
-    }
-  }
-
-  val echoActor = actor {
-    while (true) {
-      receive {
-        case msg =>
-          println("received message: "+ msg)
-      }
-    }
   }
 
 }
