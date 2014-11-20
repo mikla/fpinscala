@@ -63,5 +63,4 @@ object Main extends App {
     case Email(v1 @ UpperCase(), v2) => println(v1)
     case _ => println("")
   }
-
 }
