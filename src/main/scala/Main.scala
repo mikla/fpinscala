@@ -63,4 +63,18 @@ object Main extends App {
     case Email(v1 @ UpperCase(), v2) => println(v1)
     case _ => println("")
   }
+
+  println(reversePairs(List(1, 2, 3, 4, 5)))
+
+  def reversePairs[T](li: List[T]): List[T] = {
+    def rev(l: List[T], acc: List[T]): List[T] = {
+      l match {
+        case x :: y :: rest => rev(rest, x :: y :: acc)
+        case x :: rest => x :: acc
+        case _ => acc
+      }
+    }
+    rev(li, List.empty).reverse
+  }
+
 }
