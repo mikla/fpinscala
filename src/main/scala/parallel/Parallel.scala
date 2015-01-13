@@ -5,7 +5,9 @@ object Parallel extends App {
     if (ints.size <= 1) ints.headOption getOrElse 0
     else {
       val (l, r) = ints.splitAt(ints.length / 2)
-      val sumL = Par.unit
+      val sumL = Par.unit(sum(l))
+      val sumR = Par.unit(sum(r))
+      Par.get(sumL) + Par.get(sumR)
     }
   }
 
