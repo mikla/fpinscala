@@ -1,6 +1,6 @@
 name := "Functional Programming in Scala"
 
-scalaVersion := "2.11.2"
+scalaVersion := "2.11.5"
 
 resolvers ++= Seq(
   //  "Sonatype Releases" at "http://oss.sonatype.org/content/repositories/releases"
