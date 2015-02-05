@@ -18,7 +18,7 @@ case class CReader[A](rd: (String, Int) => A) {
 }
 
 object CReader {
-  def point[A](a: => A): CReader[A] = CReader(_ => a)
+//  def point[A](a: => A): CReader[A] = CReader(_ => a)
 }
 
 case class State[Cx, A](run: Cx => (A, Cx)) {
