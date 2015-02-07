@@ -11,17 +11,14 @@ object ReadzApp extends App {
     else "not present".failureNel[String]
   }
 
-  val x = (__ \ "name")(xml)
   val empl = ((__ \ "name").readz[String] |@|
-    (__ \ "homePhone").readz[String]) {
-    Person
-  }
+    (__ \ "homePhone").readz[String]) { Person }
 
-  println(empl)
+  println(xml.readz)
 
   case class Person(name: String, workPhone: String)
 
-  private val xml = <xml>
+  private lazy val xml = <xml>
     <name>name</name>
     <workPhone>+375292990304</workPhone>
   </xml>

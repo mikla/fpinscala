@@ -9,7 +9,16 @@ sealed trait XmlPath {
   def apply(xml: NodeSeq): NodeSeq
 
   // TODO
-  def readz[T](implicit r: Readz[T]): ValidationNel[String, T] = "ok".failureNel // Readz.at[T](this)(r)
+  def readz[T](implicit r: ValidationNel[String, T]): ValidationNel[String, T] = {
+
+    val xmlPath = this.toString
+//    r.apply(this())
+    "ok".failureNel
+
+//     Readz.at[T](this)(r)
+     ???
+//    Readz.at[T](this)(r)
+  }// Readz.at[T](this)(r)
 
   def \ (segment: String) = XmlPathSegment(segment, this)
   def filter (predicate: Node => Boolean) = XmlPathFilter(predicate, this)
