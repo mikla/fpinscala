@@ -12,7 +12,7 @@ case class Id[A](a: A) {
 
 
 // Hostname + port context
-case class CReader[A](rd: (String, Int) => A) {
+case class  CReader[A](rd: (String, Int) => A) {
   def map[B](f: A => B): CReader[B] = ???
   def flatMap[B](f: A => CReader[B]): CReader[B] = ???
 }
