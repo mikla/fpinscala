@@ -1,7 +1,10 @@
 package parallel
 
+import parallel.Par.Par
+
 object Parallel extends App {
-  def sum(ints: IndexedSeq[Int]): Int = {
+
+  /*def sum(ints: IndexedSeq[Int]): Int = {
     if (ints.size <= 1) ints.headOption getOrElse 0
     else {
       val (l, r) = ints.splitAt(ints.length / 2)
@@ -9,7 +12,7 @@ object Parallel extends App {
       val sumR = Par.unit(sum(r))
       Par.run(sumL) + Par.run(sumR) // Par.get blocks execution here!
     }
-  }
+  }*/
 
   /**
    * Avoiding pitfalls of combining unit and get.

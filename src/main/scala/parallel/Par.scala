@@ -2,12 +2,6 @@ package parallel
 
 import java.util.concurrent.{Callable, TimeUnit, Future, ExecutorService}
 
-trait Par[A] {
-
-
-
-}
-
 object Par {
 
   type Par[A] = ExecutorService => Future[A]
@@ -39,6 +33,8 @@ object Par {
       override def call(): A = a(es).get
     })
   }
+
+  def asyncF[A, B](f: A => B): A => Par[B] = a => lazyUnit(f(a))
 
   /**
    * UnitFuture doesn't perform any computation, It's already done.
