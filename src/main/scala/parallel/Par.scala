@@ -4,8 +4,6 @@ import java.util.concurrent.{Callable, TimeUnit, Future, ExecutorService}
 
 object Par {
 
-  type Par[A] = ExecutorService => Future[A]
-
   /**
    * `unit` could begin evaluating its argument immediately ina separate (logical) thread,
    * or it could simply hold

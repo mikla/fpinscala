@@ -1,7 +1,5 @@
 package parallel
 
-import parallel.Par.Par
-
 object Parallel extends App {
 
   /*def sum(ints: IndexedSeq[Int]): Int = {
