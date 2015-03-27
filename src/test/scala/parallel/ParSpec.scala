@@ -14,4 +14,13 @@ class ParSpec extends FlatSpec with Matchers {
     assert(seqSum(pool).get() equals 10)
   }
 
+  "sequence" should "return Par[List[A]]" in {
+
+  }
+
+  "parFilter" should "filter List in parallel" in {
+    val res = Par.parFilter(List(1, 2, 3, 4))(_ > 2)
+    println(res(pool).get())
+  }
+
 }

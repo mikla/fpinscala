@@ -40,11 +40,19 @@ object Par {
 
   def sortParViaMap(parList: Par[List[Int]]) = map(parList)(_.sorted)
 
-  def sequence[A](ps: List[Par[A]]): Par[List[A]] = ???
+  def sequence[A](ps: List[Par[A]]): Par[List[A]] = ps match {
+    case Nil => unit(Nil)
+    case x :: xs => map2(x, fork(sequence(xs)))(_ :: _)
+  }
 
   def parMap[A, B](ps: List[A])(f: A => B): Par[List[B]] = {
     val fbs: List[Par[B]] = ps.map(asyncF(f))
     sequence(fbs)
+  }
+
+  def parFilter[A](ps: List[A])(predicate: A => Boolean): Par[List[A]] = ps match {
+    case Nil => unit(Nil)
+    case x :: xs => map2(unit(x), lazyUnit(xs))((a, b) => if (predicate(a)) a :: b else b)
   }
 
   /**
