@@ -1,5 +1,7 @@
 package parallel
 
+import java.util.concurrent.{Executors, ExecutorService}
+
 object Parallel extends App {
 
   /*def sum(ints: IndexedSeq[Int]): Int = {
@@ -35,5 +37,11 @@ object Parallel extends App {
       Par.map2(Par.fork(sum3(l)), Par.fork(sum3(r)))(_ + _)
     }
   }
+
+  def delay[A](fa: Par[A]): Par[A] = es => fa(es)
+
+  val a = Par.lazyUnit(42 + 1)
+  val S = Executors.newFixedThreadPool(1)
+  println(Par.equal(S)(a, Par.fork(a))) // Deadlock here!
 
 }

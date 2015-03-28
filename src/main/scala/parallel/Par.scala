@@ -50,10 +50,12 @@ object Par {
     sequence(fbs)
   }
 
-  def parFilter[A](ps: List[A])(predicate: A => Boolean): Par[List[A]] = ps match {
-    case Nil => unit(Nil)
-    case x :: xs => map2(unit(x), lazyUnit(xs))((a, b) => if (predicate(a)) a :: b else b)
+  def parFilter[A](ps: List[A])(predicate: A => Boolean): Par[List[A]] = {
+    val l = ps map asyncF(a => if (predicate(a)) List(a) else List())
+    map(sequence(l))(_.flatten)
   }
+
+  def equal[A](e: ExecutorService)(p: Par[A], p2: Par[A]): Boolean = p(e).get == p2(e).get
 
   /**
    * UnitFuture doesn't perform any computation, It's already done.
