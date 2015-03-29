@@ -1,7 +1,11 @@
-import java.util.concurrent.{Future, ExecutorService}
+import java.util.concurrent.ExecutorService
 
 package object parallel {
 
-  type Par[A] = ExecutorService => Future[A]
+  sealed trait Future[A] {
+    def apply(k: A => Unit): Unit
+  }
+
+  type Par[+A] = ExecutorService => Future[A]
 
 }

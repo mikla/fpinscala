@@ -1,6 +1,6 @@
 package parallel
 
-import java.util.concurrent.{Executors, ExecutorService}
+import java.util.concurrent.Executors
 
 object Parallel extends App {
 

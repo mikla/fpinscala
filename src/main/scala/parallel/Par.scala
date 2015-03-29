@@ -1,6 +1,7 @@
 package parallel
 
-import java.util.concurrent.{Callable, TimeUnit, Future, ExecutorService}
+import java.util.concurrent.atomic.AtomicReference
+import java.util.concurrent.{CountDownLatch, Callable, ExecutorService, TimeUnit}
 
 object Par {
 
@@ -11,11 +12,22 @@ object Par {
    * example, if we want to obtain any degree of parallelism, we require that `unit` begin
    * evaluating its argument concurrently and return immediately*
    */
-  def unit[A](a: A): Par[A] = (es: ExecutorService) => UnitFuture(a)
+  def unit[A](a: A): Par[A] = (es: ExecutorService) => new Future[A] {
+    override def apply(cb: (A) => Unit): Unit = cb(a)
+  }
 
   def lazyUnit[A](a: => A): Par[A] = fork(unit(a))
 
-  def run[A](s: ExecutorService)(par: Par[A]): Future[A] = par(s)
+  def run[A](s: ExecutorService)(par: Par[A]): A = {
+    val ref = new AtomicReference[A]
+    val latch = new CountDownLatch(1)
+    par(s) { a =>
+      ref.set(a)
+      latch.countDown()
+    }
+    latch.await()
+    ref.get
+  }
 
   def map2[A, B, C](pa: Par[A], pb: Par[B])(f: (A, B) => C): Par[C] = (es: ExecutorService) => {
     val af = pa(es)
@@ -26,11 +38,11 @@ object Par {
   /**
    * Means that the give Par[A] should run in separate logical thread.
    */
-  def fork[A](a: => Par[A]): Par[A] = (es: ExecutorService) => {
-    es.submit(new Callable[A] {
-      override def call(): A = a(es).get
-    })
+  def fork[A](a: => Par[A]): Par[A] = (es: ExecutorService) => new Future[A] {
+    def apply(cb: A => Unit): Unit = eval(es)(a(es)(cb))
   }
+
+  def eval(es: ExecutorService)(r: => Unit): Unit = es.submit(new Callable[Unit] { def call = r })
 
   def asyncF[A, B](f: A => B): A => Par[B] = a => lazyUnit(f(a))
 
@@ -60,10 +72,10 @@ object Par {
   /**
    * UnitFuture doesn't perform any computation, It's already done.
    */
-  private case class UnitFuture[A](get: A) extends Future[A] {
-    override def cancel(mayInterruptIfRunning: Boolean): Boolean = false
-    override def isCancelled: Boolean = false
-    override def get(timeout: Long, unit: TimeUnit): A = get
-    override def isDone: Boolean = true
-  }
+//  private case class UnitFuture[A](get: A) extends Future[A] {
+//    override def cancel(mayInterruptIfRunning: Boolean): Boolean = false
+//    override def isCancelled: Boolean = false
+//    override def get(timeout: Long, unit: TimeUnit): A = get
+//    override def isDone: Boolean = true
+//  }
 }
