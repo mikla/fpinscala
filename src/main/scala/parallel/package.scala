@@ -6,6 +6,6 @@ package object parallel {
     def apply(k: A => Unit): Unit
   }
 
-  type Par[+A] = ExecutorService => Future[A]
+  type Par[A] = ExecutorService => Future[A]
 
 }

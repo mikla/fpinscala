@@ -12,9 +12,9 @@ object Par {
    * example, if we want to obtain any degree of parallelism, we require that `unit` begin
    * evaluating its argument concurrently and return immediately*
    */
-  def unit[A](a: A): Par[A] = (es: ExecutorService) => new Future[A] {
+  def unit[A](a: A): Par[A] = ??? /*(es: ExecutorService) => new Future[A] {
     override def apply(cb: (A) => Unit): Unit = cb(a)
-  }
+  }*/
 
   def lazyUnit[A](a: => A): Par[A] = fork(unit(a))
 
@@ -32,15 +32,16 @@ object Par {
   def map2[A, B, C](pa: Par[A], pb: Par[B])(f: (A, B) => C): Par[C] = (es: ExecutorService) => {
     val af = pa(es)
     val bf = pb(es)
-    UnitFuture(f(af.get, bf.get))
+//    UnitFuture(f(af.get, bf.get))
+    ???
   }
 
   /**
    * Means that the give Par[A] should run in separate logical thread.
    */
-  def fork[A](a: => Par[A]): Par[A] = (es: ExecutorService) => new Future[A] {
+  def fork[A](a: => Par[A]): Par[A] = ??? /* (es: ExecutorService) => new Future[A] {
     def apply(cb: A => Unit): Unit = eval(es)(a(es)(cb))
-  }
+  }*/
 
   def eval(es: ExecutorService)(r: => Unit): Unit = es.submit(new Callable[Unit] { def call = r })
 
@@ -67,7 +68,7 @@ object Par {
     map(sequence(l))(_.flatten)
   }
 
-  def equal[A](e: ExecutorService)(p: Par[A], p2: Par[A]): Boolean = p(e).get == p2(e).get
+  def equal[A](e: ExecutorService)(p: Par[A], p2: Par[A]): Boolean = ??? //p(e).get == p2(e).get
 
   /**
    * UnitFuture doesn't perform any computation, It's already done.
