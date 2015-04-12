@@ -10,9 +10,9 @@ case class Gen[A](sample: State[RNG, A]) {
 object Gen {
   def forAll[A](a: Gen[A])(f: A => Boolean): Prop = ???
 
-  def choose(start: Int, stopExclusive: Int): Gen[Int] = {
+  def choose(start: Int, stopExclusive: Int): Gen[Int] = ??? /*{
     Gen(State(SimpleRNG.nonNegativeInt).)
-  }
+  }*/
 }
 
 

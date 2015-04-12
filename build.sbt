@@ -9,5 +9,6 @@ resolvers ++= Seq(
 libraryDependencies ++= Seq(
   "org.scalaz" %% "scalaz-core" % "7.1.0",
   "org.scalacheck" %% "scalacheck" % "1.11.4" % "test",
-  "org.scalatest" % "scalatest_2.11" % "2.1.7" % "test"
+  "org.scalatest" % "scalatest_2.11" % "2.1.7" % "test",
+  "com.chuusai" %% "shapeless" % "2.1.0"
 )
