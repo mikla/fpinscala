@@ -1,7 +1,11 @@
 package scalaz.monad
 
+import shapeless.HNil
+
+import scala.concurrent.Future
 import scalaz._
 import Scalaz._
+import scalaz.OptionT.optionT
 
 object MonadTransformers extends App {
   type Result[+A] = String \/ Option[A]
@@ -17,7 +21,11 @@ object MonadTransformers extends App {
     }
 
   println(transformed)
-  val transformed2 = result map { _ map { _.toString }}
+  val transformed2 = result map {
+    _ map {
+      _.toString
+    }
+  }
   println(transformed2)
 
   // ---
@@ -34,6 +42,16 @@ object MonadTransformers extends App {
 
   // ---
 
+  /**
+  def getGrantToken: Future[Option[String]] = Future.successful("grant-token".some)
+  def getSession: Future[Option[String]] = Future.successful("session".some)
 
+  val x = for {
+    token <- optionT(getGrantToken)
+    session <- optionT(getSession)
+  } yield token :: session :: HNil
+
+  val y = x.run map (_.getOrElse(throw new Exception))
+  */
 
 }
