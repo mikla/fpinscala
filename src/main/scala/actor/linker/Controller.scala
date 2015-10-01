@@ -4,6 +4,7 @@ import actor.linker.Controller.{Result, Check}
 import akka.actor._
 import akka.util.Timeout
 import scala.concurrent.duration._
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class Controller extends Actor with ActorLogging {
 

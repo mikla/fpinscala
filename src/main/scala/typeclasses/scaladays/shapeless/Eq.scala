@@ -1,6 +1,6 @@
 package typeclasses.scaladays.shapeless
 
-import shapeless.{Lazy, Generic}
+//import shapeless.{Lazy, Generic}
 
 trait Eq[T] {
   def eqv(x: T, y: T): Boolean
@@ -18,9 +18,9 @@ object Eq {
   /**
    * Generic - map type T to R
    */
-  implicit def eqGeneric[T, R](implicit gen: Generic.Aux[T, R], eqRepr: Lazy[Eq[R]]): Eq[T] = new Eq[T] {
+  /*implicit def eqGeneric[T, R](implicit gen: Generic.Aux[T, R], eqRepr: Lazy[Eq[R]]): Eq[T] = new Eq[T] {
     override def eqv(x: T, y: T): Boolean = ???
-  }
+  }*/
 }
 
 

@@ -1,7 +1,5 @@
 package scalaz.monad
 
-import shapeless.HNil
-
 import scala.concurrent.Future
 import scalaz._
 import Scalaz._
