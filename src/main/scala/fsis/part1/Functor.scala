@@ -1,17 +1,16 @@
 package fsis.part1
 
-import scala.language.higherKinds
+import scala.language.{reflectiveCalls, higherKinds}
+import simulacrum._
 
-trait Functor[F[_]] {
+trait Functor[F[_]] { self =>
   def map[A, B](fa: F[A])(f: A => B): F[B]
 
   def lift[A, B](f: A => B): F[A] => F[B] = fa => map(fa)(f)
 
-  def as[A, B]
-
-  def void
-
-  def compose
+  def compose[G[_]](implicit G: Functor[G]): Functor[({type l[X] = F[G[X]]})#l] = new Functor[({type l[X] = F[G[X]]})#l] {
+    override def map[A, B](fga: F[G[A]])(f: A => B): F[G[B]] = self.map(fga)(ga => G.map(ga)(f))
+  }
 
 }
 
