@@ -1,5 +1,7 @@
 package fp_in_scala.property
 
+import fp_in_scala.state.RNG
+
 import scala.util.Random
 import scalaz.State
 

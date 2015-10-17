@@ -3,6 +3,8 @@ package fp_in_scala.parallel
 import java.util.concurrent.atomic.AtomicReference
 import java.util.concurrent.{CountDownLatch, Callable, ExecutorService, TimeUnit}
 
+import parallel.Par
+
 object Par {
 
   /**

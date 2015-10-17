@@ -2,6 +2,8 @@ package fp_in_scala.parallel
 
 import java.util.concurrent.Executors
 
+import parallel.Par
+
 object Parallel extends App {
 
   /*def sum(ints: IndexedSeq[Int]): Int = {
