@@ -29,5 +29,36 @@ object FutureTest extends App {
   val futuresFailed = Seq(futureToFutureTry(Future{ 1 }), futureToFutureTry(Future { 2 }), futureToFutureTry(Future { 3 }), futureToFutureTry(Future { 1 / 0 }), futureToFutureTry(Future { 1 / 0 }))
   futuresToEither(futuresFailed) onComplete (res => println(s"res is $res"))
 
+  combine (
+    Future(None),
+    Future(Right(2)),
+    Future(3)
+  ) onComplete println
+
   readLine()
+
+  def combine(f1: Future[Option[Int]],
+              f2: Future[Either[String, Int]],
+              f3: Future[Int]): Future[Either[String, Int]] = {
+
+    map2(map2(f1, f2) {
+      case (Some(x), Right(y)) => Right(x + y)
+      case (None, _) => Left("empty")
+      case (_, Left(l)) => Left(l)
+    }, f3) {
+      case (Left(l), _) => Left(l)
+      case (Right(x), y) => Right(x + y)
+    }
+
+  }
+
+  def map2[A, B, C](fa: Future[A], fb: Future[B])(f: (A, B) => C): Future[C] = {
+    for {
+      a <- fa
+      b <- fb
+    } yield f(a, b)
+  }
+
+
+
 }

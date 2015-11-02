@@ -1,9 +1,7 @@
 package scalaz.monad
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{ExecutionContext, Future}
-import scala.language.{higherKinds, reflectiveCalls}
-import scala.util.{Failure, Success}
+import scala.concurrent.Future
 
 object MonadTransformer4 extends App {
 
@@ -12,19 +10,22 @@ object MonadTransformer4 extends App {
   def fc(b: Int): Future[Option[Int]] = Future.successful(Some(b))
 
   class Wrapper[A](run: Future[Option[A]]) {
+
     def flatMap[B](f: A => Future[Option[B]]): Future[Option[B]] = {
       run.flatMap {
         case Some(v) => f(v)
         case None => Future.successful(None)
       }
     }
+
     def map[B](f: A => B): Future[Option[B]] = run.map {
       case Some(v) => Some(f(v))
-      case None => None
+      case _ => None
     }
+
   }
 
-  def wrap[A](f: Future[Option[A]]): Wrapper[A] = ???
+  def wrap[A](f: Future[Option[A]]): Wrapper[A] = new Wrapper[A](f)
 
   val computation = for {
     a <- wrap(fa(1))
@@ -32,5 +33,8 @@ object MonadTransformer4 extends App {
     c <- wrap(fc(b))
   } yield a + b + c
 
+  computation onComplete println
+
+  readLine()
 
 }
