@@ -12,11 +12,11 @@ object MonadTransformer5 extends App {
   case class Wrapper[A](var run: Future[Option[A]]) {
     def unit[B](a: B): Wrapper[B] = Wrapper(Future.successful(Some(a)))
 
-    def flatMap[B](f: A => Wrapper[B]): Wrapper[B] = Wrapper[B] {
-      run.map {
-        case Some(x) => f(x)
-        case _ => Wrapper[B](Future.successful(None))
-      } map(_.run) flatMap identity
+    def flatMap[B](f: A => Wrapper[B]): Wrapper[B] = wrap {
+      run.flatMap {
+        case Some(v) => f(v).run
+        case _ => Future.successful(None)
+      }
     }
 
     def map[B](f: A => B): Wrapper[B] = this.flatMap(a => unit(f(a)))
