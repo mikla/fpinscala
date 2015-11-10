@@ -26,7 +26,8 @@ object GenericProductUpdate extends App {
       }
     }
 
-    implicit def productUpdater[L, R, A](implicit leftUpdater: ProductUpdater[L, A], rightUpdater: ProductUpdater[R, A]): ProductUpdater[L & R, A] = {
+    implicit def productUpdater[L, R, A](implicit leftUpdater: ProductUpdater[L, A],
+                                         rightUpdater: ProductUpdater[R, A]): ProductUpdater[L & R, A] = {
       new ProductUpdater[L & R, A] {
         def apply(p: L & R, f: A => A): L & R = &(leftUpdater(p.left, f), rightUpdater(p.right, f))
       }
