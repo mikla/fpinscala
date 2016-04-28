@@ -15,4 +15,6 @@ object EqualityApp extends App {
 
   isEqual(2, 3)
 
+//  val c = Class.forName("java.lang.String").newInstance()
+//  "adds".asInstanceOf[c.type]
 }
