@@ -8,7 +8,7 @@ resolvers ++= Seq(
 )
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.11.5"
+  scalaVersion := "2.11.7"
 )
 
 lazy val scalaReflect = Def.setting {
@@ -28,7 +28,8 @@ libraryDependencies ++= Seq(
   "org.jsoup" % "jsoup" % "1.8.1",
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
   "com.chuusai" %% "shapeless" % "2.2.5",
-  "com.github.mpilquist" %% "simulacrum" % "0.4.0"
+  "com.github.mpilquist" %% "simulacrum" % "0.4.0",
+  "org.typelevel" %% "cats" % "0.6.0"
 )
 
 lazy val macroSub = (project in file("macro")).
