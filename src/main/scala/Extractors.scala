@@ -1,7 +1,7 @@
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
-object Main extends App {
+object Extractors extends App {
 
   abstract class IntQueue {
     def get(): Int
