@@ -100,11 +100,21 @@ object List {
     foldRight(List.reverse(as), z)((x, y) => f(y, x))
   }
 
+  // List(1, 2, 3, 4)
+  // acc(4, acc(3, acc(2, acc(f(1, _))))).apply(0)
+
+  // (id, 1) =>
+  // b => id(f(1, b))
+  // (b => acc(f(2, id(f(1, b)))
+  // (b => acc(f(3, acc(f(2, id(f(1, b))))
+  // (b => acc(f(4, acc(f(3, acc(f(2, id(f(1, b)))))
   /**
    * http://stackoverflow.com/questions/17136794/foldleft-using-foldright-in-scala
    */
   def foldRightViaFoldLeft[A, B](as: List[A], z: B)(f: (A, B) => B): B = {
-    foldLeft(as, (b: B) => b)((g, a) => b => g(f(a, b)))(z)
+    foldLeft(as, (b: B) => b)((acc: (B => B), a: A) =>
+      b => acc(f(a, b))
+    )(z)
   }
 
   def foldLeftViaFoldRight[A, B](as: List[A], z: B)(f: (B, A) => B): B = {
