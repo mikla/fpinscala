@@ -47,4 +47,11 @@ object SemigroupApp extends App {
     Map("foo" -> List(1, 2)) ++ Map("foo" -> List(3, 4), "bar" -> List(42))
   }
 
+  println("Testing reduce on empty list")
+
+  val optionsList: List[Option[Long]] = List(Some(1), Some(2), None)
+  val optionsSum: Option[Long] = optionsList.fold(None)(_ combine _)
+
+  println(optionsSum)
+
 }

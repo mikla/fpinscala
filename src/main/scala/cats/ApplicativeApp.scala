@@ -1,8 +1,13 @@
 package cats
 
-/**
-  * Created by mikla on 24/07/16.
-  */
-object ApplicativeApp {
+object ApplicativeApp extends App {
+
+  import cats._
+  import cats.std.list._
+  import cats.std.option._
+
+  // just pure
+
+  (Applicative[List] compose Applicative[Option]).pure(1) // List(Some(1))
 
 }
