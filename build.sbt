@@ -18,16 +18,15 @@ lazy val scalaReflect = Def.setting {
 libraryDependencies ++= Seq(
   "org.scalaz" %% "scalaz-core" % "7.1.0",
   "org.scalaz" %% "scalaz-concurrent" % "7.1.0",
+  "com.chuusai" %% "shapeless" % "2.3.2",
 //  "org.typelevel" %% "scalaz-contrib-210" % "0.2",
   "org.scalacheck" %% "scalacheck" % "1.11.4" % "test",
   "org.scalatest" % "scalatest_2.11" % "2.1.7" % "test",
-  "com.chuusai" %% "shapeless" % "2.1.0",
   "io.reactivex" %% "rxscala" % "0.24.1",
   "com.typesafe.akka" %% "akka-actor" % "2.3-SNAPSHOT",
   "com.ning" % "async-http-client" % "1.9.24",
   "org.jsoup" % "jsoup" % "1.8.1",
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
-  "com.chuusai" %% "shapeless" % "2.2.5",
   "com.github.mpilquist" %% "simulacrum" % "0.4.0",
   "org.typelevel" %% "cats" % "0.6.0"
 )
