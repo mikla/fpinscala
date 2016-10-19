@@ -17,11 +17,14 @@ import shapeless.{::, Generic, HList, HNil}
   * Изначально, мы требуем имплиситно инстанс `UserIdGetter[PermissionsChanged] (1)`.
   * Компилятор начинает шуршить наши имлиситные дефы и пытается понять, что нам может дать `UserIdGetter[PermissionsChanged]`.
   * Приходим в `genericUserIdGetter` у которого 2 тайп параметра (T - это наш кейс класс, Repr - это его HList предстваление).
-  * Для нашего `PermissionsChanged` Repr = String :: UserId :: HNil. И тут же мы трубуем имплиситно инстанс `UserIdGetter[String :: UserId :: HNil]`.
+  * Для нашего `PermissionsChanged` Repr = String :: UserId :: HNil. И тут же мы трубуем имплиситно инстанс
+  * `UserIdGetter[String :: UserId :: HNil]`.
   * Опять шуршим наши имлписитные дефы: `hConsUserId` и `hNilUserId` нам не подходят, спускаемся в `LowerPriorityImplicits`.
-  * Ага, супер, `hCons` нам может дать `UserIdGetter[String :: UserId :: HNil]`, но он имплиситно хочет `UserIdGetter[UserId :: HNil]`,
-  * well, ok, возвращаемся обратно в компаньон и смотрим, что `hConsUserId` может нам дать инстанс UserIdGetter[UserId :: HNil], но
-  * в свою очередь, он хочет инстанс для хвоста UserIdGetter[HNil], который нам даст `hNilUserId`.
+  * Ага, супер, `hCons` нам может дать `UserIdGetter[String :: UserId :: HNil]`,
+  * но он имплиситно хочет `UserIdGetter[UserId :: HNil]`,
+  * well, ok, возвращаемся обратно в компаньон и смотрим, что `hConsUserId` может нам дать инстанс
+  * UserIdGetter[UserId :: HNil], но в свою очередь, он хочет инстанс для хвоста UserIdGetter[HNil],
+  * который нам даст `hNilUserId`.
   * Собственно на этом весь вывод и заканчивается.
   *
   * Понять цепочку имплиситных выводов можно с помощью идеи.
