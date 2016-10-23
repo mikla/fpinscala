@@ -1,6 +1,6 @@
-package shapeless
+package shapelessex.application
 
-import shapeless.{::, Generic, HList, HNil}
+import shapeless.{:+:, ::, CNil, Coproduct, Generic, HList, HNil, Inl, Inr}
 
 /**
   * Задача: у нас есть какой-то `case class` и мы хотим получить из него поле типа `UserId`,
@@ -32,15 +32,13 @@ import shapeless.{::, Generic, HList, HNil}
   * магических макросов Generic-а, но если закоменитить `genericUserIdGetter`
   * и вызвать implicit parameters на строке `implicitly[UserIdGetter[String :: UserId :: HNil]]`, то он покажет нам
   * hCons -> hConsUserId -> hNilUserId
+  *
+  * Ok, пойдем дальше, это отлично работает когда мы имеем инстанс конкретного класса, но что если мы на входе имеем
+  * Event и хотим взять из него UserId, если он там есть? (2) не скомпилируется...
+  *
+  *
   */
 object ExtractFieldByTypeApp extends App {
-
-  // == Pre-conditions ==
-  case class UserId(id: String) extends AnyVal
-
-  sealed trait Event
-  case class PermissionsChanged(name: String, userId: UserId) extends Event
-  case class LocationCreated(name: String) extends Event
 
   trait UserIdGetter[T] {
     def userId(t: T): Option[UserId]
@@ -78,7 +76,7 @@ object ExtractFieldByTypeApp extends App {
 
   val permChangedUserIdGetter = implicitly[UserIdGetter[PermissionsChanged]] // (1)
 
-//  val permChangedUserIdGetterHl = implicitly[UserIdGetter[String :: UserId :: HNil]] // (1)
+  //  val permChangedUserIdGetterHl = implicitly[UserIdGetter[String :: UserId :: HNil]] // (1)
 
   println(permChangedUserIdGetter.userId(permChangedEvent))
 
@@ -94,7 +92,29 @@ object ExtractFieldByTypeApp extends App {
 
   println {
     // implicit not found!
-    // allEvents.filter(e => filterByUserId(e, Filter(UserId("1"))))
+    // allEvents.filter(e => filterByUserId(e, Filter(UserId("1")))) (2)
+  }
+
+  // делаем так, чтобы (2) начал компилироваться
+  // Coproduct in action
+
+  implicit def eventCNil: UserIdGetter[CNil] = new UserIdGetter[CNil] {
+    override def userId(t: CNil): Option[UserId] = t.impossible
+  }
+
+  implicit def eventCCons[H, T <: Coproduct](
+    implicit sh: UserIdGetter[H],
+    st: UserIdGetter[T]
+  ): UserIdGetter[H :+: T] = new UserIdGetter[H :+: T] {
+
+    override def userId(t: H :+: T): Option[UserId] = t match {
+      case Inl(l) => sh.userId(l)
+      case Inr(r) => st.userId(r)
+    }
+  }
+
+  println {
+    allEvents.filter(e => filterByUserId(e, Filter(UserId("1"))))
   }
 
 }
