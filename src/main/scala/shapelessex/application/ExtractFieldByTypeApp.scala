@@ -114,7 +114,7 @@ object ExtractFieldByTypeApp extends App {
   }
 
   println {
-    allEvents.filter(e => filterByUserId(e, Filter(UserId("1"))))
+//    allEvents.filter(e => filterByUserId(e, Filter(UserId("1"))))
   }
 
 }

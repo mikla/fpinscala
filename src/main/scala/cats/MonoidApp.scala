@@ -29,4 +29,8 @@ object MonoidApp extends App {
     l.foldMap(v => (v, v.toString))(monoidTuple)
   }
 
+  println {
+    Monoid[Int].empty
+  }
+
 }
