@@ -1,0 +1,3 @@
+package stuff
+
+class Animal()
