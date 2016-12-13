@@ -8,4 +8,6 @@ package object astronaut {
   final case class Rectangle(width: Double, height: Double) extends Shape
   final case class Circle(radius: Double) extends Shape
 
+  val AllShapes = List(Rectangle(1, 1), Circle(1))
+
 }

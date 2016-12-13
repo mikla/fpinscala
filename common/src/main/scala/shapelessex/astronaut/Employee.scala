@@ -1,4 +1,4 @@
-package shapelessex.astronaut.core
+package shapelessex.astronaut
 
 case class Employee(name: String, number: Int, manager: Boolean)
 
