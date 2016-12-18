@@ -1,10 +1,10 @@
-package cats
+package catsex
 
 object MonadApp extends App {
 
   import cats._
-  import cats.std.list._
-  import cats.std.option._
+  import cats.instances.list._
+  import cats.instances.option._
 
   println {
     Monad[List].flatMap(List(1, 2, 3))(x ⇒ List(x, x))

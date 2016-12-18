@@ -1,5 +1,6 @@
-package cats
+package catsex
 
+import cats.Functor
 import cats.implicits._
 
 object FunctorApp extends App {

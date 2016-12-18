@@ -1,4 +1,6 @@
-package cats
+package catsex
+
+import cats.Apply
 import cats.implicits._
 
 object ApplyApp extends App {

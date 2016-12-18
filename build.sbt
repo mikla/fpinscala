@@ -1,17 +1,14 @@
 lazy val commonSettings = Seq(
   organization := "com.fpinscala",
   version := "0.1.0",
-  scalaVersion := "2.11.8"
+  scalaVersion := "2.11.8",
+  scalaOrganization := "org.typelevel"
 )
 
 resolvers ++= Seq(
   "Sonatype Releases" at "http://oss.sonatype.org/content/repositories/releases",
   "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/"
 )
-
-lazy val scalaReflect = Def.setting {
-  "org.scala-lang" % "scala-reflect" % scalaVersion.value
-}
 
 lazy val commonDeps = libraryDependencies ++= Seq(
   compilerPlugin("org.scalamacros" %% "paradise" % "2.1.0" cross CrossVersion.full),
@@ -25,7 +22,8 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "org.jsoup" % "jsoup" % "1.8.1",
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
   "com.github.mpilquist" %% "simulacrum" % "0.4.0",
-  "org.typelevel" %% "cats" % "0.6.0"
+  "org.typelevel" %% "cats" % "0.7.2",
+  "org.typelevel" %% "kittens" % "1.0.0-M6"
 )
 
 lazy val common = (project in file("common"))

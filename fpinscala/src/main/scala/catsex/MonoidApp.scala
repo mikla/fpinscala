@@ -1,6 +1,7 @@
-package cats
+package catsex
 
 import cats.implicits._
+import cats.kernel.Monoid
 
 object MonoidApp extends App {
 

@@ -1,6 +1,7 @@
-package cats
+package catsex
 
 import cats.implicits._
+import cats.kernel.Semigroup
 
 object SemigroupApp extends App {
 

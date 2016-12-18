@@ -2,7 +2,7 @@ package shapelessex
 
 import shapeless.PolyDefns.~>
 import shapeless.poly._
-import cats.print._
+import catsex.print._
 import shapeless.Poly1
 
 object PolyApp extends App {

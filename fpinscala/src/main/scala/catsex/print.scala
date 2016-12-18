@@ -1,4 +1,4 @@
-package cats
+package catsex
 
 object print {
 

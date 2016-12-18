@@ -1,4 +1,4 @@
-package cats
+package catsex
 
 import cats._
 import cats.data.Xor

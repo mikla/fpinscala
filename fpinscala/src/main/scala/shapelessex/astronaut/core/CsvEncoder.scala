@@ -1,6 +1,6 @@
 package shapelessex.astronaut.core
 
-import shapeless.{::, Generic, HList, HNil}
+import shapeless.{:+:, ::, CNil, Coproduct, Generic, HList, HNil, Inl, Inr}
 
 trait CsvEncoder[A] {
   def encode(value: A): List[String]
@@ -31,6 +31,18 @@ object CsvEncoder {
     enc: CsvEncoder[R]
   ): CsvEncoder[A] = instance(a => enc.encode(gen.to(a)))
 
+  // now time to define encoders for copropduct. we are too lazy to define them by hand.
+  implicit val cnilEncoder: CsvEncoder[CNil] = instance(_ => throw new Exception("smth went wrong"))
+
+  implicit def coproductEncoder[H, T <: Coproduct](
+    implicit
+    hEncoder: CsvEncoder[H],
+    tEncoder: CsvEncoder[T]
+  ): CsvEncoder[H :+: T] = instance {
+    case Inl(h) => hEncoder.encode(h)
+    case Inr(t) => tEncoder.encode(t)
+  }
+
 }
 
 object defaultEncoders {
@@ -39,5 +51,6 @@ object defaultEncoders {
   implicit val intEncoder = instance[Int](i => List(i.toString))
   implicit val stringEncoder = instance[String](str => List(str))
   implicit val booleanEncoder = instance[Boolean](b => List(b.toString))
+  implicit val doubleEncoder = instance[Double](b => List(b.toString))
 
 }
