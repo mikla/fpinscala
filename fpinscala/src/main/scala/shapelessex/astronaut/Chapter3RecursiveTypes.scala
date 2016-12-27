@@ -16,5 +16,9 @@ object Chapter3RecursiveTypes extends App {
   implicitly[CsvEncoder[Foo]] // we have to wrap head of HList to Lazy while deriving CsvEncoder instance
   implicitly[CsvEncoder[Tree[Int]]] // same. it'c complex type
 
+  // well, we can try to debug implicit resolution
+
+  import scala.reflect.runtime.universe._
+  println(reify(CsvEncoder[Int]))
 
 }
