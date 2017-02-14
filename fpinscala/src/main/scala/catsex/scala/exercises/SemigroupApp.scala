@@ -1,4 +1,4 @@
-package catsex
+package catsex.scala.exercises
 
 import cats.implicits._
 import cats.kernel.Semigroup

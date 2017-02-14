@@ -1,9 +1,8 @@
-package catsex
+package catsex.scala.exercises
 
-import cats.{Functor, Id}
-import cats.data.Const
-import shapelessex.astronaut.Employee
 import cats.implicits._
+import cats.{Functor, Id}
+import shapelessex.astronaut.Employee
 
 import scala.language.higherKinds
 

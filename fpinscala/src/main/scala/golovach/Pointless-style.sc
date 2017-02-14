@@ -1,3 +1,5 @@
+import io.print
+
 val f: Int => Int = 1 + _
 val f1: Int => Int = 1 +
 

@@ -1,4 +1,4 @@
-package catsex
+package catsex.scala.exercises
 
 object MonadApp extends App {
 

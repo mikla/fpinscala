@@ -1,9 +1,9 @@
-package catsex
+package catsex.scala.exercises
 
 import cats._
 import cats.data.Xor
 import cats.implicits._
-import print._
+import io.print._
 
 object FoldableApp extends App {
 

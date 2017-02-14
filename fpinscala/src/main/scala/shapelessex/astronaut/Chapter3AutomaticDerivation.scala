@@ -4,7 +4,7 @@ import shapeless._
 import shapelessex.astronaut.core.CsvEncoder
 import shapelessex.astronaut.core.CsvEncoder._
 import shapelessex.astronaut.core.defaultEncoders._
-import catsex.print._
+import io.print._
 
 object Chapter3AutomaticDerivation extends App {
 
