@@ -44,19 +44,36 @@ object AccountingInfoServiceComponent {
 }
 
 /** Define interpreters */
-object InMemoryEmployeeServiceInterpreter extends (EmployeeService ~> Id) {
-  override def apply[A](fa: EmployeeService[A]): Id[A] = ???
+object ConsoleEmployeeServiceInterpreter extends (EmployeeService ~> Id) {
+  override def apply[A](fa: EmployeeService[A]): Id[A] = fa match {
+    case CreateEmployee(employee) =>
+      println(s"CreateEmployee($employee)")
+      employee
+    case DeleteEmployee(employeeId) =>
+      println(s"DeleteEmployee($employeeId)")
+      ()
+  }
 }
 
-object InMemoryAccountingServiceInterpreter extends (AccountingInfoService ~> Id) {
-  override def apply[A](fa: AccountingInfoService[A]): Id[A] = ???
+object ConsoleAccountingServiceInterpreter extends (AccountingInfoService ~> Id) {
+  override def apply[A](fa: AccountingInfoService[A]): Id[A] = fa match {
+    case GetAccountingInfo(employeeId) =>
+      println(s"GetAccountingInfo($employeeId)")
+      List.empty
+    case SaveAccountingInfo(employeeId, hoursWorked) =>
+      println(s"SaveAccountingInfo($employeeId, $hoursWorked)")
+      AccountingRecord(UUID.randomUUID().toString, employeeId, hoursWorked)
+  }
 }
 
 object DependencyInjectionApp extends App {
 
   type Application[A] = Coproduct[EmployeeService, AccountingInfoService, A]
 
-  def program(implicit E: EmployeeServiceComponent[Application], A: AccountingInfoServiceComponent[Application]): Free[Application, Long] = {
+  def program(
+    implicit E: EmployeeServiceComponent[Application],
+    A: AccountingInfoServiceComponent[Application]): Free[Application, Long] = {
+
     import E._, A._
 
     for {
@@ -67,10 +84,10 @@ object DependencyInjectionApp extends App {
     } yield hours.map(_.hoursWorked).sum
   }
 
-  val interpreter: Application ~> Id = InMemoryEmployeeServiceInterpreter or InMemoryAccountingServiceInterpreter
+  val interpreter: Application ~> Id = ConsoleEmployeeServiceInterpreter or ConsoleAccountingServiceInterpreter
 
   val evaled: Unit = program.foldMap(interpreter)
 
-  println(evaled)
+  evaled
 
 }
