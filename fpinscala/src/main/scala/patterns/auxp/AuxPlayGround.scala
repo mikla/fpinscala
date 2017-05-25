@@ -1,6 +1,6 @@
 package patterns.auxp
 
-import scalaz.Monoid
+import cats.Monoid
 
 trait Foo[A] {
   type B
@@ -31,7 +31,7 @@ object AuxPlayGround extends App {
 
 //  def fooZero[T](t: T)(implicit f: Foo[T], monoid: Monoid[f.B]) // do not compile!
 
-  def fooAux[T, R](t: T)(implicit f: Foo.Aux[T, R], m: Monoid[R]): R = m.zero
+  def fooAux[T, R](t: T)(implicit f: Foo.Aux[T, R], m: Monoid[R]): R = m.empty
 
   foo("")
 

@@ -88,6 +88,4 @@ object DependencyInjectionApp extends App {
 
   val evaled: Unit = program.foldMap(interpreter)
 
-  evaled
-
 }

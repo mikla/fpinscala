@@ -1,7 +1,6 @@
 package catsex.scala.exercises
 
 import cats._
-import cats.data.Xor
 import cats.implicits._
 import io.print._
 
@@ -28,6 +27,6 @@ object FoldableApp extends App {
   foldableListOption.fold(List(Option("1"), Option("2"), None, Option("3"))).print("Foldable.compose with None")
 
   def parseInt(s: String): Option[Int] =
-    Xor.catchOnly[NumberFormatException](s.toInt).toOption
+    Either.catchOnly[NumberFormatException](s.toInt).toOption
 
 }

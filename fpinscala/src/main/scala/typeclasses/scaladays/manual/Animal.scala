@@ -1,7 +1,5 @@
 package typeclasses.scaladays.manual
 
-import typeclasses.scaladays.manual.Eq
-
 sealed trait Animal
 case class Cat(name: String, fish: Int) extends Animal
 case class Dog(name: String, bones: Int) extends Animal

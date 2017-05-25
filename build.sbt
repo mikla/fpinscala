@@ -1,8 +1,7 @@
 lazy val commonSettings = Seq(
   organization := "com.fpinscala",
   version := "0.1.0",
-  scalaVersion := "2.11.8",
-  scalaOrganization := "org.typelevel"
+  scalaVersion := "2.12.2"
 )
 
 resolvers ++= Seq(
@@ -10,20 +9,27 @@ resolvers ++= Seq(
   "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/"
 )
 
+val shapelessVersion = "2.3.2"
+val monixVersion = "2.3.0"
+val catsVersion = "0.9.0"
+val kittensVersion = "1.0.0-M9"
+val similacrumVersion = "0.10.0"
+val scalaCheckVersion = "1.11.4"
+val scalaTestVersion = "3.0.1"
+
 lazy val commonDeps = libraryDependencies ++= Seq(
   compilerPlugin("org.scalamacros" %% "paradise" % "2.1.0" cross CrossVersion.full),
-  "org.scalaz" %% "scalaz-core" % "7.1.0",
-  "org.scalaz" %% "scalaz-concurrent" % "7.1.0",
-  "com.chuusai" %% "shapeless" % "2.3.2",
-  "org.scalacheck" %% "scalacheck" % "1.11.4" % "test",
-  "org.scalatest" % "scalatest_2.11" % "2.1.7" % "test",
-  "io.reactivex" %% "rxscala" % "0.24.1",
-  "com.ning" % "async-http-client" % "1.9.24",
-  "org.jsoup" % "jsoup" % "1.8.1",
+  "com.chuusai" %% "shapeless" % shapelessVersion,
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
-  "com.github.mpilquist" %% "simulacrum" % "0.4.0",
-  "org.typelevel" %% "cats" % "0.7.2",
-  "org.typelevel" %% "kittens" % "1.0.0-M6"
+  "com.github.mpilquist" %% "simulacrum" % similacrumVersion,
+  "org.typelevel" %% "cats" % catsVersion,
+  "org.typelevel" %% "kittens" % kittensVersion,
+  "io.monix" %% "monix-execution" % monixVersion,
+  "io.monix" %% "monix-eval" % monixVersion,
+  "io.monix" %% "monix-cats" % monixVersion,
+  "io.monix" %% "monix" % monixVersion,
+  "org.scalacheck" %% "scalacheck" % scalaCheckVersion % "test",
+  "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
 )
 
 lazy val common = (project in file("common"))
@@ -33,6 +39,10 @@ lazy val fpinscala = (project in file("fpinscala"))
   .settings(commonSettings)
   .settings(commonDeps)
   .dependsOn(common)
+
+lazy val dependentTypes = (project in file("dependent-types"))
+  .settings(commonSettings)
+  .settings(libraryDependencies ++= Seq())
 
 lazy val root = (project in file("."))
   .settings(commonSettings)

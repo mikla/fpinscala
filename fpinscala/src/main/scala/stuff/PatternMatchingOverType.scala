@@ -13,8 +13,9 @@ object PatternMatchingOverType extends App {
   val StringLocation: ZonedLocation = Location("1", MinuteBased(ZonedDateTime.now()))
 
   def offer(offer: SnapshotOffer) = offer match {
-    case SnapshotOffer(locaton: ZonedLocation) =>
+    case SnapshotOffer(locaton: ZonedLocation@unchecked) =>
       println(locaton)
+    case _ => sys.error("failed")
   }
 
   offer(SnapshotOffer(StringLocation))
