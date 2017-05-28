@@ -3,13 +3,19 @@ package fsis.part1
 import scala.language.{reflectiveCalls, higherKinds}
 import simulacrum._
 
-trait Functor[F[_]] { self =>
+@typeclass trait Functor[F[_]] { self =>
   def map[A, B](fa: F[A])(f: A => B): F[B]
 
   def lift[A, B](f: A => B): F[A] => F[B] = fa => map(fa)(f)
 
   def compose[G[_]](implicit G: Functor[G]): Functor[({type l[X] = F[G[X]]})#l] = new Functor[({type l[X] = F[G[X]]})#l] {
     override def map[A, B](fga: F[G[A]])(f: A => B): F[G[B]] = self.map(fga)(ga => G.map(ga)(f))
+  }
+
+  // just rewritten with kind-projection
+  def compose1[G[_]](implicit G: Functor[G]): Functor[Lambda[X => F[G[X]]]] = new Functor[Lambda[X => F[G[X]]]] {
+    override def map[A, B](fga: F[G[A]])(f: (A) => B): F[G[B]] =
+      self.map(fga)(ga => G.map(ga)(f))
   }
 
 }
@@ -33,8 +39,12 @@ object Functor {
     override def map[A, B](fa: Option[A])(f: (A) => B): Option[B] = fa.map(f)
   }
 
-//  implicit def function1Functor[X]: Functor[X => ?] = new Functor[X => ?] {
-//    override def map[A, B](fa: X => A)(f: (A) => B): X => B = fa andThen f
-//  }
+  implicit def function1Functor[X]: Functor[X => ?] = new Functor[X => ?] {
+    override def map[A, B](fa: X => A)(f: (A) => B): X => B = fa andThen f
+  }
+
+  def function1Functor2[X]: Functor[Lambda[X1 => Function1[X, X1]]] = new Functor[Lambda[X1 => Function1[X, X1]]] {
+    override def map[A, B](fa: (X) => A)(f: (A) => B): (X) => B = ???
+  }
 
 }

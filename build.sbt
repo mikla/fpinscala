@@ -9,6 +9,8 @@ resolvers ++= Seq(
   "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/"
 )
 
+resolvers += Resolver.sonatypeRepo("releases")
+
 val shapelessVersion = "2.3.2"
 val monixVersion = "2.3.0"
 val catsVersion = "0.9.0"
@@ -19,6 +21,7 @@ val scalaTestVersion = "3.0.1"
 
 lazy val commonDeps = libraryDependencies ++= Seq(
   compilerPlugin("org.scalamacros" %% "paradise" % "2.1.0" cross CrossVersion.full),
+  compilerPlugin("org.spire-math" %% "kind-projector" % "0.9.3" cross CrossVersion.binary),
   "com.chuusai" %% "shapeless" % shapelessVersion,
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
   "com.github.mpilquist" %% "simulacrum" % similacrumVersion,
