@@ -47,6 +47,6 @@ lazy val dependentTypes = (project in file("dependent-types"))
   .settings(commonSettings)
   .settings(libraryDependencies ++= Seq())
 
-lazy val root = (project in file("."))
+lazy val fpinscalaRoot = (project in file("."))
   .settings(commonSettings)
   .aggregate(common, fpinscala)
