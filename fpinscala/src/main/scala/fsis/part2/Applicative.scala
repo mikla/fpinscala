@@ -1,10 +1,11 @@
 package fsis.part2
 
 import fsis.part1.Functor
+import simulacrum.typeclass
 
 import scala.language.higherKinds
 
-trait Applicative[F[_]] extends Functor[F] {
+@typeclass trait Applicative[F[_]] extends Functor[F] {
 
   def pure[A](a: A): F[A]
 

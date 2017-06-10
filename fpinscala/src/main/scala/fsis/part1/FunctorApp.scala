@@ -1,5 +1,7 @@
 import fsis.part1.Functor
 
+import cats.Functor.ops._
+
 object FunctorApp extends App {
 
   def foo[A](x: A, y: A) = ???

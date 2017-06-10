@@ -1,5 +1,0 @@
-package stuff
-
-object FreeMonads {
-
-}
