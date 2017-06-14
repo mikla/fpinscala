@@ -1,4 +1,4 @@
-import fsis.part1.Functor
+import fsis.functor.Functor
 
 import cats.Functor.ops._
 

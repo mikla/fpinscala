@@ -1,4 +1,4 @@
-import fsis.part2.Applicative
+import fsis.applicative.Applicative
 import Applicative.{optionApplicative, listApplicative}
 
 optionApplicative.map(Some(1))(_ + 1)

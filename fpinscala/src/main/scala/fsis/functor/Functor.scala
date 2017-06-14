@@ -1,4 +1,4 @@
-package fsis.part1
+package fsis.functor
 
 import scala.language.{reflectiveCalls, higherKinds}
 import simulacrum._

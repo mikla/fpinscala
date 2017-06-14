@@ -1,6 +1,6 @@
-package fsis.part2
+package fsis.applicative
 
-import fsis.part1.Functor
+import fsis.functor.Functor
 import simulacrum.typeclass
 
 import scala.language.higherKinds
