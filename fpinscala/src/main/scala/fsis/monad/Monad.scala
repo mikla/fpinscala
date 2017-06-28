@@ -1,6 +1,7 @@
 package fsis.monad
 
 import fsis.applicative.Applicative
+import fsis.monoid.Monoid
 import simulacrum.typeclass
 
 import scala.language.higherKinds
@@ -29,6 +30,13 @@ import scala.language.higherKinds
       flatten(nested) // it's compiles. But it is wrong. We can't have monad compositon in general
     }
   }
+
+  // but we don't have such possibility to call empty
+  // we can try to require Monoid[F[A]]
+  // this is fine when you work with particular types.
+  // but in deeper sense - this is not useful.
+  def filter1[A](fa: F[A])(predicate: A => Boolean)(implicit M: Monoid[F[A]]): F[A] =
+    flatMap(fa)(a => if (predicate(a)) fa else M.empty)
 
 }
 

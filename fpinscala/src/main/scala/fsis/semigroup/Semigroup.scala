@@ -14,3 +14,9 @@ trait SemigroupLaws[A] {
     (a |+| (b |+| z)) == ((a |+| b) |+| z)
 
 }
+
+object Semigroup {
+  def semigroupList[A] = new Semigroup[List[A]] {
+    override def combine(a: List[A], b: List[A]): List[A] = a ++ b
+  }
+}
