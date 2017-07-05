@@ -4,6 +4,10 @@ lazy val commonSettings = Seq(
   scalaVersion := "2.12.2"
 )
 
+lazy val compilerFlags = Seq(
+  "-Ypartial-unification"
+)
+
 resolvers ++= Seq(
   "Sonatype Releases" at "http://oss.sonatype.org/content/repositories/releases",
   "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/"
@@ -18,6 +22,10 @@ val kittensVersion = "1.0.0-M9"
 val similacrumVersion = "0.10.0"
 val scalaCheckVersion = "1.11.4"
 val scalaTestVersion = "3.0.1"
+
+lazy val compilerSettings = Seq(
+  scalacOptions ++= compilerFlags
+)
 
 lazy val commonDeps = libraryDependencies ++= Seq(
   compilerPlugin("org.scalamacros" %% "paradise" % "2.1.0" cross CrossVersion.full),
@@ -36,9 +44,11 @@ lazy val commonDeps = libraryDependencies ++= Seq(
 )
 
 lazy val common = (project in file("common"))
+  .settings(compilerSettings: _*)
   .settings(commonSettings)
 
 lazy val fpinscala = (project in file("fpinscala"))
+  .settings(compilerSettings: _*)
   .settings(commonSettings)
   .settings(commonDeps)
   .dependsOn(common)
