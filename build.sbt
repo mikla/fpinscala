@@ -1,7 +1,7 @@
 lazy val commonSettings = Seq(
   organization := "com.fpinscala",
   version := "0.1.0",
-  scalaVersion := "2.12.2"
+  scalaVersion := "2.12.3"
 )
 
 lazy val compilerFlags = Seq(
