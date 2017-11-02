@@ -44,6 +44,6 @@ object Chapter6HListAndCoproducts extends App {
   val bigList: BigList = "foo" :: 1 :: true :: 1.0 :: HNil
 
   println(Penultimate[BigList].apply(bigList))
-  println(Penultimate[Employee].apply(Employee("Mikla", 1, false)))
+  println(Penultimate[model.Employee].apply(model.Employee("Mikla", 1, false)))
 
 }

@@ -5,6 +5,7 @@ import shapelessex.astronaut.core.CsvEncoder
 import shapelessex.astronaut.core.CsvEncoder._
 import shapelessex.astronaut.core.defaultEncoders._
 import io.print._
+import model.Employees
 
 object Chapter3AutomaticDerivation extends App {
 
@@ -14,11 +15,11 @@ object Chapter3AutomaticDerivation extends App {
   writeCsv(List.empty[String :: Int :: Boolean :: HNil])
 
   // first approach
-  val gen = Generic[Employee]
+  val gen = Generic[model.Employee]
   val reprEncoder: CsvEncoder[gen.Repr] = implicitly
 
   reprEncoder.encode(gen.to(Employees.employees.head)).print
-  val employeeAutoEncoder = implicitly[CsvEncoder[Employee]]
+  val employeeAutoEncoder = implicitly[CsvEncoder[model.Employee]]
 
   writeCsv(AllShapes).print // automatic derivation of CsvEncoder[Shape]
 

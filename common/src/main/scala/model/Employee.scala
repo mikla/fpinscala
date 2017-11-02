@@ -1,4 +1,5 @@
-package shapelessex.astronaut
+package model
+
 
 case class Employee(name: String, number: Int, manager: Boolean)
 
@@ -8,4 +9,5 @@ object Employees {
     Employee("Peter", 2, false),
     Employee("Milton", 3, false)
   )
+
 }

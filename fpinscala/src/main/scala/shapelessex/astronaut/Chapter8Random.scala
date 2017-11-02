@@ -1,6 +1,7 @@
 package shapelessex.astronaut
 
-import shapeless.{Generic, HList, HNil, Lazy, ::}
+import model.Employee
+import shapeless.{::, Generic, HList, HNil, Lazy}
 
 trait Random[A] {
   def get: A

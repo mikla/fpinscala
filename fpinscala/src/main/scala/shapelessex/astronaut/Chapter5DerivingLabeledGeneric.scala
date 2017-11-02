@@ -77,6 +77,6 @@ object JsonObjectEncoder {
 object Chapter5DerivingLabeledGeneric extends App {
   import JsonObjectEncoder._
 
-  println(JsonEncoder[Employee].encode(Employee("A", 1, true)))
+  println(JsonEncoder[model.Employee].encode(model.Employee("A", 1, true)))
 
 }

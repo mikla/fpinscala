@@ -2,7 +2,7 @@ package catsex.scala.exercises
 
 import cats.implicits._
 import cats.{Functor, Id}
-import shapelessex.astronaut.Employee
+import model.Employee
 
 import scala.language.higherKinds
 

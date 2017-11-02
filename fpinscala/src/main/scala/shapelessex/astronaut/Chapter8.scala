@@ -1,7 +1,8 @@
 package shapelessex.astronaut
 
+import model.Employee
 import shapeless._
-import shapeless.ops.{hlist, coproduct, nat}
+import shapeless.ops.{coproduct, hlist, nat}
 
 trait SizeOf[A] {
   def value: Int
