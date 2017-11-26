@@ -24,7 +24,7 @@ object EitherTTaskApp extends App {
           groups.map { grId =>
             getStatistics(grId)
           }
-        }.map(_.sequenceU.map(_.reduce(_ ++ _)))
+        }.map(_.sequence.map(_.reduce(_ ++ _)))
       )
     }.value
 
@@ -33,7 +33,7 @@ object EitherTTaskApp extends App {
   val tlit: List[Either[Throwable, Map[UserId, EmployeeStats]]] = List(Right(Map.empty))
 
   val traversed: Either[Throwable, List[Map[UserId, EmployeeStats]]] =
-    tlit.sequenceU
+    tlit.sequence
 
   val traversedMap: Either[Throwable, Map[UserId, EmployeeStats]] =
     traversed.map(l => l.reduce(_ ++ _))

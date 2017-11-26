@@ -1,6 +1,5 @@
 package es.tpesafehandlers
 
-import cats.data.Coproduct
 import es.Aggregate
 import es.events.LocationAdded
 import shapeless.{:+:, CNil}

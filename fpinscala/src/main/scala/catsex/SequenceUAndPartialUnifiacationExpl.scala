@@ -9,8 +9,6 @@ object SequenceUAndPartialUnifiacationExpl extends App {
     List(Validated.valid(1), Validated.invalid("a"), Validated.invalid("b"))
       .map(_.toValidatedNel)
 
-  x.sequenceU
-
   x.sequence
 
 }

@@ -2,7 +2,7 @@ package catsex.free
 
 import java.util.UUID
 
-import cats.data.Coproduct
+import cats.data.EitherK
 import cats.free.{Free, Inject}
 import cats.{Id, ~>}
 
@@ -68,7 +68,7 @@ object ConsoleAccountingServiceInterpreter extends (AccountingInfoService ~> Id)
 
 object DependencyInjectionApp extends App {
 
-  type Application[A] = Coproduct[EmployeeService, AccountingInfoService, A]
+  type Application[A] = EitherK[EmployeeService, AccountingInfoService, A]
 
   def program(
     implicit E: EmployeeServiceComponent[Application],
@@ -86,6 +86,6 @@ object DependencyInjectionApp extends App {
 
   val interpreter: Application ~> Id = ConsoleEmployeeServiceInterpreter or ConsoleAccountingServiceInterpreter
 
-  val evaled: Unit = program.foldMap(interpreter)
+//  val evaled: Unit = program.foldMap(interpreter)
 
 }
