@@ -1,4 +1,4 @@
-package catsex.scala
+package catsex.exercises
 
 import java.util.UUID
 

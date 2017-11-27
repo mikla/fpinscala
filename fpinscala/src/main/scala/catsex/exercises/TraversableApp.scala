@@ -1,4 +1,4 @@
-package catsex.scala.exercises
+package catsex.exercises
 
 import cats.instances.list._
 import cats.instances.option._

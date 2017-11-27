@@ -1,4 +1,4 @@
-package catsex.scala.exercises
+package catsex.exercises
 
 import cats.Apply
 import cats.implicits._
