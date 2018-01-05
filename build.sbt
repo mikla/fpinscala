@@ -16,13 +16,15 @@ resolvers ++= Seq(
 resolvers += Resolver.sonatypeRepo("releases")
 
 val shapelessVersion = "2.3.2"
-val monixVersion = "2.3.0"
+val monixVersion = "2.3.2"
+val pureConfigVersion = "0.8.0"
 val catsVersion = "0.9.0"
 val catsEffectVersion = "0.5"
 val kittensVersion = "1.0.0-M9"
 val similacrumVersion = "0.10.0"
 val scalaCheckVersion = "1.11.4"
 val scalaTestVersion = "3.0.1"
+val enumeratumVersion = "1.5.12"
 
 lazy val compilerSettings = Seq(
   scalacOptions ++= compilerFlags
@@ -40,6 +42,9 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "io.monix" %% "monix-eval" % monixVersion,
   "io.monix" %% "monix-cats" % monixVersion,
   "io.monix" %% "monix" % monixVersion,
+  "com.github.pureconfig" %% "pureconfig" % pureConfigVersion,
+  "com.github.pureconfig" %% "pureconfig-enumeratum" % pureConfigVersion,
+  "com.beachape" %% "enumeratum" % enumeratumVersion,
   "org.typelevel" %% "cats-effect" % catsEffectVersion,
   "org.scalacheck" %% "scalacheck" % scalaCheckVersion % "test",
   "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
