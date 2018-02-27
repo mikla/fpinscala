@@ -1,8 +1,9 @@
 package stuff
 
-import cats.syntax.traverse._
-import cats.instances.option._
-import cats.instances.either._
+import java.util.UUID
+
+import cats.implicits._
+import catsex.exercises.ValidatedApp.{CommandFailed, CommandOk, CommandProcessingResult}
 
 object EitherApp extends App {
 
@@ -12,7 +13,11 @@ object EitherApp extends App {
 
   def traverse: Either[Throwable, Option[String]] = {
     proto.map(str => deserialize(str)).sequence[Either[Throwable, ?], String]
-
   }
+
+
+  val x: Option[Int] = None
+
+  println(x.forall(_ == 1))
 
 }

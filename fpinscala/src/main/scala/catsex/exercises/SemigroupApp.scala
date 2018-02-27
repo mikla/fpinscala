@@ -1,5 +1,6 @@
 package catsex.exercises
 
+import cats.Semigroupal
 import cats.implicits._
 import cats.kernel.Semigroup
 
@@ -8,6 +9,8 @@ object SemigroupApp extends App {
   Semigroup[Int].combine(1, 2) // 3
 
   Semigroup[List[Int]].combine(List(1, 2, 3), List(4, 5, 6)) // List(1, 2, 3, 4, 5, 6)
+
+  Semigroupal[List].product(List(1), List(2, 3)) // List((1,2), (1,3))
 
   Semigroup[Option[Int]].combine(Option(1), Option(2)) // Option(3)
 
