@@ -1,5 +1,6 @@
 package stuff
 
+import scala.annotation.unchecked.uncheckedVariance
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -13,7 +14,7 @@ object FutureTest extends App {
 
     val calculationsResults = futures.foldLeft(Future.successful((List.empty[Throwable], List.empty[T]))) { (accF, f) =>
       f flatMap {
-        case Success(t: T) => accF.map(acc => (acc._1, t :: acc._2))
+        case Success(t: T@unchecked) => accF.map(acc => (acc._1, t :: acc._2))
         case Failure(e) => accF.map(acc => (e :: acc._1, acc._2))
       }
     }

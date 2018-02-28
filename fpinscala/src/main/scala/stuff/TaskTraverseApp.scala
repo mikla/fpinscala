@@ -12,7 +12,6 @@ object TaskTraverseApp extends App {
   def runTask(seq: Int, sleep: Int): Task[Unit] = Task {
     println(s"Running Task $seq, sleeping $sleep")
     Thread.sleep(sleep)
-    sleep
   }
 
   val tasks = Task.sequence { // use Task.gather to parallel things

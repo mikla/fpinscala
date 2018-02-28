@@ -3,8 +3,8 @@ package catsex.free
 import java.util.UUID
 
 import cats.data.EitherK
-import cats.free.{Free, Inject}
-import cats.{Id, ~>}
+import cats.free.Free
+import cats.{Id, Inject, InjectK, ~>}
 
 import scala.language.higherKinds
 
@@ -21,17 +21,17 @@ case class GetAccountingInfo(employeeId: String) extends AccountingInfoService[L
 case class SaveAccountingInfo(employeeId: String, hoursWorked: Long) extends AccountingInfoService[AccountingRecord]
 
 /** Defining smart algebra to lift our Algebra to Free */
-class EmployeeServiceComponent[F[_]](implicit I: Inject[EmployeeService, F]) {
+class EmployeeServiceComponent[F[_]](implicit I: InjectK[EmployeeService, F]) {
   def create(employee: Employee): Free[F, Employee] = Free.inject[EmployeeService, F](CreateEmployee(employee))
   def delete(employeeId: String): Free[F, Unit] = Free.inject[EmployeeService, F](DeleteEmployee(employeeId))
 }
 
 object EmployeeServiceComponent {
-  implicit def employeeService[F[_]](implicit I: Inject[EmployeeService, F]): EmployeeServiceComponent[F] =
+  implicit def employeeService[F[_]](implicit I: InjectK[EmployeeService, F]): EmployeeServiceComponent[F] =
     new EmployeeServiceComponent
 }
 
-class AccountingInfoServiceComponent[F[_]](implicit I: Inject[AccountingInfoService, F]) {
+class AccountingInfoServiceComponent[F[_]](implicit I: InjectK[AccountingInfoService, F]) {
   def getInfo(employeeId: String): Free[F, List[AccountingRecord]] =
     Free.inject[AccountingInfoService, F](GetAccountingInfo(employeeId))
   def saveInfo(employeeId: String, hoursWorked: Long): Free[F, AccountingRecord] =
@@ -39,7 +39,7 @@ class AccountingInfoServiceComponent[F[_]](implicit I: Inject[AccountingInfoServ
 }
 
 object AccountingInfoServiceComponent {
-  implicit def accountingService[F[_]](implicit I: Inject[AccountingInfoService, F]): AccountingInfoServiceComponent[F] =
+  implicit def accountingService[F[_]](implicit I: InjectK[AccountingInfoService, F]): AccountingInfoServiceComponent[F] =
     new AccountingInfoServiceComponent[F]
 }
 

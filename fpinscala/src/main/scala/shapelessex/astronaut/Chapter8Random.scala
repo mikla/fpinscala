@@ -1,6 +1,5 @@
 package shapelessex.astronaut
 
-import model.Employee
 import shapeless.{::, Generic, HList, HNil, Lazy}
 
 trait Random[A] {

@@ -11,6 +11,7 @@ object EqApp extends App {
   }
 
   val employees: List[Employee] = List(Employee("m", 1, true), Employee("r", 2, true))
+
   employees.find(_ == "")
 
 }

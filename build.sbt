@@ -1,7 +1,7 @@
 lazy val commonSettings = Seq(
   organization := "com.fpinscala",
   version := "0.1.0",
-  scalaVersion := "2.12.3"
+  scalaVersion := "2.12.4"
 )
 
 lazy val compilerFlags = Seq(
@@ -15,15 +15,15 @@ resolvers ++= Seq(
 
 resolvers += Resolver.sonatypeRepo("releases")
 
-val shapelessVersion = "2.3.2"
-val monixVersion = "2.3.2"
-val pureConfigVersion = "0.8.0"
-val catsVersion = "0.9.0"
-val catsEffectVersion = "0.5"
+val shapelessVersion = "2.3.3"
+val monixVersion = "2.3.3"
+val pureConfigVersion = "0.9.0"
+val catsVersion = "1.0.1"
+val catsEffectVersion = "0.9"
 val kittensVersion = "1.0.0-M9"
-val similacrumVersion = "0.10.0"
-val scalaCheckVersion = "1.11.4"
-val scalaTestVersion = "3.0.1"
+val similacrumVersion = "0.12.0"
+val scalaCheckVersion = "1.13.4"
+val scalaTestVersion = "3.0.5"
 val enumeratumVersion = "1.5.12"
 
 lazy val compilerSettings = Seq(
@@ -36,16 +36,24 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "com.chuusai" %% "shapeless" % shapelessVersion,
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
   "com.github.mpilquist" %% "simulacrum" % similacrumVersion,
-  "org.typelevel" %% "cats" % catsVersion,
+
+  "org.typelevel" %% "cats-effect" % catsEffectVersion,
+
+  "org.typelevel" %% "cats-core" % catsVersion,
+  "org.typelevel" %% "cats-free" % catsVersion,
+
   "org.typelevel" %% "kittens" % kittensVersion,
+
   "io.monix" %% "monix-execution" % monixVersion,
   "io.monix" %% "monix-eval" % monixVersion,
   "io.monix" %% "monix-cats" % monixVersion,
   "io.monix" %% "monix" % monixVersion,
+
   "com.github.pureconfig" %% "pureconfig" % pureConfigVersion,
   "com.github.pureconfig" %% "pureconfig-enumeratum" % pureConfigVersion,
+
   "com.beachape" %% "enumeratum" % enumeratumVersion,
-  "org.typelevel" %% "cats-effect" % catsEffectVersion,
+
   "org.scalacheck" %% "scalacheck" % scalaCheckVersion % "test",
   "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
 )

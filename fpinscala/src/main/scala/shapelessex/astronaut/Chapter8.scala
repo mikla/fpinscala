@@ -1,6 +1,5 @@
 package shapelessex.astronaut
 
-import model.Employee
 import shapeless._
 import shapeless.ops.{coproduct, hlist, nat}
 

@@ -1,7 +1,5 @@
 package fp_in_scala.datastructure.list
 
-import fp_in_scala.datastructure.list.Cons
-
 object Main extends App {
   val justList = Cons(1, Cons(2, Cons(3, Nil)))
   println(justList.setHead(5))
