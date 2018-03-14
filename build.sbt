@@ -5,7 +5,8 @@ lazy val commonSettings = Seq(
 )
 
 lazy val compilerFlags = Seq(
-  "-Ypartial-unification"
+  "-Ypartial-unification",
+  "-Ywarn-infer-any"
 )
 
 resolvers ++= Seq(

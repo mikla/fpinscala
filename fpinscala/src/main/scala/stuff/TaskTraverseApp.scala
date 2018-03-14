@@ -1,11 +1,15 @@
 package stuff
 
+import java.util.UUID
+
 import monix.eval.Task
 import monix.execution.Scheduler.Implicits.global
 
 import scala.concurrent.Await
 import scala.util.Random
 import scala.concurrent.duration._
+
+import cats.implicits._
 
 object TaskTraverseApp extends App {
 
@@ -19,5 +23,22 @@ object TaskTraverseApp extends App {
   }
 
   Await.ready(tasks.map(println(_)).runAsync, 1.minute)
+
+  //
+
+  case class UncoveredPosition()
+
+  def calculate(scheduleGroup: UUID): Task[Either[Throwable, UncoveredPosition]] =
+    Task.now(Right(UncoveredPosition()))
+
+  val result: Task[Either[Throwable, List[UncoveredPosition]]] =
+    Task.gatherUnordered(
+      List(UUID.randomUUID())
+        .map(scheduleGroup =>
+          calculate(scheduleGroup)
+        )
+    ).map(_.sequence)
+
+  Await.result(result.runAsync.map(println(_)), Duration.Inf)
 
 }
