@@ -26,6 +26,7 @@ val similacrumVersion = "0.12.0"
 val scalaCheckVersion = "1.13.4"
 val scalaTestVersion = "3.0.5"
 val enumeratumVersion = "1.5.12"
+val spireVerison = "0.14.1"
 
 lazy val compilerSettings = Seq(
   scalacOptions ++= compilerFlags
@@ -39,6 +40,8 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "com.github.mpilquist" %% "simulacrum" % similacrumVersion,
 
   "org.typelevel" %% "cats-effect" % catsEffectVersion,
+
+  "org.typelevel" %% "spire" % spireVerison,
 
   "org.typelevel" %% "cats-core" % catsVersion,
   "org.typelevel" %% "cats-free" % catsVersion,

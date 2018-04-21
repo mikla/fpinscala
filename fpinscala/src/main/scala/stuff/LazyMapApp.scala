@@ -1,4 +1,4 @@
-package stuff.clash
+package stuff
 
 import monix.eval.Coeval
 

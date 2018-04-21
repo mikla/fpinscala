@@ -1,4 +1,4 @@
-package stuff.clash
+package stuff
 
 object CountCharge extends App {
 
