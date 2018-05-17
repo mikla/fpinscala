@@ -4,7 +4,6 @@ import cats.data.EitherT
 import monix.eval.Task
 import shapelessex.application.UserId
 import cats.implicits._
-import monix.cats.monixToCatsMonad
 import monix.execution.Scheduler.Implicits.global
 
 case class EmployeeStats(value: Long)

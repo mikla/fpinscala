@@ -17,10 +17,10 @@ resolvers ++= Seq(
 resolvers += Resolver.sonatypeRepo("releases")
 
 val shapelessVersion = "2.3.3"
-val monixVersion = "2.3.3"
+val monixVersion = "3.0.0-RC1"
 val pureConfigVersion = "0.9.0"
-val catsVersion = "1.0.1"
-val catsEffectVersion = "0.9"
+val catsVersion = "1.1.0"
+val catsEffectVersion = "1.0.0-RC"
 val kittensVersion = "1.0.0-M9"
 val similacrumVersion = "0.12.0"
 val scalaCheckVersion = "1.13.4"
@@ -50,7 +50,6 @@ lazy val commonDeps = libraryDependencies ++= Seq(
 
   "io.monix" %% "monix-execution" % monixVersion,
   "io.monix" %% "monix-eval" % monixVersion,
-  "io.monix" %% "monix-cats" % monixVersion,
   "io.monix" %% "monix" % monixVersion,
 
   "com.github.pureconfig" %% "pureconfig" % pureConfigVersion,
