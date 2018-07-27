@@ -1,0 +1,38 @@
+package monix
+
+import monix.eval.Task
+import monix.execution.Scheduler.Implicits.global
+
+import scala.concurrent.Future
+
+object TaskEvalApp extends App {
+
+  val loadSmth = for {
+    _ <- Task.eval(println("starting..."))
+    res <- Task(1)
+    _ <- Task.eval(println("done."))
+  } yield res
+
+//  loadSmth.runAsync
+//
+//  readLine()
+//
+//  loadSmth.runAsync
+//
+//  readLine()
+
+  val loadSmthNow = for {
+    _ <- Task.now(println("starting now..."))
+    res <- Task(1)
+    _ <- Task.now(println("done now."))
+  } yield res
+
+  loadSmthNow.runAsync
+
+  readLine()
+
+  loadSmthNow.runAsync
+
+  readLine()
+
+}
