@@ -1,7 +1,7 @@
 lazy val commonSettings = Seq(
   organization := "com.fpinscala",
   version := "0.1.0",
-  scalaVersion := "2.12.4"
+  scalaVersion := "2.12.6"
 )
 
 lazy val compilerFlags = Seq(
@@ -27,6 +27,7 @@ val scalaCheckVersion = "1.13.4"
 val scalaTestVersion = "3.0.5"
 val enumeratumVersion = "1.5.12"
 val spireVerison = "0.14.1"
+val log4catsVersion = "0.1.0"
 
 lazy val compilerSettings = Seq(
   scalacOptions ++= compilerFlags
@@ -40,6 +41,12 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "com.github.mpilquist" %% "simulacrum" % similacrumVersion,
 
   "org.typelevel" %% "cats-effect" % catsEffectVersion,
+
+  "io.chrisdavenport" %% "log4cats-core"    % log4catsVersion,
+  "io.chrisdavenport" %% "log4cats-slf4j"   % log4catsVersion,
+  "io.chrisdavenport" %% "log4cats-log4s"   % log4catsVersion,
+  "io.chrisdavenport" %% "log4cats-scribe"  % log4catsVersion,
+  "io.chrisdavenport" %% "log4scalaz-log4s" % log4catsVersion,
 
   "org.typelevel" %% "spire" % spireVerison,
 
