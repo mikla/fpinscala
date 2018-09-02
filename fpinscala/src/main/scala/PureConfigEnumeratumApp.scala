@@ -14,15 +14,19 @@ object PureConfigEnumeratumApp extends App {
     case object Hello extends Greeting
     case object GoodBye extends Greeting
     case object ShoutGoodBye extends Greeting
-
   }
 
-  case class GreetingConf(start: Greeting, end: Greeting)
+  case class Overtimes(daily: Int = 100, weekly: Int = 100)
+
+  case class GreetingConf(start: Greeting, end: Greeting, overtimes: Overtimes = Overtimes())
 
   val conf = parseString(
     """{
-      start: GoodBye,
+      start: GoodBye
       end: ShoutGoodBye
+      overtimes = {
+        daily = 10
+      }
     }""")
 
   println(GoodBye.entryName)

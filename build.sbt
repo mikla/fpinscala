@@ -18,9 +18,9 @@ resolvers += Resolver.sonatypeRepo("releases")
 
 val shapelessVersion = "2.3.3"
 val monixVersion = "3.0.0-RC1"
-val pureConfigVersion = "0.9.0"
+val pureConfigVersion = "0.9.1"
 val catsVersion = "1.1.0"
-val catsEffectVersion = "1.0.0-RC"
+val catsEffectVersion = "1.0.0-RC3"
 val kittensVersion = "1.0.0-M9"
 val similacrumVersion = "0.12.0"
 val scalaCheckVersion = "1.13.4"
@@ -28,6 +28,8 @@ val scalaTestVersion = "3.0.5"
 val enumeratumVersion = "1.5.12"
 val spireVerison = "0.14.1"
 val log4catsVersion = "0.1.0"
+val circeVersion = "0.9.3"
+val supertaggedVersion = "1.4"
 
 lazy val compilerSettings = Seq(
   scalacOptions ++= compilerFlags
@@ -47,6 +49,12 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "io.chrisdavenport" %% "log4cats-log4s"   % log4catsVersion,
   "io.chrisdavenport" %% "log4cats-scribe"  % log4catsVersion,
   "io.chrisdavenport" %% "log4scalaz-log4s" % log4catsVersion,
+
+  "io.circe" %% "circe-core" % circeVersion,
+  "io.circe" %% "circe-generic" % circeVersion,
+  "io.circe" %% "circe-parser" % circeVersion,
+
+  "org.rudogma" %% "supertagged" % supertaggedVersion,
 
   "org.typelevel" %% "spire" % spireVerison,
 
