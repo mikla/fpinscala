@@ -2,6 +2,11 @@ package catsex
 
 import cats.data.{Validated, ValidatedNel}
 import cats.implicits._
+import cats.Id
+import alleycats.std.all._
+import model.Employee
+import shapelessex.application.UserId
+import typelevel.EmployeeId
 
 object SequenceUAndPartialUnifiacationExpl extends App {
 
@@ -11,4 +16,10 @@ object SequenceUAndPartialUnifiacationExpl extends App {
 
   x.sequence
 
+  val deserializedResult: Map[UserId, Either[Throwable, Employee]] =
+    Map(UserId("id") -> Right(Employee("name", 1, manager = false)))
+
+  val map = deserializedResult.sequence
+
+  println(map)
 }

@@ -59,6 +59,9 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "org.typelevel" %% "spire" % spireVerison,
 
   "org.typelevel" %% "cats-core" % catsVersion,
+  "org.typelevel" %% "cats-macros" % catsVersion,
+  "org.typelevel" %% "cats-kernel" % catsVersion,
+  "org.typelevel" %% "alleycats-core" % catsVersion,
   "org.typelevel" %% "cats-free" % catsVersion,
 
   "org.typelevel" %% "kittens" % kittensVersion,
