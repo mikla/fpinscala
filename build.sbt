@@ -30,6 +30,7 @@ val spireVerison = "0.14.1"
 val log4catsVersion = "0.1.0"
 val circeVersion = "0.9.3"
 val supertaggedVersion = "1.4"
+val monocleVersion = "1.5.0"
 
 lazy val compilerSettings = Seq(
   scalacOptions ++= compilerFlags
@@ -74,6 +75,10 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "com.github.pureconfig" %% "pureconfig-enumeratum" % pureConfigVersion,
 
   "com.beachape" %% "enumeratum" % enumeratumVersion,
+
+  "com.github.julien-truffaut" %% "monocle-core" % monocleVersion,
+  "com.github.julien-truffaut" %% "monocle-macro" % monocleVersion,
+  "com.github.julien-truffaut" %% "monocle-law" % monocleVersion % "test",
 
   "org.scalacheck" %% "scalacheck" % scalaCheckVersion % "test",
   "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
