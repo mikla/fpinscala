@@ -13,8 +13,11 @@ object OptionalLensesApp extends App {
   val modified1 = Employee1.solid.set(2)(employee1)
   val modified2 = Employee1.solid.set(2)(employee2)
 
+  val modified3 = Employee1.hoursAlgo.set(Some(Wrapper(Algo(3, 3))))(employee2)
+
   println(modified1)
   println(modified2)
+  println(modified3)
 
 }
 
@@ -23,6 +26,8 @@ case class Employee1(name: String, number: Int, manager: Boolean, hoursAlgo: Opt
 object Employee1 {
   val hoursAlgo: Lens[Employee1, Option[Wrapper]] = GenLens[Employee1](_.hoursAlgo)
   val solid = hoursAlgo composePrism some composeLens Wrapper.algo composeLens Algo.fluidLens
+
+  val hoursAlgoSet = hoursAlgo composePrism none
 }
 
 case class Wrapper(value: Algo)
