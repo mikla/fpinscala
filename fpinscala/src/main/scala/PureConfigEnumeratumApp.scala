@@ -3,9 +3,20 @@ import enumeratum.EnumEntry.{Camelcase, CapitalWords, Snakecase, Uppercase}
 import enumeratum.{EnumEntry, _}
 import pureconfig.module.enumeratum._
 import com.typesafe.config.ConfigFactory.parseString
-import pureconfig.loadConfig
+import pureconfig.{ConfigReader, loadConfig}
+import pureconfig.generic.auto._
+import supertagged.TaggedType
+import supertagged.@@
 
 object PureConfigEnumeratumApp extends App {
+
+  object Location extends TaggedType[String]
+  type Location = Location.Type
+
+//  implicit val taggedReader = ConfigReader[String].map(s => Location @@ s)
+
+  implicit def deriveTaggedReader[T: ConfigReader, Tag <: TaggedType[T]] = ConfigReader[T].map(t => @@[Tag](t))
+  implicit val locationReader = deriveTaggedReader[String, TaggedType[String]]
 
   sealed trait Greeting extends EnumEntry
 
@@ -18,7 +29,11 @@ object PureConfigEnumeratumApp extends App {
 
   case class Overtimes(daily: Int = 100, weekly: Int = 100)
 
-  case class GreetingConf(start: Greeting, end: Greeting, overtimes: Overtimes = Overtimes())
+  case class GreetingConf(
+    start: Greeting,
+    end: Greeting,
+    overtimes: Overtimes = Overtimes(),
+    enabledLocations: List[Location])
 
   val conf = parseString(
     """{
@@ -27,9 +42,9 @@ object PureConfigEnumeratumApp extends App {
       overtimes = {
         daily = 10
       }
+      enabled-locations = ["Riga"]
     }""")
 
-  println(GoodBye.entryName)
   println(loadConfig[GreetingConf](conf))
 
 }
