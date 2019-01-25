@@ -22,7 +22,7 @@ object TaskTraverseApp extends App {
     (0 to 20).map(i => runTask(i, Random.nextInt(1000)))
   }
 
-  Await.ready(tasks.map(println(_)).runAsync, 1.minute)
+  Await.ready(tasks.map(println(_)).runToFuture, 1.minute)
 
   //
 
@@ -39,6 +39,6 @@ object TaskTraverseApp extends App {
         )
     ).map(_.sequence)
 
-  Await.result(result.runAsync.map(println(_)), Duration.Inf)
+  Await.result(result.runToFuture.map(println(_)), Duration.Inf)
 
 }

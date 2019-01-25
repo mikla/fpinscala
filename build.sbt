@@ -17,7 +17,7 @@ resolvers ++= Seq(
 resolvers += Resolver.sonatypeRepo("releases")
 
 val shapelessVersion = "2.3.3"
-val monixVersion = "3.0.0-RC1"
+val monixVersion = "3.0.0-RC2"
 val pureConfigVersion = "0.10.1"
 val catsVersion = "1.1.0"
 val catsEffectVersion = "1.0.0-RC3"

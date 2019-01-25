@@ -27,11 +27,11 @@ object TaskEvalApp extends App {
     _ <- Task.now(println("done now."))
   } yield res
 
-  loadSmthNow.runAsync
+  loadSmthNow.runToFuture
 
   readLine()
 
-  loadSmthNow.runAsync
+  loadSmthNow.runToFuture
 
   readLine()
 

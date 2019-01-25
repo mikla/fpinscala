@@ -31,7 +31,7 @@ object ValidatedApp extends App {
 
   process().map(commandsRes =>
     commandsRes.map(validateCommandProcessingResult).reduce(_ combine _)
-  ).runAsync.onComplete(r => println(r))
+  ).runToFuture.onComplete(r => println(r))
 
   readLine()
 

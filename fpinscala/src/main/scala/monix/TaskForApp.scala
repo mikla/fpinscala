@@ -13,7 +13,7 @@ object TaskForApp extends App {
     z <- Task.now("cool")
   } yield (x, y, z)
 
-  x.runAsync.map(println).recover { case f => println(f) }
+  x.runToFuture.map(println).recover { case f => println(f) }
 
   readLine()
 

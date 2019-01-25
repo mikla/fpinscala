@@ -37,7 +37,7 @@ object EitherTTaskApp extends App {
   val traversedMap: Either[Throwable, Map[UserId, EmployeeStats]] =
     traversed.map(l => l.reduce(_ ++ _))
 
-  combine().runAsync.onComplete(println)
+  combine().runToFuture.onComplete(println)
 
   readLine()
 
