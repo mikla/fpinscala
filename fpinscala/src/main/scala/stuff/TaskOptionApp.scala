@@ -15,7 +15,7 @@ object TaskOptionApp extends App {
     p <- Monad[Task].ifM(l.isDefined.pure[Task])(l.pure[Task], Task.raiseError(new Throwable("Error")))
   } yield p
 
-  println(value.value.runToFuture.value)
+  println(value.runToFuture.value)
 
   readLine()
 

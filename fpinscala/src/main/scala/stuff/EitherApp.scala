@@ -15,9 +15,31 @@ object EitherApp extends App {
     proto.map(str => deserialize(str)).sequence[Either[Throwable, ?], String]
   }
 
-
   val x: Option[Int] = None
 
   println(x.forall(_ == 1))
+
+  case class InvalidRequest(reason: String)
+
+  def validate(condition: Boolean, onError: String) = Either.cond(condition, Right(()), InvalidRequest(onError))
+
+  val y = 5
+
+  val xx = for {
+    _ <- validate(y > 0, "Must be positive")
+    _ <- validate(y < 10, "??")
+  } yield ()
+
+  println(xx)
+
+  val eitherFlatMap: Either[String, Int] = Right(1)
+  println(eitherFlatMap *> Right(2))
+
+  (2, 3).tupleLeft()
+
+  eitherFlatMap.fold(_ => (), a => ())
+
+  val someOption: Option[Int] = None
+  someOption.as(println("not lazy"))
 
 }

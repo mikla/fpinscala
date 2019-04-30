@@ -19,8 +19,8 @@ resolvers += Resolver.sonatypeRepo("releases")
 val shapelessVersion = "2.3.3"
 val monixVersion = "3.0.0-RC2"
 val pureConfigVersion = "0.10.1"
-val catsVersion = "1.1.0"
-val catsEffectVersion = "1.0.0-RC3"
+val catsVersion = "1.5.0"
+val catsEffectVersion = "1.2.0"
 val kittensVersion = "1.0.0-M9"
 val similacrumVersion = "0.12.0"
 val scalaCheckVersion = "1.13.4"
@@ -78,6 +78,9 @@ lazy val commonDeps = libraryDependencies ++= Seq(
 
   "com.github.julien-truffaut" %% "monocle-core" % monocleVersion,
   "com.github.julien-truffaut" %% "monocle-macro" % monocleVersion,
+
+  "com.outworkers" %% "phantom-dsl" % "2.15.5",
+
   "com.github.julien-truffaut" %% "monocle-law" % monocleVersion % "test",
 
   "org.scalacheck" %% "scalacheck" % scalaCheckVersion % "test",

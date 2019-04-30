@@ -8,6 +8,11 @@ object GCDApp extends App {
     else gcd(x, y - x)
   }
 
-  println(gcd(22, 131))
+  println(gcd(4851, 3003))
+
+  def gcdF(x: Int, y: Int): Int =
+    if (y != 0) gcdF(y, x % y) else x
+
+  println(gcdF(4851, 3003))
 
 }
