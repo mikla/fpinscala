@@ -2,9 +2,6 @@ package stuff.hackerrank
 
 import scala.io.Source
 
-/**
-  * Created by mikla on 10/08/16.
-  */
 object CompareThePriplets extends App {
   val input = Source.stdin.getLines().take(2).toList
   val a = input.head.split(" ").map(_.toInt)

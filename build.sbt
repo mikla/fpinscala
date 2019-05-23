@@ -28,7 +28,7 @@ val scalaTestVersion = "3.0.5"
 val enumeratumVersion = "1.5.12"
 val spireVerison = "0.14.1"
 val log4catsVersion = "0.1.0"
-val circeVersion = "0.9.3"
+val circeVersion = "0.9.1"
 val supertaggedVersion = "1.4"
 val monocleVersion = "1.5.0"
 
