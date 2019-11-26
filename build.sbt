@@ -1,7 +1,7 @@
 lazy val commonSettings = Seq(
   organization := "com.fpinscala",
   version := "0.1.0",
-  scalaVersion := "2.12.6"
+  scalaVersion := "2.12.8"
 )
 
 lazy val compilerFlags = Seq(
@@ -17,7 +17,7 @@ resolvers ++= Seq(
 resolvers += Resolver.sonatypeRepo("releases")
 
 val shapelessVersion = "2.3.3"
-val monixVersion = "3.0.0-RC2"
+val monixVersion = "3.0.0-RC3"
 val pureConfigVersion = "0.10.1"
 val catsVersion = "1.5.0"
 val catsEffectVersion = "1.2.0"
@@ -64,6 +64,9 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "org.typelevel" %% "cats-kernel" % catsVersion,
   "org.typelevel" %% "alleycats-core" % catsVersion,
   "org.typelevel" %% "cats-free" % catsVersion,
+
+  "dev.zio" %% "zio" % "1.0.0-RC13",
+  "dev.zio" %% "zio-streams" % "1.0.0-RC13",
 
   "org.typelevel" %% "kittens" % kittensVersion,
 

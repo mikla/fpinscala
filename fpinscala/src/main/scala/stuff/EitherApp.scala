@@ -42,4 +42,10 @@ object EitherApp extends App {
   val someOption: Option[Int] = None
   someOption.as(println("not lazy"))
 
+
+  val processed : List[Either[String, Int]] = List(Right(1), Left("error"))
+
+  println(processed.partition(_.isRight))
+  println(processed.flatMap(_.toOption))
+
 }

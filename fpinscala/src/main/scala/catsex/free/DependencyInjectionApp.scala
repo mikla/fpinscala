@@ -9,6 +9,7 @@ import cats.{Id, Inject, InjectK, ~>}
 import scala.language.higherKinds
 
 case class Employee(id: String, name: String, isActive: Boolean)
+
 case class AccountingRecord(id: String, employeeId: String, hoursWorked: Long)
 
 sealed trait EmployeeService[A]

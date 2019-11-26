@@ -7,14 +7,16 @@ import io.circe.syntax._
 
 object ADTDecoding extends App {
 
+  case class MayClass(name: String)
+
   sealed trait Event
-  case class Event1(name:String, l: List[String]) extends Event
+  case class Event1(myClass: MayClass, l: List[String]) extends Event
   case class Event2(value: Int) extends Event
 
-//  implicit val decoderEvent: Decoder[Event] = deriveDecoder[Event]
-//  implicit val encoderEvent: Encoder[Event] = deriveEncoder[Event]
+  //  implicit val decoderEvent: Decoder[Event] = deriveDecoder[Event]
+  //  implicit val encoderEvent: Encoder[Event] = deriveEncoder[Event]
 
-  val event1: Event = Event1("Hey", List("1"))
+  val event1: Event = Event1(MayClass("Hey"), List("1"))
   val event1Json: String = event1.asJson.noSpaces
 
   println(event1Json)
