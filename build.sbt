@@ -1,7 +1,7 @@
 lazy val commonSettings = Seq(
   organization := "com.fpinscala",
   version := "0.1.0",
-  scalaVersion := "2.12.8"
+  scalaVersion := "2.12.10"
 )
 
 lazy val compilerFlags = Seq(
@@ -17,27 +17,28 @@ resolvers ++= Seq(
 resolvers += Resolver.sonatypeRepo("releases")
 
 val shapelessVersion = "2.3.3"
-val monixVersion = "3.0.0-RC3"
-val pureConfigVersion = "0.10.1"
-val catsVersion = "1.5.0"
-val catsEffectVersion = "1.2.0"
-val kittensVersion = "1.0.0-M9"
-val similacrumVersion = "0.12.0"
-val scalaCheckVersion = "1.13.4"
-val scalaTestVersion = "3.0.5"
-val enumeratumVersion = "1.5.12"
-val spireVerison = "0.14.1"
-val log4catsVersion = "0.1.0"
-val circeVersion = "0.9.1"
+val monixVersion = "3.1.0"
+val pureConfigVersion = "0.12.1"
+val catsVersion = "2.0.0"
+val catsEffectVersion = "2.0.0"
+val kittensVersion = "2.0.0"
+val similacrumVersion = "0.19.0"
+val scalaCheckVersion = "1.14.2"
+val scalaTestVersion = "3.0.8"
+val enumeratumVersion = "1.5.13"
+val spireVerison = "0.16.2"
+val log4catsVersion = "1.0.1"
+val circeVersion = "0.12.3"
 val supertaggedVersion = "1.4"
-val monocleVersion = "1.5.0"
+val monocleVersion = "2.0.0"
+val zioVersion = "1.0.0-RC17"
 
 lazy val compilerSettings = Seq(
   scalacOptions ++= compilerFlags
 )
 
 lazy val commonDeps = libraryDependencies ++= Seq(
-  compilerPlugin("org.scalamacros" %% "paradise" % "2.1.0" cross CrossVersion.full),
+  compilerPlugin("org.scalamacros" %% "paradise" % "2.1.1" cross CrossVersion.full),
   compilerPlugin("org.spire-math" %% "kind-projector" % "0.9.3" cross CrossVersion.binary),
   "com.chuusai" %% "shapeless" % shapelessVersion,
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
@@ -45,11 +46,8 @@ lazy val commonDeps = libraryDependencies ++= Seq(
 
   "org.typelevel" %% "cats-effect" % catsEffectVersion,
 
-  "io.chrisdavenport" %% "log4cats-core"    % log4catsVersion,
-  "io.chrisdavenport" %% "log4cats-slf4j"   % log4catsVersion,
-  "io.chrisdavenport" %% "log4cats-log4s"   % log4catsVersion,
-  "io.chrisdavenport" %% "log4cats-scribe"  % log4catsVersion,
-  "io.chrisdavenport" %% "log4scalaz-log4s" % log4catsVersion,
+  "io.chrisdavenport" %% "log4cats-core" % log4catsVersion, // Only if you want to Support Any Backend
+  "io.chrisdavenport" %% "log4cats-slf4j" % log4catsVersion,
 
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
@@ -65,8 +63,8 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "org.typelevel" %% "alleycats-core" % catsVersion,
   "org.typelevel" %% "cats-free" % catsVersion,
 
-  "dev.zio" %% "zio" % "1.0.0-RC13",
-  "dev.zio" %% "zio-streams" % "1.0.0-RC13",
+  "dev.zio" %% "zio" % zioVersion,
+  "dev.zio" %% "zio-streams" % zioVersion,
 
   "org.typelevel" %% "kittens" % kittensVersion,
 
@@ -82,7 +80,10 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "com.github.julien-truffaut" %% "monocle-core" % monocleVersion,
   "com.github.julien-truffaut" %% "monocle-macro" % monocleVersion,
 
-  "com.outworkers" %% "phantom-dsl" % "2.15.5",
+  "eu.timepit" %% "refined" % "0.9.10",
+
+  // cassandra driver
+  "com.outworkers" %% "phantom-dsl" % "2.42.0",
 
   "com.github.julien-truffaut" %% "monocle-law" % monocleVersion % "test",
 
