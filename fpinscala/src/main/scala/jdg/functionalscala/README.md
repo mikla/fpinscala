@@ -1,0 +1,1 @@
+Some solutions from JdG workshop held in Riga Nov 27.
