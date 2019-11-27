@@ -1,10 +1,7 @@
-package typelevel
+package catsex
 
-import cats.implicits._
-import cats._
 import cats.Functor
 import cats.derived._
-import cats.syntax.functor._
 
 case class ArmImpl[T](t: T)
 
@@ -17,7 +14,6 @@ case class DomainObject[T](
 object KittensTest extends App {
 
   implicit val domainFunctor: Functor[DomainObject] = {
-    import auto.functor._
     semi.functor }
 
   val stringDomain = DomainObject("first", "second", new ArmImpl("str"), List("a", "b"))

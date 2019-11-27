@@ -1,7 +1,9 @@
-import javax.management.{MBeanAttributeInfo, ObjectName}
-import javax.management.remote.{JMXConnectorFactory, JMXServiceURL}
+package application
 
+import javax.management.remote.{JMXConnectorFactory, JMXServiceURL}
 import scala.collection.JavaConverters._
+import javax.management.{MBeanAttributeInfo, ObjectName}
+
 import scala.util.Try
 
 object JMXTestConnection extends App {

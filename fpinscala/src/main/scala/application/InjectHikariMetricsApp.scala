@@ -1,4 +1,6 @@
-object ReflectionApp extends App {
+package application
+
+object InjectHikariMetricsApp extends App {
 
   class Conf(url: String) {
     var metrics: String = _

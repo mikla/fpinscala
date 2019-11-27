@@ -5,8 +5,8 @@ import cats.implicits._
 import cats.Id
 import alleycats.std.all._
 import model.Employee
+import shapelessex.EmployeeId
 import shapelessex.application.UserId
-import typelevel.EmployeeId
 
 object SequenceUAndPartialUnifiacationExpl extends App {
 

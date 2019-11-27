@@ -1,4 +1,4 @@
-package softwaremill
+package tf
 
 import java.util.UUID
 
@@ -8,6 +8,12 @@ import cats.Monad
 import scala.concurrent.{Await, Future}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
+
+import cats.Monad
+import softwaremill.User
+
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 
 object TaglessFinalApproachApp extends App {
 

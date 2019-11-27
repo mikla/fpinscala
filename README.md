@@ -11,3 +11,9 @@ Inspired by:
 
 * Functional Structures in Scala
  https://www.youtube.com/playlist?list=PLFrwDVdSrYE6dy14XCmUtRAJuhCxuzJp0 (`fsis` package)
+ 
+* [Fp to the Max](https://www.youtube.com/watch?v=sxudIMiOo68) under (`fptomax` package)
+
+* [Cats Exercises](https://www.scala-exercises.org/cats) under `catsex.exercises` package)
+
+* Experiments with Fix in `fixpoint` package.

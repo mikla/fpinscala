@@ -29,8 +29,3 @@ trait UserService {
   }
 
 }
-
-
-object MonadTransformersEvoApp extends App {
-
-}

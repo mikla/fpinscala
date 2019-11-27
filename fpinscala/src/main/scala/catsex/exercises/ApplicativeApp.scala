@@ -1,6 +1,6 @@
 package catsex.exercises
 
-import cats.{Applicative, Apply, Cartesian}
+import cats.{Applicative, Apply, Semigroupal}
 import cats.instances.list._
 import cats.instances.option._
 
@@ -14,8 +14,8 @@ object ApplicativeApp extends App {
 
   println(List(1) ** List(2, 3))
 
-  implicit class ProductExtensionOps[F[_] : Cartesian, A](fa: F[A]) {
-    def **[B](fb: F[B])(implicit A: Cartesian[F]): F[(A, B)] = A.product(fa, fb)
+  implicit class ProductExtensionOps[F[_] : Semigroupal, A](fa: F[A]) {
+    def **[B](fb: F[B])(implicit A: Semigroupal[F]): F[(A, B)] = A.product(fa, fb)
   }
 
 }

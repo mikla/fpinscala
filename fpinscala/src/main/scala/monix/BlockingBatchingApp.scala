@@ -8,9 +8,6 @@ import scala.concurrent.duration.Duration
 
 object BlockingBatchingApp extends App {
 
-
-  println((1 to 455).grouped(10).size)
-
   val tasksToExecute = (1 to 1000).map { i =>
     Task {
       println(s"Executing ${i} task")

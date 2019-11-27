@@ -1,4 +1,4 @@
-package catsex.effect.io
+package cats_effect.io
 
 import cats.effect.{IO, SyncIO}
 import cats.implicits._

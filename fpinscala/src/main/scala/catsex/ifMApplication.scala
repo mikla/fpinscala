@@ -1,8 +1,6 @@
-package application
+package catsex
 
-import cats.MonoidK
 import cats.implicits._
-import cats.kernel.Monoid
 
 object ifMApplication extends App {
 

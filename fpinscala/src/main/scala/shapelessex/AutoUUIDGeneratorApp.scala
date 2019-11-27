@@ -1,4 +1,4 @@
-package typelevel
+package shapelessex
 
 import java.util.UUID
 

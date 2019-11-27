@@ -1,16 +1,18 @@
-package softwaremill
+package catsex.free
 
 import java.util.UUID
 
-import cats.{Inject, InjectK}
 import cats.implicits._
-import cats.free.Free
-import cats.data.EitherK
-
-import scala.concurrent.{Await, Future}
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration.Duration
 import scala.language.higherKinds
+
+import cats.InjectK
+import cats.data.EitherK
+import cats.free.Free
+import softwaremill.User
+
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 
 object FreeApproachApp extends App {
 
