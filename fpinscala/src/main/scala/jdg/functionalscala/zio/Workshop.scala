@@ -1,8 +1,14 @@
 package jdg.functionalscala.zio
 
+import java.nio.charset.StandardCharsets
+import java.util.concurrent.TimeUnit
+
 import zio._
 
+import scala.io.Source
+
 object HelloWorld extends App {
+
   import zio.console._
 
   /**
@@ -54,23 +60,30 @@ object PromptName extends App {
 object ZIOTypes {
   type ??? = Nothing
 
+  // ZIO[Any, _, _] meaning we don't need env
+
+  def compose[R, S, E, A, B](left: ZIO[R, E, A],
+    right: ZIO[S, E, B]): ZIO[R with S, E, (A, B)] =
+    ???
+
   /**
     * EXERCISE 4
     *
     * Provide definitions for the ZIO type aliases below.
     */
-  type Task[+A] = ???
-  type UIO[+A] = ???
-  type RIO[-R, +A] = ???
-  type IO[+E, +A] = ???
-  type URIO[-R, +A] = ???
+  type Task[+A] = ZIO[Any, Throwable, A]
+  type UIO[+A] = ZIO[Any, Nothing, A]
+  type RIO[-R, +A] = ZIO[R, Throwable, A]
+  type IO[+E, +A] = ZIO[Any, E, A]
+  type URIO[-R, +A] = ZIO[R, Nothing, A]
 }
 
 object NumberGuesser extends App {
+
   import zio.console._
   import zio.random._
 
-  def analyzeAnswer(random: Int, guess: String) =
+  def analyzeAnswer(random: Int, guess: String): ZIO[Console, Nothing, Unit] =
     if (random.toString == guess.trim) putStrLn("You guessed correctly!")
     else putStrLn(s"You did not guess correctly. The answer was ${random}")
 
@@ -81,13 +94,23 @@ object NumberGuesser extends App {
     * the number, feeding their response to `analyzeAnswer`, above.
     */
   def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
-    ???
+    (for {
+      _ <- putStrLn("Welcome")
+      random <- nextInt(3)
+      _ <- putStrLn("Enter a guess from 0 to 3")
+      guess <- getStrLn
+      _ <- analyzeAnswer(random, guess)
+    } yield (0)) orElse ZIO.succeed(0)
 }
 
 object AlarmApp extends App {
+
   import zio.console._
   import zio.duration._
   import java.io.IOException
+
+  def parseDouble(line: String): ZIO[Any, NumberFormatException, Double] =
+    ZIO.effect(line.toDouble).refineToOrDie[NumberFormatException]
 
   /**
     * EXERCISE 6
@@ -97,12 +120,18 @@ object AlarmApp extends App {
     */
   lazy val getAlarmDuration: ZIO[Console, IOException, Duration] = {
     def parseDuration(input: String): IO[NumberFormatException, Duration] =
-      ???
+      parseDouble(input).map(
+        double => Duration(double.toLong, TimeUnit.SECONDS)
+      )
 
     def fallback(input: String): ZIO[Console, IOException, Duration] =
-      ???
+      for {
+        duration <- parseDuration(input).orElse(
+          putStrLn("invalid input") *> getAlarmDuration
+        )
+      } yield duration
 
-    ???
+    getStrLn.flatMap(fallback)
   }
 
   /**
@@ -113,10 +142,24 @@ object AlarmApp extends App {
     * alarm message.
     */
   def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
-    ???
+    (for {
+      _ <- putStrLn("Enter")
+      duration <- getAlarmDuration
+      _ <- ZIO.sleep(duration)
+      _ <- putStrLn("Wake up")
+    } yield (0)) orElse ZIO.succeed(1)
+
+  val died1: UIO[Unit] =
+    ZIO.unit
+      .map(_ => throw new Error("Sneaky error"))
+      .ensuring(UIO {
+        throw new Error("Finalizer Error")
+      })
+
 }
 
 object Cat extends App {
+
   import zio.console._
   import zio.blocking._
   import java.io.IOException
@@ -127,7 +170,10 @@ object Cat extends App {
     * Implement a function to read a file on the blocking thread pool, storing
     * the result into a string.
     */
-  def readFile(file: String): ZIO[Blocking, IOException, String] = ???
+  def readFile(file: String): ZIO[Blocking, IOException, String] =
+    effectBlocking {
+      Source.fromFile(file).getLines().mkString("\n")
+    }.refineToOrDie[IOException]
 
   /**
     * EXERCISE 9
@@ -136,10 +182,14 @@ object Cat extends App {
     * contents of the specified file to standard output.
     */
   def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
-    ???
+    args match {
+      case file :: Nil => (readFile(file) >>= putStrLn).fold(_ => 2, _ => 0)
+      case _ => putStrLn("Usafe: cat <file>") as 1
+    }
 }
 
 object CatIncremental extends App {
+
   import zio.console._
   import zio.blocking._
   import java.io._
@@ -150,13 +200,22 @@ object CatIncremental extends App {
     * Implement all missing methods of `FileHandle`. Be sure to do all work on
     * the blocking thread pool.
     */
-  final case class FileHandle private (private val is: InputStream) {
-    final def close: ZIO[Blocking, IOException, Unit] = ???
+  final case class FileHandle private(private val is: InputStream) {
+    final def close: ZIO[Blocking, IOException, Unit] =
+      effectBlocking(is.close()).refineToOrDie[IOException]
 
-    final def read: ZIO[Blocking, IOException, Option[Chunk[Byte]]] = ???
+    final def read: ZIO[Blocking, IOException, Option[Chunk[Byte]]] =
+      effectBlocking {
+        val array = Array.ofDim[Byte](1024)
+        val read = is.read(array)
+        if (read != -1) Some(Chunk.fromArray(array).take(read))
+        else None
+      }.refineToOrDie[IOException]
   }
+
   object FileHandle {
-    final def open(file: String): ZIO[Blocking, IOException, FileHandle] = ???
+    final def open(file: String): ZIO[Blocking, IOException, FileHandle] =
+      effectBlocking(new FileHandle(new FileInputStream(file))).refineToOrDie[IOException]
   }
 
   /**
@@ -167,12 +226,32 @@ object CatIncremental extends App {
     * interruption.
     */
   def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
-    ???
+    args match {
+      case file :: Nil =>
+        def cat(fh: FileHandle): ZIO[Blocking with console.Console, IOException, Unit] =
+          fh.read.flatMap {
+            case None => ZIO.unit
+            case Some(chunk) =>
+              putStrLn(new String(chunk.toArray, StandardCharsets.UTF_8)) *> cat(fh)
+          }
+
+        (for {
+          handle <- FileHandle.open(file)
+          _ <- cat(handle)
+          _ <- handle.close
+        } yield 0) orElse ZIO.succeed(1)
+
+        // or using bracket
+
+        FileHandle.open(file).bracket(_.close.ignore)(cat).fold(_ => 1, _ => 0)
+    }
 }
 
 object ComputePi extends App {
+
   import zio.random._
   import zio.console._
+  import zio.duration._
 
   /**
     * Some state to keep track of all points inside a circle,
@@ -205,11 +284,35 @@ object ComputePi extends App {
     * Build a multi-fiber program that estimates the value of `pi`. Print out
     * ongoing estimates continuously until the estimation is complete.
     */
-  def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
-    ???
+  def run(args: List[String]): ZIO[ZEnv, Nothing, Int] = {
+    def computePi(piState: PiState): ZIO[Random, Nothing, Nothing] = (for {
+      point <- randomPoint
+      (x, y) = point
+      _ <- piState.total.update(_ + 1)
+      _ <- piState.inside.update(count => if (insideCircle(x, y)) count + 1 else count)
+    } yield ()).forever
+
+    def reportStatus(piState: PiState) =
+      (for {
+        total <- piState.total.get
+        inside <- piState.inside.get
+        estimate = estimatePi(inside, total)
+        _ <- putStrLn(s"$estimate")
+        _ <- ZIO.sleep(1.second)
+      } yield ()).forever
+
+    for {
+      piState <- (Ref.make(0l) zipWith Ref.make(0L)) (PiState(_, _))
+      _ <- putStrLn("Welcome to ZIO Pi")
+      compute <- computePi(piState).fork
+      report <- reportStatus(piState).fork
+      _ <- getStrLn.orDie *> compute.interrupt *> report.interrupt
+    } yield 0
+  }
 }
 
 object Hangman extends App {
+
   import zio.console._
   import zio.random._
   import java.io.IOException
@@ -249,10 +352,10 @@ object Hangman extends App {
 
     /**
       *
-      *  f     n  c  t  o
+      * f     n  c  t  o
       *  -  -  -  -  -  -  -
       *
-      *  Guesses: a, z, y, x
+      * Guesses: a, z, y, x
       *
       */
     val word =
@@ -280,12 +383,19 @@ object Hangman extends App {
   }
 
   sealed trait GuessResult
+
   object GuessResult {
+
     case object Won extends GuessResult
+
     case object Lost extends GuessResult
+
     case object Correct extends GuessResult
+
     case object Incorrect extends GuessResult
+
     case object Unchanged extends GuessResult
+
   }
 
   def guessResult(oldState: State, newState: State, char: Char): GuessResult =
@@ -312,6 +422,7 @@ object Hangman extends App {
   * demonstrate its correctness and testability.
   */
 object TicTacToe extends App {
+
   import zio.console._
 
   sealed trait Mark {
@@ -321,12 +432,16 @@ object TicTacToe extends App {
     }
     final def render: String = renderChar.toString
   }
+
   object Mark {
+
     case object X extends Mark
+
     case object O extends Mark
+
   }
 
-  final case class Board private (value: Vector[Vector[Option[Mark]]]) {
+  final case class Board private(value: Vector[Vector[Option[Mark]]]) {
 
     /**
       * Retrieves the mark at the specified row/col.
@@ -371,28 +486,29 @@ object TicTacToe extends App {
         wonBy(0, 2, 1, 0, mark)
 
     private final def wonBy(row0: Int,
-                            col0: Int,
-                            rowInc: Int,
-                            colInc: Int,
-                            mark: Mark): Boolean =
+      col0: Int,
+      rowInc: Int,
+      colInc: Int,
+      mark: Mark): Boolean =
       extractLine(row0, col0, rowInc, colInc).collect { case Some(v) => v }.toList == List
         .fill(3)(mark)
 
     private final def extractLine(row0: Int,
-                                  col0: Int,
-                                  rowInc: Int,
-                                  colInc: Int): Iterable[Option[Mark]] =
+      col0: Int,
+      rowInc: Int,
+      colInc: Int): Iterable[Option[Mark]] =
       for {
         row <- (row0 to (row0 + rowInc * 2))
         col <- (col0 to (col0 + colInc * 2))
       } yield value(row)(col)
   }
+
   object Board {
     final val empty = new Board(Vector.fill(3)(Vector.fill(3)(None)))
 
     def fromChars(first: Iterable[Char],
-                  second: Iterable[Char],
-                  third: Iterable[Char]): Option[Board] =
+      second: Iterable[Char],
+      third: Iterable[Char]): Option[Board] =
       if (first.size != 3 || second.size != 3 || third.size != 3) None
       else {
         def toMark(char: Char): Option[Mark] =
