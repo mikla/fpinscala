@@ -1,1 +1,0 @@
-val f: String => String = Map("France" -> "Paris")

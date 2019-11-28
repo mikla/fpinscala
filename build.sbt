@@ -65,6 +65,7 @@ lazy val commonDeps = libraryDependencies ++= Seq(
 
   "dev.zio" %% "zio" % zioVersion,
   "dev.zio" %% "zio-streams" % zioVersion,
+  "dev.zio" %% "zio-test" % zioVersion % "test",
 
   "org.typelevel" %% "kittens" % kittensVersion,
 
