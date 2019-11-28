@@ -5,7 +5,7 @@ This repos is just a playground for functional stuff that I have discovered.
 
 Inspired by:
 
-* According to the book Functional Programming in Scala. http://www.manning.com/bjarnason/ ([fp_in_scala](/tree/master/fpinscala/src/main/scala/fp_in_scala) package)
+* According to the book Functional Programming in Scala. http://www.manning.com/bjarnason/ ([fp_in_scala](https://github.com/mikla/fpinscala/tree/master/fpinscala/src/main/scala/fp_in_scala) package)
 
 * The Type Astronaut's Guide to Shapeless https://github.com/underscoreio/shapeless-guide (`shapelessex` package)
 
