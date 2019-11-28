@@ -3,6 +3,7 @@ package jdg.functionalscala.zio
 import java.nio.charset.StandardCharsets
 import java.util.concurrent.TimeUnit
 
+import jdg.functionalscala.zio.Hangman.GuessResult.{Correct, Incorrect, Lost, Unchanged, Won}
 import zio._
 
 import scala.io.Source
@@ -301,13 +302,27 @@ object ComputePi extends App {
         _ <- ZIO.sleep(1.second)
       } yield ()).forever
 
+    // Single worker version
     for {
       piState <- (Ref.make(0l) zipWith Ref.make(0L)) (PiState(_, _))
       _ <- putStrLn("Welcome to ZIO Pi")
       compute <- computePi(piState).fork
       report <- reportStatus(piState).fork
+
+      // we could also zip fibers and interrupt once zipped version.
+
       _ <- getStrLn.orDie *> compute.interrupt *> report.interrupt
     } yield 0
+
+    // Multiple workers
+    for {
+      piState <- (Ref.make(0l) zipWith Ref.make(0L)) (PiState(_, _))
+      workers = List.fill(10)(computePi(piState))
+      reporter = reportStatus(piState)
+      fiber <- (ZIO.forkAll(workers) zipWith (reporter.fork)) (_ zip _)
+      _ <- getStrLn.orDie *> fiber.interrupt
+    } yield 0
+
   }
 }
 
@@ -323,7 +338,11 @@ object Hangman extends App {
     * Implement an effect that gets a single, lower-case character from
     * the user.
     */
-  lazy val getChoice: ZIO[Console, IOException, Char] = ???
+  lazy val getChoice: ZIO[Console, IOException, Char] =
+    getStrLn.map(_.trim.toLowerCase.toList).flatMap {
+      case char :: Nil => ZIO.succeed(char)
+      case _ => putStrLn("Enter char!") *> getChoice
+    }
 
   /**
     * EXERCISE 14
@@ -331,7 +350,7 @@ object Hangman extends App {
     * Implement an effect that prompts the user for their name, and
     * returns it.
     */
-  lazy val getName: ZIO[Console, IOException, String] = ???
+  lazy val getName: ZIO[Console, IOException, String] = getStrLn("Enter your name")
 
   /**
     * EXERCISE 15
@@ -346,7 +365,20 @@ object Hangman extends App {
     * Implement the main game loop, which gets choices from the user until
     * the game is won or lost.
     */
-  def gameLoop(ref: Ref[State]): ZIO[Console, IOException, Unit] = ???
+  def gameLoop(ref: Ref[State]): ZIO[Console, IOException, Unit] = for {
+    oldState <- ref.get
+    char <- getChoice
+    newState <- ref.update(_.addChar(char))
+    _ <- renderState(newState)
+    loop <- guessResult(oldState, newState, char) match {
+      case Incorrect => putStrLn("") as true
+      case Lost => putStrLn("") as false
+      case Won => putStrLn("") as false
+      case Correct => putStrLn("") as true
+      case Unchanged => putStrLn("") as true
+    }
+    _ <- if (loop) gameLoop(ref) else ZIO.unit
+  } yield ()
 
   def renderState(state: State): ZIO[Console, Nothing, Unit] = {
 
@@ -412,7 +444,14 @@ object Hangman extends App {
     * and the above helper functions.
     */
   def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
-    ???
+    (for {
+      word <- chooseWord
+      name <- getName
+      state = State(name, Set(), word)
+      _ <- renderState(state)
+      ref <- Ref.make(state)
+      _ <- gameLoop(ref)
+    } yield 0) orElse ZIO.succeed(1)
 }
 
 /**
