@@ -1,5 +1,7 @@
 package jdg.functionalscala
 
+import java.sql.ResultSet
+
 import zio._
 import zio.stm._
 import zio.stream.{Sink, ZStream}
@@ -236,5 +238,91 @@ object Day3 extends App {
     override def run(args: List[String]): ZIO[zio.ZEnv, Nothing, Int] =
       stream map (_ => 0)
   }
+
+
+  object dependencies {
+
+    /**
+      * EXERCISE 1
+      *
+      * Make the `LiveUserStore` depend on a `Database` by having the
+      * `LiveUserStore` trait extend `Database`.
+      */
+    trait LiveUserStore extends UserStore {
+      val userStore: UserStore.Service = new UserStore.Service {
+        def getUserById(id: Long): Task[UserProfile] = ???
+      }
+    }
+
+    // ZIO[R, E, A]
+    // Introduce the env. effect: ZIO.accessM (ZIO.environment)
+    // Eliminate the enveromental effect: ZIO#provide
+
+    type Result
+    trait Query {
+      def q(sql: String): Task[Result]
+    }
+
+    def query(sql: String): ZIO[Query, Throwable, Result] =
+      ZIO.accessM[Query](env => env.q(sql))
+
+    query("SQL ").provide((sql: String) => ???)
+    query("SQL ").provideSome((sql: String) => ???) // you can provide part of environment
+
+    /**
+      * EXERCISE 2
+      *
+      * Effectfully create a `Database` module inside `Task`. In a real
+      * implementation, this method might actually perform the database
+      * connection.
+      */
+    def connect(connectionUrl: String): Task[Database] =
+      Task.effect {
+        val dbConn = ???
+
+        ???
+      }
+
+    /**
+      * EXERCISE 3
+      *
+      * Define a `UserStore` in terms of a `Database`.
+      */
+    lazy val userService: ZIO[Database, Nothing, UserStore] =
+      ZIO.accessM[Database](
+        env =>
+          UIO {
+            ???
+          }
+      )
+
+    /**
+      * EXERCISE 4
+      *
+      * Using `provideSomeM`, eliminate the `UserStore` dependency.
+      */
+    lazy val myProgram: ZIO[UserStore, Throwable, Unit] = ??? // Assume implemented
+    lazy val eliminated: ZIO[Database, Throwable, Unit] = ???
+
+    trait Database {
+      val database: Database.Service
+    }
+    object Database {
+      trait Service {
+        def query(query: String): Task[ResultSet]
+      }
+    }
+
+    trait UserStore {
+      val userStore: UserStore.Service
+    }
+    object UserStore {
+      trait Service {
+        def getUserById(id: Long): Task[UserProfile]
+      }
+    }
+    case class UserProfile(name: String, age: Int, address: String)
+  }
+
 
 }
