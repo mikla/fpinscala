@@ -1,9 +1,9 @@
-package jdg.functionalscala.zio
+package jdg.functionalscala.ziorea
 
 import java.nio.charset.StandardCharsets
 import java.util.concurrent.TimeUnit
 
-import jdg.functionalscala.zio.Hangman.GuessResult.{Correct, Incorrect, Lost, Unchanged, Won}
+import jdg.functionalscala.ziorea.Hangman.GuessResult.{Correct, Incorrect, Lost, Unchanged, Won}
 import zio._
 
 import scala.io.Source
@@ -350,7 +350,7 @@ object Hangman extends App {
     * Implement an effect that prompts the user for their name, and
     * returns it.
     */
-  lazy val getName: ZIO[Console, IOException, String] = getStrLn("Enter your name")
+  lazy val getName: ZIO[Console, IOException, String] = getStrLn
 
   /**
     * EXERCISE 15

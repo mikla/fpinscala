@@ -1,4 +1,4 @@
-package jdg.functionalscala.zio
+package jdg.functionalscala.ziorea
 
 // This shit eventually hit stackoverflow
 final case class ZTask[+A](code: () => A) { self =>

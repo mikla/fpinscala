@@ -1,4 +1,4 @@
-package jdg.functionalscala.zio
+package jdg.functionalscala.ziorea
 
 object Dictionary {
   val Dictionary = List(
