@@ -1,4 +1,8 @@
-```jshelllanguage
+```sbtshell
+jmh:run -i 3 -wi 3 -f1 -t1 .*MapValuesBenchmark.*
+```
+
+```sbtshell
 [info] Benchmark                               Mode  Cnt      Score       Error   Units
 [info] MapValuesBenchmark.mapTest             thrpt    3      0.022 ±     0.005  ops/ms
 [info] MapValuesBenchmark.mapValuesForceTest  thrpt    3      0.024 ±     0.005  ops/ms
