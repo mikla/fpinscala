@@ -46,7 +46,7 @@ lazy val commonDeps = libraryDependencies ++= Seq(
 
   "org.typelevel" %% "cats-effect" % catsEffectVersion,
 
-//  "io.chrisdavenport" %% "log4cats-core" % log4catsVersion, // Only if you want to Support Any Backend
+  //  "io.chrisdavenport" %% "log4cats-core" % log4catsVersion, // Only if you want to Support Any Backend
   "io.chrisdavenport" %% "log4cats-slf4j" % log4catsVersion,
 
   "io.circe" %% "circe-core" % circeVersion,
@@ -106,6 +106,13 @@ lazy val fpinscala = (project in file("fpinscala"))
 lazy val dependentTypes = (project in file("dependent-types"))
   .settings(commonSettings)
   .settings(libraryDependencies ++= Seq())
+
+lazy val performance = (project in file("performance"))
+  .enablePlugins(JmhPlugin)
+  .settings(compilerSettings: _*)
+  .settings(commonSettings)
+  .settings(commonDeps)
+  .dependsOn(common)
 
 lazy val fpinscalaRoot = (project in file("."))
   .settings(commonSettings)
