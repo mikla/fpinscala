@@ -41,10 +41,15 @@ class CollectionSearch {
   @Benchmark
   def scalaBuiltInBinarySearchOnSortedArray: Map[UUID, Int] = {
     val array = legacyIds.toArray.sorted
-    universalIds.mapValues(lid => array.search(lid) match {
-      case Found(_) => Some(lid)
-      case _ => None
-    }).flattenValues[Int]
+    universalIds.mapValues(lid => array.binarySearch(lid)).flattenValues[Int]
+  }
+
+  @Benchmark
+  def useMap: Map[UUID, Int] = {
+    val m = legacyIds.map(e => (e, e)).toMap
+    universalIds.mapValues { lid =>
+      m.get(lid)
+    }.flattenValues[Int]
   }
 
 }
