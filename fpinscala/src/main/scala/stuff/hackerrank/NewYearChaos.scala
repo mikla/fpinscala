@@ -2,10 +2,10 @@ package stuff.hackerrank
 
 object NewYearChaos extends App {
 
-  def minimumBribes(q: Array[Int]) {
+  def minimumBribes(q: Array[Int]): Int = {
     var ans = 0
     var i = q.length - 1
-    while (i >=0) {
+    while (i >= 0) {
       if (q(i) - (i + 1) > 2) {
         println("Too chaotic")
         return 0
@@ -17,10 +17,11 @@ object NewYearChaos extends App {
       }
       i = i - 1
     }
-    println(ans)
+    ans
   }
 
-  minimumBribes(Array(2, 1, 5, 3, 4))
-
+  println {
+    minimumBribes(Array(2, 1, 5, 3, 4))
+  }
 
 }

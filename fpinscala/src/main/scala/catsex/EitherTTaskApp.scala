@@ -6,6 +6,8 @@ import shapelessex.application.UserId
 import cats.implicits._
 import monix.execution.Scheduler.Implicits.global
 
+import scala.io.StdIn
+
 case class EmployeeStats(value: Long)
 
 object EitherTTaskApp extends App {
@@ -39,6 +41,6 @@ object EitherTTaskApp extends App {
 
   combine().runToFuture.onComplete(println)
 
-  readLine()
+  StdIn.readLine()
 
 }

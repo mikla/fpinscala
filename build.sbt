@@ -1,17 +1,16 @@
 lazy val commonSettings = Seq(
   organization := "com.fpinscala",
   version := "0.1.0",
-  scalaVersion := "2.12.10"
+  scalaVersion := "2.13.2"
 )
 
 lazy val compilerFlags = Seq(
-  "-Ypartial-unification",
-  "-Ywarn-infer-any"
+  "-Ymacro-annotations"
 )
 
 resolvers ++= Seq(
-  "Sonatype Releases" at "http://oss.sonatype.org/content/repositories/releases",
-  "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/"
+  "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases",
+  "Akka Snapshot Repository" at "https://repo.akka.io/snapshots/"
 )
 
 resolvers += Resolver.sonatypeRepo("releases")
@@ -22,14 +21,14 @@ val pureConfigVersion = "0.12.1"
 val catsVersion = "2.0.0"
 val catsEffectVersion = "2.0.0"
 val kittensVersion = "2.0.0"
-val similacrumVersion = "0.19.0"
+val similacrumVersion = "1.0.0"
 val scalaCheckVersion = "1.14.2"
 val scalaTestVersion = "3.0.8"
 val enumeratumVersion = "1.5.13"
-val spireVerison = "0.16.2"
+val spireVerison = "0.17.0-M1"
 val log4catsVersion = "1.0.1"
 val circeVersion = "0.12.3"
-val supertaggedVersion = "1.4"
+val supertaggedVersion = "1.5"
 val monocleVersion = "2.0.0"
 val zioVersion = "1.0.0-RC17"
 
@@ -38,11 +37,10 @@ lazy val compilerSettings = Seq(
 )
 
 lazy val commonDeps = libraryDependencies ++= Seq(
-  compilerPlugin("org.scalamacros" %% "paradise" % "2.1.1" cross CrossVersion.full),
-  compilerPlugin("org.spire-math" %% "kind-projector" % "0.9.3" cross CrossVersion.binary),
+  compilerPlugin("org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full),
   "com.chuusai" %% "shapeless" % shapelessVersion,
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
-  "com.github.mpilquist" %% "simulacrum" % similacrumVersion,
+  "org.typelevel" %% "simulacrum" % similacrumVersion,
 
   "org.typelevel" %% "cats-effect" % catsEffectVersion,
 
@@ -85,7 +83,7 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "eu.timepit" %% "refined" % "0.9.10",
 
   // cassandra driver
-  "com.outworkers" %% "phantom-dsl" % "2.42.0",
+  "com.outworkers" %% "phantom-dsl" % "2.50.0",
 
   "com.github.julien-truffaut" %% "monocle-law" % monocleVersion % "test",
 
@@ -101,7 +99,7 @@ lazy val fpinscala = (project in file("fpinscala"))
   .settings(compilerSettings: _*)
   .settings(commonSettings)
   .settings(commonDeps)
-  .dependsOn(common)
+  .dependsOn(common, macroo)
 
 lazy val dependentTypes = (project in file("dependent-types"))
   .settings(commonSettings)
@@ -117,6 +115,12 @@ lazy val performance = (project in file("performance"))
 lazy val fpinscalaRoot = (project in file("."))
   .settings(commonSettings)
   .aggregate(common, fpinscala)
+
+lazy val macroo = (project in file("macro"))
+  .settings(commonSettings)
+  .settings(compilerSettings: _*)
+  .settings(commonDeps)
+  .dependsOn(common)
 
 addCommandAlias("c", ";compile")
 addCommandAlias("r", ";reload")

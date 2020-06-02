@@ -2,7 +2,7 @@ package performance
 
 import java.io.File
 
-import scala.io.Source
+import scala.io.{Source, StdIn}
 
 object StringPoolApp extends App {
 
@@ -16,10 +16,8 @@ object StringPoolApp extends App {
     Row(str.intern())
   }
 
-  readLine()
+  StdIn.readLine()
 
-  rows
-
-  rowsFromFile
-
+  println(rows)
+  println(rowsFromFile)
 }

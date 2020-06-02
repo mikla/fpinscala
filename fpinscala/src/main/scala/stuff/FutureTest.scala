@@ -4,6 +4,7 @@ import scala.annotation.unchecked.uncheckedVariance
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.io.StdIn
 
 object FutureTest extends App {
 
@@ -37,7 +38,7 @@ object FutureTest extends App {
     Future(3)
   ) onComplete println
 
-  readLine()
+  StdIn.readLine()
 
   def combine(f1: Future[Option[Int]],
               f2: Future[Either[String, Int]],

@@ -1,10 +1,12 @@
 package stuff.clash
 
+import scala.io.StdIn
+
 object Clash2 extends App {
 
-  val n = readInt
+  val n = StdIn.readInt
   val lines = for(i <- 0 until n) yield {
-    val line = readLine
+    val line = StdIn.readLine
     line
   }
 

@@ -2,6 +2,7 @@ package scalaz.monad
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.io.StdIn
 
 object MonadTransformer4 extends App {
 
@@ -35,6 +36,6 @@ object MonadTransformer4 extends App {
 
   computation onComplete println
 
-  readLine()
+  StdIn.readLine()
 
 }

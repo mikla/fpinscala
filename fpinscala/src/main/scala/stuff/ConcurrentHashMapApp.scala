@@ -2,9 +2,11 @@ package stuff
 
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
-import monix.execution.Scheduler.Implicits.global
 
+import monix.execution.Scheduler.Implicits.global
 import monix.eval.Task
+
+import scala.io.StdIn
 
 object ConcurrentHashMapApp extends App {
 
@@ -33,7 +35,7 @@ object ConcurrentHashMapApp extends App {
 
   Task.gatherUnordered(projections.map(start)).runToFuture
 
-  readLine()
+  StdIn.readLine()
 
   println(runningProjections)
 

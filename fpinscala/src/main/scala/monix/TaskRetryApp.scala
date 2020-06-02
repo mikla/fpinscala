@@ -8,6 +8,7 @@ import monix.execution.Scheduler.Implicits.{global => scheduler}
 import monix.execution.exceptions.ExecutionRejectedException
 
 import scala.concurrent.duration._
+import scala.io.StdIn
 
 object TaskRetryApp extends App {
 
@@ -97,6 +98,6 @@ object TaskRetryApp extends App {
   //    t <- protectWithRetry(task, cb, 2.seconds)
   //  } yield t).runToFuture
 
-  readLine()
+  StdIn.readLine()
 
 }

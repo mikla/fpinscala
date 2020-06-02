@@ -1,9 +1,8 @@
 package collections
 
 import scala.annotation.tailrec
-import scala.collection.{IndexedSeqLike, SeqLike}
+import scala.collection.SeqOps
 import scala.collection.Searching._
-import scala.collection.generic.IsSeqLike
 
 object search {
 
@@ -22,16 +21,16 @@ object search {
     bsf(list, target, 0, list.length - 1)
   }
 
-  class BinarySearchImpl[A, Repr](override val coll: SeqLike[A, Repr]) extends SearchImpl[A, Repr](coll) {
+  class BinarySearchImpl[A, Repr](val coll: SeqOps[A, Seq, Repr]) {
     def binarySearch(e: A)(implicit o: Ordering[A]): Option[A] = {
-      search(e)(o) match {
+      coll.search(e)(o) match {
         case Found(_) => Some(e)
         case _ => None
       }
     }
   }
 
-  implicit def binarySearch[Repr, A](coll: Repr)
-    (implicit fr: IsSeqLike[Repr]): BinarySearchImpl[fr.A, Repr] = new BinarySearchImpl(fr.conversion(coll))
+//  implicit def binarySearch[Repr, A](coll: Repr)
+//    (implicit fr: IsSeq[Repr]): BinarySearchImpl[fr.A, Repr] = new BinarySearchImpl(fr(coll))
 
 }

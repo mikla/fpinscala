@@ -35,8 +35,8 @@ object IOApp extends App {
   println(fib(500).unsafeRunSync())
 
   fib(500).unsafeRunAsync {
-    case Left(e) => IO(e.printStackTrace())
-    case Right(_) => IO.unit
+    case Left(e) => e.printStackTrace()
+    case Right(_) => ()
   }
 
   def readLine(in: BufferedReader)(implicit ec: ExecutionContext): IO[String] =

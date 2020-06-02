@@ -1,13 +1,15 @@
 package stuff.clash
 
+import scala.io.StdIn
+
 object Clash extends App {
 
   var s: scala.collection.mutable.Set[Char] = scala.collection.mutable.Set.empty[Char]
 
-  val n = readInt()
+  val n = StdIn.readInt()
 
   val sets = for(i <- 0 until n) yield {
-    val w = readLine
+    val w = StdIn.readLine
     w.foldLeft(Set.empty[Char]) { (acc: Set[Char], elem: Char) =>
       if (elem.isLetter) acc + elem
       else acc

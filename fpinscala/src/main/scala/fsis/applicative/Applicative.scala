@@ -3,8 +3,6 @@ package fsis.applicative
 import fsis.functor.Functor
 import simulacrum.typeclass
 
-import scala.language.higherKinds
-
 @typeclass trait Applicative[F[_]] extends Functor[F] { self =>
 
   def pure[A](a: A): F[A]

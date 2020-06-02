@@ -4,6 +4,7 @@ import monix.eval.Task
 import monix.execution.Scheduler.Implicits.global
 
 import scala.concurrent.Future
+import scala.io.StdIn
 
 object TaskForApp extends App {
 
@@ -15,6 +16,6 @@ object TaskForApp extends App {
 
   x.runToFuture.map(println).recover { case f => println(f) }
 
-  readLine()
+  StdIn.readLine()
 
 }

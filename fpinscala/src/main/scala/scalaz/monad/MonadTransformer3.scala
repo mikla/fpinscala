@@ -1,9 +1,10 @@
 package scalaz.monad
 
 import scala.concurrent.{ExecutionContext, Future}
-import scala.language.{reflectiveCalls, higherKinds}
+import scala.language.{higherKinds, reflectiveCalls}
 import scala.util.{Failure, Success}
 import ExecutionContext.Implicits.global
+import scala.io.StdIn
 
 object MonadTransformer3 extends App {
 
@@ -55,6 +56,6 @@ object MonadTransformer3 extends App {
 
   computation.run onComplete println
 
-  readLine()
+  StdIn.readLine()
 
 }

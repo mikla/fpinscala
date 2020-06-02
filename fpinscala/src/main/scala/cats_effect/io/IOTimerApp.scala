@@ -5,6 +5,7 @@ import cats.implicits._
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
+import scala.io.StdIn
 
 object IOTimerApp extends App {
 
@@ -28,6 +29,6 @@ object IOTimerApp extends App {
     case Left(e) => println("cb: " + e)
   }
 
-  readLine()
+  StdIn.readLine()
 
 }

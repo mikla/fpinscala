@@ -2,10 +2,12 @@ package monix
 
 import monix.catnap.CircuitBreaker
 import monix.eval._
+
 import scala.concurrent.duration._
 import monix.catnap.CircuitBreaker
-
 import monix.execution.Scheduler.Implicits.{global => scheduler}
+
+import scala.io.StdIn
 
 object MonixExponentialBackoff extends App {
 
@@ -58,6 +60,6 @@ object MonixExponentialBackoff extends App {
 
   protectedTask.runToFuture
 
-  readLine()
+  StdIn.readLine()
 
 }

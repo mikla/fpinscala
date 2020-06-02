@@ -1,13 +1,12 @@
 package monix
 
-import cats.implicits._
 import cats.effect.concurrent.MVar
 import monix.eval.Task
 import monix.execution.Scheduler
 import monix.execution.Scheduler.Implicits.global
 
-import scala.concurrent.Await
 import scala.concurrent.duration._
+import scala.io.StdIn
 
 object MVarApp extends App {
 
@@ -33,8 +32,5 @@ object MVarApp extends App {
 
   task1.executeOn(io).runToFuture
 
-
-  readLine()
-
-  //  Await.result((otherCommands, importLocations).mapN((_, _) => 0).runToFuture, Duration.Inf)
+  StdIn.readLine()
 }

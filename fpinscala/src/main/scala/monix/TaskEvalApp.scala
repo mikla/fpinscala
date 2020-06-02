@@ -3,7 +3,7 @@ package monix
 import monix.eval.Task
 import monix.execution.Scheduler.Implicits.global
 
-import scala.concurrent.Future
+import scala.io.StdIn
 
 object TaskEvalApp extends App {
 
@@ -29,10 +29,10 @@ object TaskEvalApp extends App {
 
   loadSmthNow.runToFuture
 
-  readLine()
+  StdIn.readLine()
 
   loadSmthNow.runToFuture
 
-  readLine()
+  StdIn.readLine()
 
 }

@@ -7,6 +7,8 @@ import cats.instances.list._
 import monix.eval.Task
 import monix.execution.Scheduler.Implicits.global
 
+import scala.io.StdIn
+
 object ValidatedApp extends App {
 
   sealed trait CommandProcessingResult
@@ -33,7 +35,6 @@ object ValidatedApp extends App {
     commandsRes.map(validateCommandProcessingResult).reduce(_ combine _)
   ).runToFuture.onComplete(r => println(r))
 
-  readLine()
-
+  StdIn.readLine()
 
 }

@@ -1,5 +1,7 @@
 package fptomax
 
+import scala.io.StdIn
+
 case class IO[A](unsafeRun: () => A) {self =>
   def map[B](f: A => B): IO[B] = IO(() => f(self.unsafeRun()))
   def flatMap[B](f: A => IO[B]): IO[B] = IO(() => f(self.unsafeRun()).unsafeRun())
@@ -16,7 +18,7 @@ object IO {
 
   implicit val ConsoleIO: Console[IO] = new Console[IO] {
     override def putStrLine(line: String): IO[Unit] = IO(() => println(line))
-    override def getStrLine: IO[String] = IO(() => readLine())
+    override def getStrLine: IO[String] = IO(() => StdIn.readLine())
   }
 
   implicit val RandomIO = new Random[IO] {

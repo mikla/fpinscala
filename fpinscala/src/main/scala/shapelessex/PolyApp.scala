@@ -11,7 +11,6 @@ object PolyApp extends App {
     def apply[T](s: Set[T]) = s.headOption
   }
 
-
   choose(Set(1, 2, 3)).print("choose 1")
   choose(Set('a', 'b', 'c')).print("choose 2")
 
