@@ -1,11 +1,7 @@
 package catsex
 
 import cats.{Applicative, FlatMap, Foldable, Id}
-import cats.syntax.foldable._
-import cats.syntax.cartesian._
-
-import cats.instances.option._
-import cats.instances.int._
+import cats.implicits._
 
 object GenericSumApp extends App {
 
@@ -18,7 +14,7 @@ object GenericSumApp extends App {
     }
 
     def mult(a: F[Int], b: F[Int]): Int = {
-      (a |@| b).map(_ * _).fold
+      (a, b).mapN(_ * _).fold
     }
 
   }

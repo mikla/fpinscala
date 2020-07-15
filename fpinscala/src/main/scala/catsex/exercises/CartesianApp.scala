@@ -15,7 +15,7 @@ object CartesianApp extends App {
     override def ap[A, B](ff: Option[(A) => B])(fa: Option[A]): Option[B] = ???
   }
 
-  (x |@| y).map(_ + _)
+  (x, y).mapN(_ + _)
 
 
 }

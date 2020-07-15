@@ -13,11 +13,8 @@ object ApplyApp extends App {
     override def map[A, B](fa: Option[A])(f: (A) => B): Option[B] = ???
   }
 
-
-  val option2 = Option(1) |@| Option(2) |@| Option(3)
-
   println {
-    option2.map(_ + _ + _)
+    (Option(1), Option(2), Option(3)).mapN(_ + _ + _)
   }
 
 
@@ -32,10 +29,6 @@ object ApplyApp extends App {
     Apply[Option].tuple2(Some(1), Some(2))
   }
 
-  val addArity2 = (a: Int, b: Int, c: Int) ⇒ a + b + c
-
-  println {
-    option2 apWith Some(addArity2)
-  }
+  val addArity2 = (a: Int, b: Int, c: Int) => a + b + c
 
 }

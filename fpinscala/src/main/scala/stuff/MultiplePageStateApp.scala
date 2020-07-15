@@ -9,7 +9,6 @@ object MultiplePageStateApp extends App {
     def mobileMenuOpened: Boolean
     def setUserMenuOpened(opened: Boolean): PageState
     def swapMobileMenuOpened: PageState
-
   }
 
   object PageState {
