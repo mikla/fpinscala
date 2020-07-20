@@ -27,7 +27,7 @@ object Day3 extends App {
     def make: UIO[Lock] = TRef.make(false).map(new Lock(_)).commit
   }
 
-  override def run(args: List[String]): ZIO[zio.ZEnv, Nothing, Int] = ???
+  override def run(args: List[String]): ZIO[zio.ZEnv, Nothing, ExitCode] = ???
 
   def exampleRef = {
     def swap[A](ref1: Ref[A], ref2: Ref[A]): UIO[Unit] =
@@ -235,8 +235,8 @@ object Day3 extends App {
 
      */
 
-    override def run(args: List[String]): ZIO[zio.ZEnv, Nothing, Int] =
-      stream map (_ => 0)
+    override def run(args: List[String]): ZIO[zio.ZEnv, Nothing, ExitCode] =
+      stream map (_ => ExitCode.success)
   }
 
 

@@ -17,8 +17,8 @@ object HelloWorld extends App {
     *
     * Implement a simple "Hello World" program using the effect returned by `putStrLn`.
     */
-  def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
-    putStrLn("Hello, World") as 0
+  def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] =
+    putStrLn("Hello, World") as ExitCode.success
 
 }
 
@@ -38,8 +38,8 @@ object ErrorConversion extends App {
     * Using `ZIO#orElse` or `ZIO#fold`, have the `run` function compose the
     * preceding `failed` effect into the effect that `run` returns.
     */
-  def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
-    (failed as 0) orElse ZIO.succeed(1)
+  def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] =
+    (failed as ExitCode.success) orElse ZIO.succeed(ExitCode.failure)
 }
 
 object PromptName extends App {
@@ -53,9 +53,9 @@ object PromptName extends App {
     * Implement a simple program that asks the user for their name (using
     * `getStrLn`), and then prints it out to the user (using `putStrLn`).
     */
-  def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
+  def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] =
     putStrLn("Name?") *>
-      getStrLn.flatMap(name => putStrLn(s"Good, " + name)).fold(_ => 1, _ => 0)
+      getStrLn.flatMap(name => putStrLn(s"Good, " + name)).fold(_ => ExitCode.failure, _ => ExitCode.success)
 }
 
 object ZIOTypes {
@@ -94,14 +94,14 @@ object NumberGuesser extends App {
     * Choose a random number (using `nextInt`), and then ask the user to guess
     * the number, feeding their response to `analyzeAnswer`, above.
     */
-  def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
+  def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] =
     (for {
       _ <- putStrLn("Welcome")
-      random <- nextInt(3)
+      random <- nextIntBounded(3)
       _ <- putStrLn("Enter a guess from 0 to 3")
       guess <- getStrLn
       _ <- analyzeAnswer(random, guess)
-    } yield (0)) orElse ZIO.succeed(0)
+    } yield (ExitCode.success)) orElse ZIO.succeed(ExitCode.failure)
 }
 
 object AlarmApp extends App {
@@ -142,13 +142,13 @@ object AlarmApp extends App {
     * sleeps the specified number of seconds, and then prints out a wakeup
     * alarm message.
     */
-  def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
+  def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] =
     (for {
       _ <- putStrLn("Enter")
       duration <- getAlarmDuration
       _ <- ZIO.sleep(duration)
       _ <- putStrLn("Wake up")
-    } yield (0)) orElse ZIO.succeed(1)
+    } yield (ExitCode.success)) orElse ZIO.succeed(ExitCode.failure)
 
   val died1: UIO[Unit] =
     ZIO.unit
@@ -182,10 +182,11 @@ object Cat extends App {
     * Implement a version of the command-line utility "cat", which dumps the
     * contents of the specified file to standard output.
     */
-  def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
+
+  def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] =
     args match {
-      case file :: Nil => (readFile(file) >>= putStrLn).fold(_ => 2, _ => 0)
-      case _ => putStrLn("Usafe: cat <file>") as 1
+//      case file :: Nil => (readFile(file) >>= putStrLn).fold(_ => ExitCode.failure, _ => ExitCode.success)
+      case _ => putStrLn("Usafe: cat <file>") as ExitCode.failure
     }
 }
 
@@ -226,7 +227,7 @@ object CatIncremental extends App {
     * or `ZManaged` to ensure the file is closed in the event of error or
     * interruption.
     */
-  def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
+  def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] =
     args match {
       case file :: Nil =>
         def cat(fh: FileHandle): ZIO[Blocking with console.Console, IOException, Unit] =
@@ -244,7 +245,7 @@ object CatIncremental extends App {
 
         // or using bracket
 
-        FileHandle.open(file).bracket(_.close.ignore)(cat).fold(_ => 1, _ => 0)
+        FileHandle.open(file).bracket(_.close.ignore)(cat).fold(_ => ExitCode.failure, _ => ExitCode.success)
     }
 }
 
@@ -285,7 +286,7 @@ object ComputePi extends App {
     * Build a multi-fiber program that estimates the value of `pi`. Print out
     * ongoing estimates continuously until the estimation is complete.
     */
-  def run(args: List[String]): ZIO[ZEnv, Nothing, Int] = {
+  def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] = {
     def computePi(piState: PiState): ZIO[Random, Nothing, Nothing] = (for {
       point <- randomPoint
       (x, y) = point
@@ -321,7 +322,7 @@ object ComputePi extends App {
       reporter = reportStatus(piState)
       fiber <- (ZIO.forkAll(workers) zipWith (reporter.fork)) (_ zip _)
       _ <- getStrLn.orDie *> fiber.interrupt
-    } yield 0
+    } yield ExitCode.success
 
   }
 }
@@ -368,7 +369,7 @@ object Hangman extends App {
   def gameLoop(ref: Ref[State]): ZIO[Console, IOException, Unit] = for {
     oldState <- ref.get
     char <- getChoice
-    newState <- ref.update(_.addChar(char))
+    newState <- ref.updateAndGet(_.addChar(char))
     _ <- renderState(newState)
     loop <- guessResult(oldState, newState, char) match {
       case Incorrect => putStrLn("") as true
@@ -443,7 +444,7 @@ object Hangman extends App {
     * Implement hangman using `Dictionary.Dictionary` for the words,
     * and the above helper functions.
     */
-  def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
+  def run(args: List[String]): URIO[ZEnv, ExitCode] =
     (for {
       word <- chooseWord
       name <- getName
@@ -451,7 +452,7 @@ object Hangman extends App {
       _ <- renderState(state)
       ref <- Ref.make(state)
       _ <- gameLoop(ref)
-    } yield 0) orElse ZIO.succeed(1)
+    } yield ExitCode.failure) orElse ZIO.succeed(ExitCode.failure)
 }
 
 /**
@@ -575,6 +576,6 @@ object TicTacToe extends App {
   /**
     * The entry point to the game will be here.
     */
-  def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
-    putStrLn(TestBoard) as 0
+  def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] =
+    putStrLn(TestBoard) as ExitCode.success
 }

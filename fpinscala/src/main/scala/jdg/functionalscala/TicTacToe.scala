@@ -91,7 +91,7 @@ object TicTacToe extends App {
 //  } yield 0
 
 
-  override def run(args: List[String]): ZIO[zio.ZEnv, Nothing, Int] = ???
+  override def run(args: List[String]): ZIO[zio.ZEnv, Nothing, ExitCode] = ???
 
 
 }

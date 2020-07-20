@@ -30,7 +30,7 @@ val log4catsVersion = "1.0.1"
 val circeVersion = "0.12.3"
 val supertaggedVersion = "1.5"
 val monocleVersion = "2.0.0"
-val zioVersion = "1.0.0-RC17"
+val zioVersion = "1.0.0-RC21-2"
 
 lazy val compilerSettings = Seq(
   scalacOptions ++= compilerFlags
