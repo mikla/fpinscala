@@ -6,32 +6,41 @@ import shapeless.{::, Generic, HNil}
 
 import scala.language.implicitConversions
 
-case class WorkTypeId(value: UUID) extends AnyVal
-case class AbsenceTypeId(value: UUID) extends AnyVal
-case class EmployeeId(value: UUID) extends AnyVal
-case class NotId()
-
-trait UUIDGenerator[T] {
-  def generate: T
+trait WithConstruct[T] {
+  def construct(uuid: UUID)(implicit U: UUIDConstruct[T]): T = UUIDConstruct.construct[T](uuid)
 }
 
-object UUIDGenerator {
+case class WorkTypeId(value: UUID) extends AnyVal
+object WorkTypeId extends WithConstruct[WorkTypeId]
 
-  implicit def generate[T](implicit U: UUIDGenerator[T]): T = U.generate
+case class AbsenceTypeId(value: UUID) extends AnyVal
 
-  implicit def genericUUIDGenerator[T](implicit G: Generic.Aux[T, UUID :: HNil]): UUIDGenerator[T] =
-    new UUIDGenerator[T] {
-      override def generate: T = G.from(UUID.randomUUID() :: HNil)
-    }
+case class EmployeeId(value: UUID) extends AnyVal
+
+case class NotId()
+
+trait UUIDConstruct[T] {
+  def construct(uuid: UUID): T
+}
+
+object UUIDConstruct {
+
+  def construct[T](uuid: UUID)(implicit U: UUIDConstruct[T]): T = U.construct(uuid)
+
+  implicit def genericUUIDGenerator[T](
+    implicit G: Generic.Aux[T, UUID :: HNil]
+  ): UUIDConstruct[T] = (uuid: UUID) => G.from(uuid :: HNil)
 
 }
 
 object AutoUUIDGeneratorApp extends App {
 
-  import UUIDGenerator._
+  import UUIDConstruct._
 
-  println(generate[EmployeeId])
-  println(implicitly[UUIDGenerator[EmployeeId]].generate)
+  //  WorkTypeId.generate
+
+  println(construct[EmployeeId](UUID.randomUUID()))
+  println(implicitly[UUIDConstruct[EmployeeId]].construct(UUID.randomUUID()))
 
   //  println(EmployeeId.generate)
   //  println(WorkTypeId.generate())
