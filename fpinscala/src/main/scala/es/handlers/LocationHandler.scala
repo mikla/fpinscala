@@ -8,11 +8,11 @@ class LocationHandler extends EventHandler[Event, Aggregate] {
 
   def handle(state: Aggregate): PartialFunction[Event, Aggregate] = {
     case event: LocationEvent => event match {
-      case LocationAdded(id, name) =>
-        state.copy(locations = state.locations :+ Location(id, name))
+        case LocationAdded(id, name) =>
+          state.copy(locations = state.locations :+ Location(id, name))
 
-      case LocationNameChanged(name) => state
-    }
+        case LocationNameChanged(name) => state
+      }
   }
 
 }

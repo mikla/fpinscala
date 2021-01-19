@@ -21,13 +21,12 @@ object OptionalLensesApp extends App {
 
 }
 
-
 case class Employee1(name: String, number: Int, manager: Boolean, hoursAlgo: Option[Wrapper] = None)
 object Employee1 {
   val hoursAlgo: Lens[Employee1, Option[Wrapper]] = GenLens[Employee1](_.hoursAlgo)
-  val solid = hoursAlgo composePrism some composeLens Wrapper.algo composeLens Algo.fluidLens
+  val solid = hoursAlgo.composePrism(some).composeLens(Wrapper.algo).composeLens(Algo.fluidLens)
 
-  val hoursAlgoSet = hoursAlgo composePrism none
+  val hoursAlgoSet = hoursAlgo.composePrism(none)
 }
 
 case class Wrapper(value: Algo)

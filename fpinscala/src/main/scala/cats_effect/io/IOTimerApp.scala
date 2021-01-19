@@ -18,9 +18,7 @@ object IOTimerApp extends App {
 //
 //  cancel.unsafeRunSync()
 
-  val pureResult: SyncIO[IO[Unit]] = io.runCancelable { r =>
-    IO(println(s"Done: $r"))
-  }
+  val pureResult: SyncIO[IO[Unit]] = io.runCancelable(r => IO(println(s"Done: $r")))
 
   // in example they use .flatten.
   // and it doesn't work

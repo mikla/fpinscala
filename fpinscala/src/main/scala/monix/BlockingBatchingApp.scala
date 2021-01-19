@@ -10,12 +10,11 @@ object BlockingBatchingApp extends App {
 
   val tasksToExecute = (1 to 1000).map { i =>
     Task {
-      println(s"Executing ${i} task")
+      println(s"Executing $i task")
       Thread.sleep(5000 + i)
-      println(s"Task ${i} done")
+      println(s"Task $i done")
     }
   }
-
 
   Await.result(Task.sequence(tasksToExecute).runToFuture, Duration.Inf)
 

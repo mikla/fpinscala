@@ -12,8 +12,9 @@ object PingPong extends IOApp {
     for {
       access <- ref.access
       (value, setter) = access
-      _ <- if (value == mine) print(mine) *> setter(mine.other)
-      else setter(value) *> go(mine, ref)
+      _ <-
+        if (value == mine) print(mine) *> setter(mine.other)
+        else setter(value) *> go(mine, ref)
     } yield ()
 
   sealed trait Next {

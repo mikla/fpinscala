@@ -46,11 +46,9 @@ object TypeInfApp extends App {
     implicitly[Printable[String]]
 
     //  Printable.print("aaaaaaaaaaa")
-    ("asddd").print_
+    "asddd".print_
 
-
-    ("asdasd").format(stringPrintable)
+    "asdasd".format(stringPrintable)
   }
-
 
 }

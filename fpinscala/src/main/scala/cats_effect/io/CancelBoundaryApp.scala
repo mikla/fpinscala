@@ -7,14 +7,14 @@ object CancelBoundaryApp extends App {
 
   def fib(n: Int, a: Long, b: Long): IO[Long] =
     IO.suspend {
-      if (n <= 0) IO.pure(a) else {
+      if (n <= 0) IO.pure(a)
+      else {
         val next = fib(n - 1, b, a + b)
 
         if (n % 10 == 0) IO.cancelBoundary *> next
         else next
       }
     }
-
 
   val n100 = fib(15, 0, 1)
 

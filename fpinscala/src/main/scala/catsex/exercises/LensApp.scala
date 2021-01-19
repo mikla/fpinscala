@@ -14,7 +14,7 @@ trait Lens[S, A] {
 
   def modify(s: S)(f: A => A): S = modifyF[Id](s)(f)
 
-  def modifyF[F[_]: Functor](s: S)(f: A => F[A]): F[S] =
+  def modifyF[F[_] : Functor](s: S)(f: A => F[A]): F[S] =
     f(get(s)).map(a => set(s, a))
 
 }

@@ -17,9 +17,8 @@ object ApplyApp extends App {
     (Option(1), Option(2), Option(3)).mapN(_ + _ + _)
   }
 
-
-  val intToString: Int ⇒ String = _.toString
-  val double: Int ⇒ Int = _ * 2
+  val intToString: Int => String = _.toString
+  val double: Int => Int = _ * 2
 
   println {
     Apply[Option].ap(None)(Some(1))

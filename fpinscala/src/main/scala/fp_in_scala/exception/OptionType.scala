@@ -16,12 +16,10 @@ case class SomeType[+A](x: A) extends OptionType[A] {
   override def filter(f: (A) => Boolean): OptionType[A] = if (f(x)) SomeType(x) else NoneType
 }
 
-object NoneType extends OptionType[Nothing]{
+object NoneType extends OptionType[Nothing] {
   override def map[B](f: (Nothing) => B): OptionType[B] = NoneType
   override def flatMap[B](f: (Nothing) => OptionType[B]): OptionType[B] = NoneType
   override def getOrElse[B >: Nothing](default: => B): B = default
   override def orElse[B >: Nothing](ob: => OptionType[B]): OptionType[B] = ob
   override def filter(f: (Nothing) => Boolean): OptionType[Nothing] = NoneType
 }
-
-

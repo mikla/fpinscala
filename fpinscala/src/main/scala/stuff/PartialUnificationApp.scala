@@ -19,8 +19,7 @@ object PartialUnificationApp extends App {
   def required2[F[_, _], A, B](f: F[A, B]) = ()
   required(new Foo[Int, String, Boolean] {})
 
-
-  def requiredEither[F[_]: Functor](f: F[Int]) = f.map(_.toString + "!")
+  def requiredEither[F[_] : Functor](f: F[Int]) = f.map(_.toString + "!")
   println(requiredEither(Right(3): Either[Int, Int]))
 
 }

@@ -7,8 +7,8 @@ import scala.io.StdIn
   */
 object Clash4 extends App {
   val n = StdIn.readInt
-  var inputs = StdIn.readLine split " "
-  val digs = for(i <- 0 until n) yield {
+  var inputs = StdIn.readLine.split(" ")
+  val digs = for (i <- 0 until n) yield {
     val digit = inputs(i).toInt
     digit
   }

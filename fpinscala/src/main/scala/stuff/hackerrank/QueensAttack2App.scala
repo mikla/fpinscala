@@ -38,7 +38,8 @@ object QueensAttack2App extends App {
 
     case object RightUp extends ObstacleDirection {
       override def distance(n: Int, r_q: Int, c_q: Int, obstacle: Option[(Int, Int)]): Int =
-        if (c_q == n || r_q == 1) 0 else {
+        if (c_q == n || r_q == 1) 0
+        else {
           obstacle.map { case (row, col) =>
             if (r_q + 1 >= c_q) r_q - row - 1 else col - c_q - 1
           }.getOrElse {
@@ -175,8 +176,7 @@ object QueensAttack2App extends App {
       Array(2, 3)
     )
   ))
-  */
-
+   */
 
   println(RightUp.distance(5, 4, 4, None))
 }

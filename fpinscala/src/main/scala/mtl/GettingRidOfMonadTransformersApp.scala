@@ -38,14 +38,13 @@ object GettingRidOfMonadTransformersApp extends App {
 
   }
 
-  def programToCommandTF[F[_]](row: Row)(implicit M: MonadError[F, Throwable]): F[Command] = {
+  def programToCommandTF[F[_]](row: Row)(implicit M: MonadError[F, Throwable]): F[Command] =
     for {
       period <- periodFromBoundsTF[F](row.start, row.end)
       name <- row.name.map(_.pure[F]).getOrElse(M.raiseError(new Exception("name ?")))
       m <- row.serializedMap.map(sm => tryDeserializeTF[F](sm))
         .getOrElse(M.raiseError(new Exception("serialized map ?")))
     } yield Command(Program(row.id, name, period, m))
-  }
 
   println(programToCommand(testRow))
   println(programToCommandTF[Effect](testRow))
@@ -54,7 +53,8 @@ object GettingRidOfMonadTransformersApp extends App {
     decode[Map[String, String]](m).leftMap(_.fillInStackTrace())
 
   private def tryDeserializeTF[F[_]](m: String)(
-    implicit M: MonadError[F, Throwable]): F[Map[String, String]] =
+    implicit M: MonadError[F, Throwable]
+  ): F[Map[String, String]] =
     decode[Map[String, String]](m) match {
       case Right(v) => M.pure(v)
       case Left(err) => M.raiseError(err)
@@ -64,6 +64,7 @@ object GettingRidOfMonadTransformersApp extends App {
     Right(DatePeriod(start, end))
 
   private def periodFromBoundsTF[F[_]](start: LocalDate, end: LocalDate)(
-    implicit M: MonadError[F, Throwable]): F[DatePeriod] = M.pure(DatePeriod(start, end))
+    implicit M: MonadError[F, Throwable]
+  ): F[DatePeriod] = M.pure(DatePeriod(start, end))
 
 }

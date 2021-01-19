@@ -1,6 +1,6 @@
 package stuff
 
-import java.text.Normalizer.{ normalize ⇒ jnormalize, _ }
+import java.text.Normalizer.{normalize => jnormalize, _}
 
 object StringNormalizerApp extends App {
 

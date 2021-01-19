@@ -16,7 +16,6 @@ object FoldableApp extends App {
   Foldable[List].toList(List(1, 2, 3))
   Foldable[Option].toList(Option(42)).print("Foldable.toList: ")
 
-
   Foldable[Option].filter_(Some(42))(_ != 42).print("Foldable[Option].filter_: ")
 
   // A => G[B]

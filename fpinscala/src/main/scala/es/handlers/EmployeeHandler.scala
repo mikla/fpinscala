@@ -8,11 +8,11 @@ class EmployeeHandler extends EventHandler[Event, Aggregate] {
 
   def handle(state: Aggregate): PartialFunction[Event, Aggregate] = {
     case event: EmployeeEvent => event match {
-      case EmployeeAdded(name, number, isManager) =>
-        state.copy(employees = state.employees :+ Employee(name, number, isManager))
+        case EmployeeAdded(name, number, isManager) =>
+          state.copy(employees = state.employees :+ Employee(name, number, isManager))
 
-      case EmployeeNameChanged(name) => state
-    }
+        case EmployeeNameChanged(name) => state
+      }
   }
 
 }

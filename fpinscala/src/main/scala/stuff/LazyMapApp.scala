@@ -25,7 +25,6 @@ object LazyMapApp extends App {
 
   println(m("2")())
 
-
   // With monix
 
   val value1m = Coeval.evalOnce {

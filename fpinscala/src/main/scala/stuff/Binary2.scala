@@ -14,7 +14,7 @@ object Binary2 extends App {
   }
 
   object Vect {
-    type Aux[I] = Vect {type Item = I}
+    type Aux[I] = Vect { type Item = I }
   }
 
   final case class BoolVect64(values: Long) extends AnyVal with Vect {
@@ -22,7 +22,8 @@ object Binary2 extends App {
     def length = 64
     def repr: String = values.toBinaryString.reverse.padTo(64, '0')
     def get(index: Int): Boolean = repr(index) == '1'
-    def set(index: Int, item: Boolean) = BoolVect64(BigInt(repr.updated(index, if (item) '1' else '0').reverse.mkString, 2).toLong)
+    def set(index: Int, item: Boolean) =
+      BoolVect64(BigInt(repr.updated(index, if (item) '1' else '0').reverse.mkString, 2).toLong)
   }
 
   final case class BoolVect8(values: Byte) extends AnyVal with Vect {

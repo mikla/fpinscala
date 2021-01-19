@@ -4,8 +4,7 @@ import es.commands.{AddEmployeeCommand, AddLocationCommand, EmployeeCommand}
 import es.events.{EmployeeAdded, Event, LocationAdded}
 import es.handlers.{EmployeeHandler, LocationHandler}
 
-class EmployeeAggregateBehaviour
-  extends AggregateRootBehaviour[Aggregate, EmployeeCommand, Event, EmployeeError] {
+class EmployeeAggregateBehaviour extends AggregateRootBehaviour[Aggregate, EmployeeCommand, Event, EmployeeError] {
 
   override def processInitializationCommand(command: EmployeeCommand) =
     processLifecycleCommand(Aggregate.empty)(command)

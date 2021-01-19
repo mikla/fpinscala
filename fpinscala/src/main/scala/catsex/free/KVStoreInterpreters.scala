@@ -1,6 +1,6 @@
 package catsex.free
 
-import cats.{Id, ~>}
+import cats.{~>, Id}
 
 import scala.collection.mutable
 
@@ -10,8 +10,7 @@ object KVStoreInterpreters {
 
     val kvs = mutable.Map.empty[String, Any]
 
-    override def apply[A](fa: KVStoreA[A]): Id[A] = {
-
+    override def apply[A](fa: KVStoreA[A]): Id[A] =
       fa match {
         case Put(key, value) =>
           println(s"put $key->$value")
@@ -25,8 +24,6 @@ object KVStoreInterpreters {
           kvs.remove(key)
           ()
       }
-
-    }
 
   }
 

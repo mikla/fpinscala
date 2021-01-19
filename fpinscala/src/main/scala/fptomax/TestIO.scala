@@ -18,13 +18,15 @@ case class TestData(input: List[String], output: List[String], nums: List[Int]) 
 case class TestIO[A](run: TestData => (TestData, A)) {
   self =>
   def map[B](ab: A => B): TestIO[B] =
-    TestIO(t => self.run(t) match {
-      case (t, a) => (t, ab(a))
-    })
+    TestIO(t =>
+      self.run(t) match {
+        case (t, a) => (t, ab(a))
+      })
   def flatMap[B](afb: A => TestIO[B]): TestIO[B] =
-    TestIO(t => self.run(t) match {
-      case (t, a) => afb(a).run(t)
-    })
+    TestIO(t =>
+      self.run(t) match {
+        case (t, a) => afb(a).run(t)
+      })
 
   def eval(t: TestData): TestData = run(t)._1
 

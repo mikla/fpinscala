@@ -11,9 +11,8 @@ object ImplicitTraitRequire extends App {
 
   implicit val ctx = SchedulingContext("", "tz")
 
-  def render(implicit C: Context) = {
+  def render(implicit C: Context) =
     println(C.timeZone)
-  }
 
   render
 

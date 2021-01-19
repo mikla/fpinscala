@@ -29,8 +29,7 @@ object IOApp extends App {
       if (n > 0)
         fib(n - 1, b, b2)
       else
-        IO.pure(b2)
-    )
+        IO.pure(b2))
 
   println(fib(500).unsafeRunSync())
 
@@ -67,9 +66,7 @@ object IOApp extends App {
 
   val fiberIO = for {
     fiber <- launchMissiles.start(cs)
-    _ <- runToBunker.handleErrorWith { error =>
-      fiber.cancel *> IO.raiseError(error)
-    }
+    _ <- runToBunker.handleErrorWith(error => fiber.cancel *> IO.raiseError(error))
     aftermatch <- fiber.join
   } yield aftermatch
 

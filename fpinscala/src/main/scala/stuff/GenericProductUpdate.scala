@@ -13,26 +13,25 @@ object GenericProductUpdate extends App {
   }
 
   trait LowPriorityProductUpdater {
-    implicit def noopValueUpdater[P, A]: ProductUpdater[P, A] = {
+    implicit def noopValueUpdater[P, A]: ProductUpdater[P, A] =
       new ProductUpdater[P, A] {
         def apply(p: P, f: A => A): P = p // keep as is
       }
-    }
   }
 
   object ProductUpdater extends LowPriorityProductUpdater {
-    implicit def simpleValueUpdater[A]: ProductUpdater[A, A] = {
+    implicit def simpleValueUpdater[A]: ProductUpdater[A, A] =
       new ProductUpdater[A, A] {
         def apply(p: A, f: A => A): A = f(p)
       }
-    }
 
-    implicit def productUpdater[L, R, A](implicit leftUpdater: ProductUpdater[L, A],
-                                         rightUpdater: ProductUpdater[R, A]): ProductUpdater[L & R, A] = {
+    implicit def productUpdater[L, R, A](implicit
+      leftUpdater: ProductUpdater[L, A],
+      rightUpdater: ProductUpdater[R, A]
+    ): ProductUpdater[L & R, A] =
       new ProductUpdater[L & R, A] {
         def apply(p: L & R, f: A => A): L & R = &(leftUpdater(p.left, f), rightUpdater(p.right, f))
       }
-    }
   }
 
   def update[A, P](product: P)(f: A => A)(implicit updater: ProductUpdater[P, A]): P = updater(product, f)
@@ -43,9 +42,7 @@ object GenericProductUpdate extends App {
 
   val p: String & Int & User & String = "hello" & 123 & User("Elwood", 23) & "bye"
 
-  val pUpd = update(p) { i: String =>
-    i.toUpperCase
-  }
+  val pUpd = update(p) { i: String => i.toUpperCase }
 
   println(pUpd)
 

@@ -18,7 +18,6 @@ object MinimumSwaps2App extends App {
     var ans = 0
 
     a.indices.foreach { i =>
-
       if (!(visited(i) || positions(i)._2 == i)) {
         var cycle_size: Int = 0
         var j = i

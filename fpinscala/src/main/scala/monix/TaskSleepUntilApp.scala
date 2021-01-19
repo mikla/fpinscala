@@ -15,7 +15,7 @@ object TaskSleepUntilApp extends App {
 
   val checkCondition = Task(condition)
 
-  val proceed = Task.eval(println(s"Condition now: ${condition}. Proceeding..."))
+  val proceed = Task.eval(println(s"Condition now: $condition. Proceeding..."))
 
   val p = for {
     _ <- checkCondition.restartUntil(identity)

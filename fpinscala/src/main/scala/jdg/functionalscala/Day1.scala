@@ -16,7 +16,7 @@ object Day1 extends App {
   // business domain. Note any limitations in your solution.
   // case class BankAccount(ownerId: String, balance: BigDecimal, accountType: String, openedDate: Long)
 
-  case class OwnerId private(id: String)
+  case class OwnerId private (id: String)
 
   object OwnerId {
     def fromString(value: String): Option[OwnerId] =
@@ -106,14 +106,14 @@ object Day1 extends App {
   // Rewrite the following non-function `printer1` into a pure function, which
   // could be used by pure or impure code.
   //
-  def printer2[A](println: String => A, combine: (A, A) => A): A = {
-    List("Welcome to the help page!",
+  def printer2[A](println: String => A, combine: (A, A) => A): A =
+    List(
+      "Welcome to the help page!",
       "To list commands, type `commands`.",
       "For help on a command, type `help <command>`",
       "For help on a command, type `help <command>`",
       "To exit the help page, type `exit`."
     ).map(println).reduce(combine)
-  }
 
   printer2[Unit](println(_), (_, _) => ())
 
@@ -133,7 +133,7 @@ object Day1 extends App {
   val goDown: DrawCommand = (c: Canvas) => c.copy(y = c.y - 1)
   val draw: DrawCommand = (c: Canvas) => ???
 
-  (goUp andThen goDown andThen goLeft)
+  goUp.andThen(goDown).andThen(goLeft)
 
   // Or we could introduce sum type for commands
   // sealed trait Command
@@ -185,11 +185,9 @@ object Day1 extends App {
       Parser(input => Right((input, a)))
 
     final def char: Parser[Unit, Char] =
-      Parser(
-        input =>
-          if (input.length == 0) Left(())
-          else Right((input.drop(1), input.charAt(0)))
-      )
+      Parser(input =>
+        if (input.length == 0) Left(())
+        else Right((input.drop(1), input.charAt(0))))
   }
 
   def alt[E1, E2, A, B](l: Parser[E1, A], r: E1 => Parser[E2, B]): Parser[(E1, E2), Either[A, B]] =
@@ -213,7 +211,7 @@ object Day1 extends App {
   // Implement the function `groupBy1`.
   //
   val TestData =
-  "poweroutage;2018-09-20;level=20" :: Nil
+    "poweroutage;2018-09-20;level=20" :: Nil
   val ByDate: String => String =
     (data: String) => data.split(";")(1)
   val Reducer: (String, List[String]) => String =
@@ -240,9 +238,10 @@ object Day1 extends App {
   //
   object groupBy2 {
     def apply[Event, Key, C](events: List[Event], by: Event => Key)(
-      reducer: (Key, List[Event]) => C): Map[Key, C] =
+      reducer: (Key, List[Event]) => C
+    ): Map[Key, C] =
       events.groupBy(by).map { case (key, events) =>
-         key -> reducer(key, events)
+        key -> reducer(key, events)
       }
   }
 

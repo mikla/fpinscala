@@ -1,19 +1,19 @@
 package fp_in_scala.parallel
 
 import java.util.concurrent.atomic.AtomicReference
-import java.util.concurrent.{CountDownLatch, Callable, ExecutorService, TimeUnit}
+import java.util.concurrent.{Callable, CountDownLatch, ExecutorService, TimeUnit}
 
 import parallel.Par
 
 object Par {
 
   /**
-   * `unit` could begin evaluating its argument immediately ina separate (logical) thread,
-   * or it could simply hold
-   * onto its argument until get is called and begin evaluation then. But note that in this
-   * example, if we want to obtain any degree of parallelism, we require that `unit` begin
-   * evaluating its argument concurrently and return immediately*
-   */
+    * `unit` could begin evaluating its argument immediately ina separate (logical) thread,
+    * or it could simply hold
+    * onto its argument until get is called and begin evaluation then. But note that in this
+    * example, if we want to obtain any degree of parallelism, we require that `unit` begin
+    * evaluating its argument concurrently and return immediately*
+    */
   def unit[A](a: A): Par[A] = ??? /*(es: ExecutorService) => new Future[A] {
     override def apply(cb: (A) => Unit): Unit = cb(a)
   }*/
@@ -39,8 +39,8 @@ object Par {
   }
 
   /**
-   * Means that the give Par[A] should run in separate logical thread.
-   */
+    * Means that the give Par[A] should run in separate logical thread.
+    */
   def fork[A](a: => Par[A]): Par[A] = ??? /* (es: ExecutorService) => new Future[A] {
     def apply(cb: A => Unit): Unit = eval(es)(a(es)(cb))
   }*/
@@ -66,15 +66,15 @@ object Par {
   }
 
   def parFilter[A](ps: List[A])(predicate: A => Boolean): Par[List[A]] = {
-    val l = ps map asyncF(a => if (predicate(a)) List(a) else List())
+    val l = ps.map(asyncF(a => if (predicate(a)) List(a) else List()))
     map(sequence(l))(_.flatten)
   }
 
   def equal[A](e: ExecutorService)(p: Par[A], p2: Par[A]): Boolean = ??? //p(e).get == p2(e).get
 
   /**
-   * UnitFuture doesn't perform any computation, It's already done.
-   */
+    * UnitFuture doesn't perform any computation, It's already done.
+    */
 //  private case class UnitFuture[A](get: A) extends Future[A] {
 //    override def cancel(mayInterruptIfRunning: Boolean): Boolean = false
 //    override def isCancelled: Boolean = false

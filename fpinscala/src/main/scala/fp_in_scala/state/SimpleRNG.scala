@@ -2,7 +2,7 @@ package fp_in_scala.state
 
 case class SimpleRNG(seed: Long) extends RNG {
   override def nextInt: (Int, RNG) = {
-    val newSeed = (seed * 0x5DEECE66DL + 0xBL) & 0xFFFFFFFFFFFFL
+    val newSeed = (seed * 0x5deece66dL + 0xbL) & 0xffffffffffffL
     val nextRNG = SimpleRNG(newSeed)
     val n = (newSeed >>> 16).toInt
     (n, nextRNG)
@@ -42,12 +42,11 @@ object SimpleRNG {
   }
 
   def ints(count: Int)(rng: RNG): (List[Int], RNG) = {
-    def loop(acc: List[Int], size: Int, rngState: RNG): (List[Int], RNG) = {
+    def loop(acc: List[Int], size: Int, rngState: RNG): (List[Int], RNG) =
       if (size < count) {
         val (i, rngState_) = rngState.nextInt
         loop(i :: acc, size + 1, rngState_)
       } else (acc, rngState)
-    }
     loop(List.empty, 0, rng)
   }
 
@@ -68,13 +67,12 @@ object SimpleRNG {
 
   def unit[A](a: A): Rand[A] = rng => (a, rng)
 
-  def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = {
+  def sequence[A](fs: List[Rand[A]]): Rand[List[A]] =
     fs.foldRight(unit(List.empty[A]))((l, acc) => map2(l, acc)(_ :: _))
-  }
 
   def flatMap[A, B](f: Rand[A])(g: A => Rand[B]): Rand[B] = rng => {
-   val (a, rng2) = f(rng)
-   g(a)(rng2)
+    val (a, rng2) = f(rng)
+    g(a)(rng2)
   }
 
   def _map[A, B](s: Rand[A])(f: A => B): Rand[B] = flatMap(s)(a => unit(f(a)))

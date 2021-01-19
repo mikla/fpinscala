@@ -14,10 +14,8 @@ object MonixExponentialBackoff extends App {
   val circuitBreaker = CircuitBreaker[Task].of(
     maxFailures = 5,
     resetTimeout = 10.seconds,
-
     exponentialBackoffFactor = 2,
     maxResetTimeout = 10.minutes,
-
     onRejected = Task {
       println("Task rejected in Open or HalfOpen")
     },
@@ -48,7 +46,7 @@ object MonixExponentialBackoff extends App {
   }
 
   val protectedTask = (for {
-    r  <- problematic
+    r <- problematic
   } yield r).onErrorRestartLoop(100.millis) { (e, delay, retry) =>
     // Exponential back-off, but with a limit
     if (delay < 60.seconds) {

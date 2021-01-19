@@ -16,12 +16,11 @@ case class LeftType[+E](value: E) extends EitherType[E, Nothing] {
 
 case class RightType[+A](value: A) extends EitherType[Nothing, A] {
   override def map[B](f: (A) => B): EitherType[Nothing, B] = RightType(f(value))
-  override def map2[EE >: Nothing, B, C](b: EitherType[EE, B])(f: (A, B) => EitherType[EE, C]) = {
+  override def map2[EE >: Nothing, B, C](b: EitherType[EE, B])(f: (A, B) => EitherType[EE, C]) =
     b match {
       case LeftType(v) => LeftType(v)
       case RightType(v) => RightType(f(value, v))
     }
-  }
   override def flatMap[EE >: Nothing, B](f: (A) => EitherType[EE, B]): EitherType[EE, B] = f(value)
   override def orElse[EE >: Nothing, B >: A](b: => EitherType[EE, B]): EitherType[EE, B] = b
 }

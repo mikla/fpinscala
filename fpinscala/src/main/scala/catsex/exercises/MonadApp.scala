@@ -7,7 +7,7 @@ object MonadApp extends App {
   import cats.instances.option._
 
   println {
-    Monad[List].flatMap(List(1, 2, 3))(x ⇒ List(x, x))
+    Monad[List].flatMap(List(1, 2, 3))(x => List(x, x))
   }
 
   println {
@@ -20,8 +20,7 @@ object MonadApp extends App {
 
   case class Log[A](log: List[String], a: A)
 
-  def toLogger[A, B](f: A => B)(message: String): A => Log[B] = a =>
-    Log(List(message), f(a))
+  def toLogger[A, B](f: A => B)(message: String): A => Log[B] = a => Log(List(message), f(a))
 
   def execLoggers[A, B, C](a: A)(f1: A => Log[B])(f2: B => Log[C]): Log[C] = {
     val b = f1(a).a
@@ -38,7 +37,7 @@ object MonadApp extends App {
 
   println(execLoggers(3)(add1Log)(multLog))
 
-  def bindLog[A, B](a: Log[A])(f : A => Log[B]): Log[B] = {
+  def bindLog[A, B](a: Log[A])(f: A => Log[B]): Log[B] = {
     val logb = f(a.a)
     Log(a.log ::: logb.log, logb.a)
   }

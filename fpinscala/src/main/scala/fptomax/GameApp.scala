@@ -18,16 +18,16 @@ object GameApp extends App {
       Console.putStrLine("You did not enter a number")
     )(guess =>
       if (guess == num) Console.putStrLine("You guessed right, " + name + "!")
-      else Console.putStrLine("You guessed wrong, " + name + "! The number was: " + num)
-    )
+      else Console.putStrLine("You guessed wrong, " + name + "! The number was: " + num))
 
   def checkContinue[F[_] : Program : Console](name: String): F[Boolean] =
     for {
       _ <- Console.putStrLine("Do you want to continue, " + name + "?")
       choice <- Console.getStrLine.map(_.toLowerCase)
-      cont <- if (choice == "y") finish(true)
-      else if (choice == "n") finish(false)
-      else checkContinue(name)
+      cont <-
+        if (choice == "y") finish(true)
+        else if (choice == "n") finish(false)
+        else checkContinue(name)
     } yield cont
 
   def gameLoop[F[_] : Program : Console : Random](name: String): F[Unit] =

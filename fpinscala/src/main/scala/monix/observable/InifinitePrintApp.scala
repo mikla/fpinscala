@@ -9,14 +9,10 @@ import scala.concurrent.duration.Duration
 object InifinitePrintApp extends App {
 
   Await.result(
-    Observable.repeat(false, true).foreach { e =>
-      if (e) println("First") else println("Second")
-    },
+    Observable.repeat(false, true).foreach(e => if (e) println("First") else println("Second")),
     Duration.Inf
   )
 
-  while (true) {
-
-  }
+  while (true) {}
 
 }

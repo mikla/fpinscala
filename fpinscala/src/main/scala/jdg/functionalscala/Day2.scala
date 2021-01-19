@@ -35,7 +35,7 @@ object Day2 extends App {
     final def append[A](l: F[A], r: F[A]): F[A] =
       uncons(l) match {
         case Some((l, ls)) => append(ls, cons(l, r))
-        case None          => r
+        case None => r
       }
 
     final def filter[A](fa: F[A])(f: A => Boolean): F[A] =
@@ -44,13 +44,13 @@ object Day2 extends App {
     final def bind[A, B](fa: F[A])(f: A => F[B]): F[B] =
       uncons(fa) match {
         case Some((a, as)) => append(f(a), bind(as)(f))
-        case None          => empty[B]
+        case None => empty[B]
       }
 
     final def fmap[A, B](fa: F[A])(f: A => B): F[B] = {
       val single: B => F[B] = singleton[B](_)
 
-      bind(fa)(f andThen single)
+      bind(fa)(f.andThen(single))
     }
   }
 
@@ -59,7 +59,7 @@ object Day2 extends App {
     override def cons[A](a: A, as: List[A]): List[A] = a :: as
     override def uncons[A](as: List[A]): Option[(A, List[A])] = as match {
       case a :: xs => Some((a, xs))
-      case _       => None
+      case _ => None
     }
   }
 
@@ -77,7 +77,7 @@ object Day2 extends App {
     override def size[A](fa: List[A]): Int = fa.size
   }
 
-  def MapSized2[K]: Sized[({type l[X] = Map[K, X]})#l] with Object = new Sized[({type l[X] = Map[K, X]})#l] {
+  def MapSized2[K]: Sized[({ type l[X] = Map[K, X] })#l] with Object = new Sized[({ type l[X] = Map[K, X] })#l] {
     override def size[A](fa: Map[K, A]): Int = fa.size
   }
 

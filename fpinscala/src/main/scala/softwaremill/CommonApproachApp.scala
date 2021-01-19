@@ -31,19 +31,17 @@ object CommonApproachApp extends App {
     }
   }
 
-  class LoyaltyPoints(ur: UserRepository,  es: EmailService) {
-    def addPoints(userId: UUID, pointsToAdd: Int): Future[Either[String, Unit]] = {
+  class LoyaltyPoints(ur: UserRepository, es: EmailService) {
+    def addPoints(userId: UUID, pointsToAdd: Int): Future[Either[String, Unit]] =
       ur.findUser(userId).flatMap {
         case None => Future.successful(Left("User not found"))
         case Some(user) =>
           val updated = user.copy(loyaltyPoints = user.loyaltyPoints + pointsToAdd)
           for {
             _ <- ur.updateUser(updated)
-            _ <- es.sendEmail(user.email, "Points added!",
-              s"You now have ${updated.loyaltyPoints}")
+            _ <- es.sendEmail(user.email, "Points added!", s"You now have ${updated.loyaltyPoints}")
           } yield Right(())
       }
-    }
   }
 
   val userRepository = new UserRepositoryImpl

@@ -8,7 +8,7 @@ object Clash extends App {
 
   val n = StdIn.readInt()
 
-  val sets = for(i <- 0 until n) yield {
+  val sets = for (i <- 0 until n) yield {
     val w = StdIn.readLine
     w.foldLeft(Set.empty[Char]) { (acc: Set[Char], elem: Char) =>
       if (elem.isLetter) acc + elem

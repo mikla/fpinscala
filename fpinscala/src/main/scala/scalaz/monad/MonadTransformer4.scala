@@ -12,12 +12,11 @@ object MonadTransformer4 extends App {
 
   class Wrapper[A](run: Future[Option[A]]) {
 
-    def flatMap[B](f: A => Future[Option[B]]): Future[Option[B]] = {
+    def flatMap[B](f: A => Future[Option[B]]): Future[Option[B]] =
       run.flatMap {
         case Some(v) => f(v)
         case None => Future.successful(None)
       }
-    }
 
     def map[B](f: A => B): Future[Option[B]] = run.map {
       case Some(v) => Some(f(v))
@@ -34,7 +33,7 @@ object MonadTransformer4 extends App {
     c <- wrap(fc(b))
   } yield a + b + c
 
-  computation onComplete println
+  computation.onComplete(println)
 
   StdIn.readLine()
 

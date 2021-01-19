@@ -16,9 +16,8 @@ object Traversable {
   import Applicative.ops._
 
   implicit val listTraversable: Traversable[List] = new Traversable[List] {
-    override def traverse[G[_] : Applicative, A, B](fa: List[A])(f: A => G[B]): G[List[B]] = {
+    override def traverse[G[_] : Applicative, A, B](fa: List[A])(f: A => G[B]): G[List[B]] =
       ???
-    }
   }
 
 }

@@ -15,6 +15,8 @@ object RansomNoteApp extends App {
   checkMagazine("ive got a lovely bunch of coconuts".split(" "), "ive got some coconuts".split(" "))
   checkMagazine("give me one grand today night".split(" "), "give one grand today".split(" "))
   checkMagazine("two times three is not four".split(" "), "two times two is four".split(" "))
-  checkMagazine("apgo clm w lxkvg mwz elo bg elo lxkvg elo apgo apgo w elo bg".split(" "), "elo lxkvg bg mwz clm w".split(" "))
+  checkMagazine(
+    "apgo clm w lxkvg mwz elo bg elo lxkvg elo apgo apgo w elo bg".split(" "),
+    "elo lxkvg bg mwz clm w".split(" "))
 
 }

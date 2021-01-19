@@ -21,9 +21,8 @@ object SemigroupK {
     override def combine[A](x: List[A], y: => List[A]): List[A] = x ++ y
   }
 
-
   val optionSmk = new SemigroupK[Option] {
-    override def combine[A](x: Option[A], y: => Option[A]): Option[A] = x orElse y
+    override def combine[A](x: Option[A], y: => Option[A]): Option[A] = x.orElse(y)
   }
 
 }

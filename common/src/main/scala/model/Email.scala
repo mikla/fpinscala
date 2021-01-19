@@ -3,7 +3,7 @@ package model
 /**
   * Smart constructors
   */
-final case class Email private(value: String)
+final case class Email private (value: String)
 
 object Email {
   def fromString(value: String): Option[Email] =

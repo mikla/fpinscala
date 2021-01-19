@@ -5,7 +5,6 @@ import simulacrum.typeclass
 
 import scala.language.higherKinds
 
-
 @typeclass trait Foldable[F[_]] {
 
   def foldLeft[A, B](fa: F[A], initial: B)(f: (B, A) => B): B

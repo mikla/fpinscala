@@ -11,12 +11,11 @@ object computation {
     */
   def repeated[A](init: A, f: A => A, times: Int): List[A] = {
     @tailrec
-    def loop(seed: Int, init: A, acc: List[A]): List[A] = {
+    def loop(seed: Int, init: A, acc: List[A]): List[A] =
       if (seed < times) {
         val newInit = f(init)
         loop(seed + 1, newInit, newInit :: acc)
       } else acc
-    }
     loop(0, init, Nil)
   }
 

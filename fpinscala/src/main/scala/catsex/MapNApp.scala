@@ -9,7 +9,6 @@ object MapNApp extends App {
 
   println((x, y).mapN(_ + _))
 
-
   val xx: Option[Int] = Some(2)
   val yy: Option[Int] = Some(3)
 

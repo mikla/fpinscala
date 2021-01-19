@@ -12,7 +12,7 @@ object Binary extends App {
   }
 
   object Vect {
-    type Aux[I] = Vect {type Item = I}
+    type Aux[I] = Vect { type Item = I }
   }
 
   final case class BoolVect64(values: Long) extends AnyVal with Vect {
@@ -57,7 +57,6 @@ object Binary extends App {
 
   println("Bool 8")
 
-
   println(BoolVect64(123).get(0))
   println(BoolVect64(123).get(1))
   println(BoolVect64(123).get(2))
@@ -68,8 +67,5 @@ object Binary extends App {
   println(BoolVect64(123).get(7))
 
   println(BoolVect8(123).set(1, false).values)
-
-
-
 
 }

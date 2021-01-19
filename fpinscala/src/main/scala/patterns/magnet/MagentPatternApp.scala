@@ -7,9 +7,9 @@ import scala.util.Try
 object MagentPatternApp extends App {
   import EventMagnet._
 
-  def applyMagnet(): EventMagnet = {
+  def applyMagnet(): EventMagnet =
     LotteryCreated("name")
-  }.apply()
+      .apply()
 
 }
 

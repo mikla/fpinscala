@@ -8,7 +8,7 @@ object ApplicativeApp extends App {
 
   // just pure
 
-  (Applicative[List] compose Applicative[Option]).pure(1) // List(Some(1))
+  Applicative[List].compose(Applicative[Option]).pure(1) // List(Some(1))
 
   Applicative[List].product(List(1), List(2, 3)) // List((1,2), (1,3))
 

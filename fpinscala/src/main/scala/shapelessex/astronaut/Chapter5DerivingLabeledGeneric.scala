@@ -11,7 +11,6 @@ case class JsonNumber(Value: Double) extends JsonValue
 case class JsonBoolean(value: Boolean) extends JsonValue
 case object JsonNull extends JsonValue
 
-
 trait JsonEncoder[A] {
   def encode(value: A): JsonValue
 }
@@ -30,15 +29,14 @@ object JsonEncoder {
   implicit val booleanEncoder: JsonEncoder[Boolean] = instance(JsonBoolean)
 
   implicit def listEncoder[A](
-    implicit
-    enc: JsonEncoder[A]): JsonEncoder[List[A]] = instance(list => JsonArray(list.map(enc.encode)))
+    implicit enc: JsonEncoder[A]
+  ): JsonEncoder[List[A]] = instance(list => JsonArray(list.map(enc.encode)))
 
   implicit def optionEncoder[A](
-    implicit
-    enc: JsonEncoder[A]): JsonEncoder[Option[A]] = instance(opt => opt.map(enc.encode).getOrElse(JsonNull))
+    implicit enc: JsonEncoder[A]
+  ): JsonEncoder[Option[A]] = instance(opt => opt.map(enc.encode).getOrElse(JsonNull))
 
 }
-
 
 trait JsonObjectEncoder[A] extends JsonEncoder[A] {
   def encode(value: A): JsonObject

@@ -9,7 +9,6 @@ object BitbybitApp {
     println()
   }
 
-
   def main(args: Array[String]): Unit = {
     val filename = "/Users/mikla/projects/fpinscala/fpinscala/src/main/scala/stuff/hackerrank/input.txt"
     val a = Array.fill(32)('?')
@@ -30,8 +29,7 @@ object BitbybitApp {
         else if (b(words(1).toInt) == '0' || b(words(2).toInt) == '0')
           b(words(1).toInt) = '0'
         else b(words(1).toInt) = '?'
-      }
-      else if (words.contains("AND")) {
+      } else if (words.contains("AND")) {
         if (b(words(2).toInt) == '1' && b(words(1).toInt) == '1')
           b(words(1).toInt) = '1'
         else if (b(words(1).toInt) == '0' && b(words(2).toInt) == '0')

@@ -13,8 +13,6 @@ object Foo {
   }
 }
 
-
-
 object AuxPlayGround extends App {
 
   implicit def fi = new Foo[Int] {

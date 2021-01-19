@@ -12,8 +12,8 @@ object DiffList extends App {
 
   // Nil
   val append: List[Int] => List[Int] = x => x ::: List(1, 2, 3)
-  val prepend = append andThen (List(4, 5, 6) ::: _)
-  val append2 = prepend andThen (_ ::: List(10, 11, 12))
+  val prepend = append.andThen(List(4, 5, 6) ::: _)
+  val append2 = prepend.andThen(_ ::: List(10, 11, 12))
 
   var start = identity(Nil)
 
@@ -21,8 +21,8 @@ object DiffList extends App {
 
   println(append2(Nil))
 
-  val l1 = List(1,2,3)
-  val l2 = List(4,5,6)
+  val l1 = List(1, 2, 3)
+  val l2 = List(4, 5, 6)
   val dl = new DiffList[Int](Nil)
 
   val result = dl.append(l2).prepend(l1).result

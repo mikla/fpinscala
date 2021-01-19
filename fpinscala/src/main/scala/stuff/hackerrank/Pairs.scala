@@ -18,7 +18,7 @@ object Solution {
     val arr = lines(1).split(" ").map(_.toInt).sorted
 
     @tailrec
-    def loop(left: Int, right: Int, acc: Int): Int = {
+    def loop(left: Int, right: Int, acc: Int): Int =
       if (right >= n) acc
       else {
         val diff = arr(right) - arr(left)
@@ -28,7 +28,6 @@ object Solution {
           case e if e > 0 => loop(left + 1, right, acc)
         }
       }
-    }
 
     println {
       loop(0, 1, 0)

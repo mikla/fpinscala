@@ -11,7 +11,7 @@ object FunctorApp extends App {
   val listFunctor = implicitly[Functor[List]]
   val optionFunctor = implicitly[Functor[Option]]
 
-  val listOptionFunctor: Functor[Lambda[X => List[Option[X]]]] = listFunctor compose optionFunctor
+  val listOptionFunctor: Functor[Lambda[X => List[Option[X]]]] = listFunctor.compose(optionFunctor)
 
   val optionsList = List(Some(1), None, Some(2))
 

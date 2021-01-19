@@ -35,8 +35,6 @@ import shapeless.{:+:, ::, CNil, Coproduct, Generic, HList, HNil, Inl, Inr}
   *
   * Ok, пойдем дальше, это отлично работает когда мы имеем инстанс конкретного класса, но что если мы на входе имеем
   * Event и хотим взять из него UserId, если он там есть? (2) не скомпилируется...
-  *
-  *
   */
 object ExtractFieldByTypeApp extends App {
 
@@ -54,9 +52,10 @@ object ExtractFieldByTypeApp extends App {
       override def userId(t: UserId :: T): Option[UserId] = Some(t.head)
     }
 
-    implicit def genericUserIdGetter[T, Repr](implicit G: Generic.Aux[T, Repr], A: UserIdGetter[Repr]) = new UserIdGetter[T] {
-      override def userId(t: T): Option[UserId] = A.userId(G.to(t))
-    }
+    implicit def genericUserIdGetter[T, Repr](implicit G: Generic.Aux[T, Repr], A: UserIdGetter[Repr]) =
+      new UserIdGetter[T] {
+        override def userId(t: T): Option[UserId] = A.userId(G.to(t))
+      }
 
   }
 
@@ -87,8 +86,10 @@ object ExtractFieldByTypeApp extends App {
 
   def filterByUserId[E <: Event](
     event: E,
-    filter: Filter)(
-    implicit A: UserIdGetter[E]) = A.userId(event).contains(filter.userId)
+    filter: Filter
+  )(
+    implicit A: UserIdGetter[E]
+  ) = A.userId(event).contains(filter.userId)
 
   println {
     // implicit not found!
@@ -103,7 +104,8 @@ object ExtractFieldByTypeApp extends App {
   }
 
   implicit def eventCCons[H, T <: Coproduct](
-    implicit sh: UserIdGetter[H],
+    implicit
+    sh: UserIdGetter[H],
     st: UserIdGetter[T]
   ): UserIdGetter[H :+: T] = new UserIdGetter[H :+: T] {
 

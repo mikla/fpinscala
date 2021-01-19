@@ -13,11 +13,11 @@ object HListApp extends App {
 
   val sets = Set(1) :: Set("foo") :: HNil
 
-  val opts = sets map choose // Some(1) :: Some("foor") :: HNil
+  val opts = sets.map(choose) // Some(1) :: Some("foor") :: HNil
 
   val l = (23 :: "foo" :: HNil) :: HNil :: (true :: HNil) :: HNil
 
-  val fl = l flatMap identity
+  val fl = l.flatMap(identity)
 
   // 23 :: "foo" :: HNil
 
@@ -26,7 +26,7 @@ object HListApp extends App {
   object addSize extends Poly2 {
 
     implicit def default[T](implicit st: shapelessex.PolyApp.size.Case.Aux[T, Int]) =
-      at[Int, T] { (acc, t) => acc + size(t) }
+      at[Int, T]((acc, t) => acc + size(t))
 
   }
 

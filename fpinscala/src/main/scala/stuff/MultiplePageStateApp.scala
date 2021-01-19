@@ -14,14 +14,17 @@ object MultiplePageStateApp extends App {
   object PageState {
 
     @AutoMenu
-    case class RootPage(promotedStatuts: Seq[StatusSummary],
+    case class RootPage(
+      promotedStatuts: Seq[StatusSummary],
       override val userMenuOpened: Boolean = false,
-      override val mobileMenuOpened: Boolean = false) extends PageState
+      override val mobileMenuOpened: Boolean = false
+    ) extends PageState
 
     @AutoMenu
-    case class SettingsPage(override val userMenuOpened: Boolean = false,
-      override val mobileMenuOpened: Boolean = false)
-      extends PageState
+    case class SettingsPage(
+      override val userMenuOpened: Boolean = false,
+      override val mobileMenuOpened: Boolean = false
+    ) extends PageState
 
   }
 

@@ -34,9 +34,7 @@ object TaskTraverseApp extends App {
   val result: Task[Either[Throwable, List[UncoveredPosition]]] =
     Task.gatherUnordered(
       List(UUID.randomUUID())
-        .map(scheduleGroup =>
-          calculate(scheduleGroup)
-        )
+        .map(scheduleGroup => calculate(scheduleGroup))
     ).map(_.sequence)
 
   Await.result(result.runToFuture.map(println(_)), Duration.Inf)

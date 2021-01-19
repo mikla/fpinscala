@@ -10,7 +10,7 @@ object ContextBounds extends App {
 
     // Let's figure out WTF is this?
 
-    case class Calculator[T: Monoid](value: T)
+    case class Calculator[T : Monoid](value: T)
 
     // It's actually equivalent to:
 
@@ -33,7 +33,7 @@ object ContextBounds extends App {
 
   { // How to use it?
 
-    case class Calculator[T: Monoid](value: T)
+    case class Calculator[T : Monoid](value: T)
 
     // Monoid gives you two functions on type T:
 
@@ -51,7 +51,7 @@ object ContextBounds extends App {
 
     // Back to our Calculator example
 
-    case class Calculator1[T: Monoid](value: T) {
+    case class Calculator1[T : Monoid](value: T) {
       def calculate(value2: T): T = {
         // let's just `combine` two values... No rocket since
         // One way is to get our Monoid[T] instance by calling implicitly function, like this:
@@ -124,7 +124,7 @@ object ContextBounds extends App {
       def humanly: String = H.humanly(value)
     }
 
-    implicit def humanlyExtenstion[A: HumanReadable](value: A) = HumanlyOps(value)
+    implicit def humanlyExtenstion[A : HumanReadable](value: A) = HumanlyOps(value)
 
     // And now we can call humanly on Int
 

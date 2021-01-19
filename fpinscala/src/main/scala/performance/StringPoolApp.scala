@@ -12,9 +12,7 @@ object StringPoolApp extends App {
 
   val rowsFromFile = Source
     .fromFile(new File("/Users/amiklushou/projects/fpinscala/fpinscala/src/main/scala/performance/rows"))
-    .getLines.toList.map { str =>
-    Row(str.intern())
-  }
+    .getLines.toList.map(str => Row(str.intern()))
 
   StdIn.readLine()
 

@@ -25,7 +25,7 @@ trait MonoidDefs {
     foldMap(as, flip(endoMonoid[B]))(a => b => f(b, a))(z)
 
   def foldMapV[A, B](v: IndexedSeq[A], m: Monoid[B])(f: A => B): B = {
-    def deep(seq: IndexedSeq[A]): B = {
+    def deep(seq: IndexedSeq[A]): B =
       if (seq.length == 2) {
         m.op(f(seq(0)), f(seq(1)))
       } else if (seq.length == 1) {
@@ -34,7 +34,6 @@ trait MonoidDefs {
         val c = seq.length / 2
         m.op(deep(seq.take(c)), deep(seq.drop(c)))
       }
-    }
     deep(v)
   }
 

@@ -18,7 +18,7 @@ object HelloWorld extends App {
     * Implement a simple "Hello World" program using the effect returned by `putStrLn`.
     */
   def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] =
-    putStrLn("Hello, World") as ExitCode.success
+    putStrLn("Hello, World").as(ExitCode.success)
 
 }
 
@@ -39,7 +39,7 @@ object ErrorConversion extends App {
     * preceding `failed` effect into the effect that `run` returns.
     */
   def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] =
-    (failed as ExitCode.success) orElse ZIO.succeed(ExitCode.failure)
+    (failed.as(ExitCode.success)).orElse(ZIO.succeed(ExitCode.failure))
 }
 
 object PromptName extends App {
@@ -63,8 +63,7 @@ object ZIOTypes {
 
   // ZIO[Any, _, _] meaning we don't need env
 
-  def compose[R, S, E, A, B](left: ZIO[R, E, A],
-    right: ZIO[S, E, B]): ZIO[R with S, E, (A, B)] =
+  def compose[R, S, E, A, B](left: ZIO[R, E, A], right: ZIO[S, E, B]): ZIO[R with S, E, (A, B)] =
     ???
 
   /**
@@ -86,7 +85,7 @@ object NumberGuesser extends App {
 
   def analyzeAnswer(random: Int, guess: String): ZIO[Console, Nothing, Unit] =
     if (random.toString == guess.trim) putStrLn("You guessed correctly!")
-    else putStrLn(s"You did not guess correctly. The answer was ${random}")
+    else putStrLn(s"You did not guess correctly. The answer was $random")
 
   /**
     * EXERCISE 5
@@ -101,7 +100,7 @@ object NumberGuesser extends App {
       _ <- putStrLn("Enter a guess from 0 to 3")
       guess <- getStrLn
       _ <- analyzeAnswer(random, guess)
-    } yield (ExitCode.success)) orElse ZIO.succeed(ExitCode.failure)
+    } yield (ExitCode.success)).orElse(ZIO.succeed(ExitCode.failure))
 }
 
 object AlarmApp extends App {
@@ -121,9 +120,7 @@ object AlarmApp extends App {
     */
   lazy val getAlarmDuration: ZIO[Console, IOException, Duration] = {
     def parseDuration(input: String): IO[NumberFormatException, Duration] =
-      parseDouble(input).map(
-        double => Duration(double.toLong, TimeUnit.SECONDS)
-      )
+      parseDouble(input).map(double => Duration(double.toLong, TimeUnit.SECONDS))
 
     def fallback(input: String): ZIO[Console, IOException, Duration] =
       for {
@@ -148,7 +145,7 @@ object AlarmApp extends App {
       duration <- getAlarmDuration
       _ <- ZIO.sleep(duration)
       _ <- putStrLn("Wake up")
-    } yield (ExitCode.success)) orElse ZIO.succeed(ExitCode.failure)
+    } yield (ExitCode.success)).orElse(ZIO.succeed(ExitCode.failure))
 
   val died1: UIO[Unit] =
     ZIO.unit
@@ -186,7 +183,7 @@ object Cat extends App {
   def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] =
     args match {
 //      case file :: Nil => (readFile(file) >>= putStrLn).fold(_ => ExitCode.failure, _ => ExitCode.success)
-      case _ => putStrLn("Usafe: cat <file>") as ExitCode.failure
+      case _ => putStrLn("Usafe: cat <file>").as(ExitCode.failure)
     }
 }
 
@@ -202,7 +199,7 @@ object CatIncremental extends App {
     * Implement all missing methods of `FileHandle`. Be sure to do all work on
     * the blocking thread pool.
     */
-  final case class FileHandle private(private val is: InputStream) {
+  final case class FileHandle private (private val is: InputStream) {
     final def close: ZIO[Blocking, IOException, Unit] =
       effectBlocking(is.close()).refineToOrDie[IOException]
 
@@ -241,7 +238,7 @@ object CatIncremental extends App {
           handle <- FileHandle.open(file)
           _ <- cat(handle)
           _ <- handle.close
-        } yield 0) orElse ZIO.succeed(1)
+        } yield 0).orElse(ZIO.succeed(1))
 
         // or using bracket
 
@@ -278,7 +275,7 @@ object ComputePi extends App {
     * An effect that computes a random (x, y) point.
     */
   val randomPoint: ZIO[Random, Nothing, (Double, Double)] =
-    nextDouble zip nextDouble
+    nextDouble.zip(nextDouble)
 
   /**
     * EXERCISE 12
@@ -305,7 +302,7 @@ object ComputePi extends App {
 
     // Single worker version
     for {
-      piState <- (Ref.make(0l) zipWith Ref.make(0L)) (PiState(_, _))
+      piState <- (Ref.make(0L).zipWith(Ref.make(0L)))(PiState(_, _))
       _ <- putStrLn("Welcome to ZIO Pi")
       compute <- computePi(piState).fork
       report <- reportStatus(piState).fork
@@ -317,10 +314,10 @@ object ComputePi extends App {
 
     // Multiple workers
     for {
-      piState <- (Ref.make(0l) zipWith Ref.make(0L)) (PiState(_, _))
+      piState <- (Ref.make(0L).zipWith(Ref.make(0L)))(PiState(_, _))
       workers = List.fill(10)(computePi(piState))
       reporter = reportStatus(piState)
-      fiber <- (ZIO.forkAll(workers) zipWith (reporter.fork)) (_ zip _)
+      fiber <- (ZIO.forkAll(workers).zipWith(reporter.fork))(_ zip _)
       _ <- getStrLn.orDie *> fiber.interrupt
     } yield ExitCode.success
 
@@ -372,11 +369,11 @@ object Hangman extends App {
     newState <- ref.updateAndGet(_.addChar(char))
     _ <- renderState(newState)
     loop <- guessResult(oldState, newState, char) match {
-      case Incorrect => putStrLn("") as true
-      case Lost => putStrLn("") as false
-      case Won => putStrLn("") as false
-      case Correct => putStrLn("") as true
-      case Unchanged => putStrLn("") as true
+      case Incorrect => putStrLn("").as(true)
+      case Lost => putStrLn("").as(false)
+      case Won => putStrLn("").as(false)
+      case Correct => putStrLn("").as(true)
+      case Unchanged => putStrLn("").as(true)
     }
     _ <- if (loop) gameLoop(ref) else ZIO.unit
   } yield ()
@@ -384,12 +381,10 @@ object Hangman extends App {
   def renderState(state: State): ZIO[Console, Nothing, Unit] = {
 
     /**
-      *
       * f     n  c  t  o
       *  -  -  -  -  -  -  -
       *
       * Guesses: a, z, y, x
-      *
       */
     val word =
       state.word.toList
@@ -452,7 +447,7 @@ object Hangman extends App {
       _ <- renderState(state)
       ref <- Ref.make(state)
       _ <- gameLoop(ref)
-    } yield ExitCode.failure) orElse ZIO.succeed(ExitCode.failure)
+    } yield ExitCode.failure).orElse(ZIO.succeed(ExitCode.failure))
 }
 
 /**
@@ -481,7 +476,7 @@ object TicTacToe extends App {
 
   }
 
-  final case class Board private(value: Vector[Vector[Option[Mark]]]) {
+  final case class Board private (value: Vector[Vector[Option[Mark]]]) {
 
     /**
       * Retrieves the mark at the specified row/col.
@@ -525,18 +520,11 @@ object TicTacToe extends App {
         wonBy(0, 1, 1, 0, mark) ||
         wonBy(0, 2, 1, 0, mark)
 
-    private final def wonBy(row0: Int,
-      col0: Int,
-      rowInc: Int,
-      colInc: Int,
-      mark: Mark): Boolean =
+    private final def wonBy(row0: Int, col0: Int, rowInc: Int, colInc: Int, mark: Mark): Boolean =
       extractLine(row0, col0, rowInc, colInc).collect { case Some(v) => v }.toList == List
         .fill(3)(mark)
 
-    private final def extractLine(row0: Int,
-      col0: Int,
-      rowInc: Int,
-      colInc: Int): Iterable[Option[Mark]] =
+    private final def extractLine(row0: Int, col0: Int, rowInc: Int, colInc: Int): Iterable[Option[Mark]] =
       for {
         row <- (row0 to (row0 + rowInc * 2))
         col <- (col0 to (col0 + colInc * 2))
@@ -546,9 +534,7 @@ object TicTacToe extends App {
   object Board {
     final val empty = new Board(Vector.fill(3)(Vector.fill(3)(None)))
 
-    def fromChars(first: Iterable[Char],
-      second: Iterable[Char],
-      third: Iterable[Char]): Option[Board] =
+    def fromChars(first: Iterable[Char], second: Iterable[Char], third: Iterable[Char]): Option[Board] =
       if (first.size != 3 || second.size != 3 || third.size != 3) None
       else {
         def toMark(char: Char): Option[Mark] =
@@ -577,5 +563,5 @@ object TicTacToe extends App {
     * The entry point to the game will be here.
     */
   def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] =
-    putStrLn(TestBoard) as ExitCode.success
+    putStrLn(TestBoard).as(ExitCode.success)
 }

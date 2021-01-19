@@ -13,4 +13,3 @@ object PolyHirarchyConverterApp extends App {
   println(implicitly[Converter[Outer]].polyConvert(origibal))
 
 }
-

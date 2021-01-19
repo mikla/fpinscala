@@ -20,12 +20,12 @@ object PolyConvAllApp extends App {
 
   trait ConvertedImplicits extends LowLowe {
 
-    implicit def functorConv[F[_]: Functor, A](implicit A: Converter[A]): Converter[F[A]] = (t: F[A]) => t.map(v => A.polyConvert(v))
+    implicit def functorConv[F[_] : Functor, A](implicit A: Converter[A]): Converter[F[A]] =
+      (t: F[A]) => t.map(v => A.polyConvert(v))
 
     implicit val toChangedConverter = new Converter[ToChange] {
-      override def polyConvert(t: ToChange): ToChange = {
+      override def polyConvert(t: ToChange): ToChange =
         ToChange("prefixed-" + t.value)
-      }
     }
 
     implicit val hnilConverter = new Converter[HNil] {
@@ -35,14 +35,17 @@ object PolyConvAllApp extends App {
     implicit def hlistConverter[H, T <: HList](
       implicit
       PH: Converter[H],
-      PT: Converter[T]) = new Converter[H :: T] {
+      PT: Converter[T]
+    ) = new Converter[H :: T] {
       override def polyConvert(t: H :: T): H :: T = PH.polyConvert(t.head) :: PT.polyConvert(t.tail)
     }
 
     implicit def productConverter[T, TT, Repr <: HList](
-      implicit G1: Generic.Aux[T, Repr],
+      implicit
+      G1: Generic.Aux[T, Repr],
       //    M: Mapper.Aux[toChange.type, Repr, Repr],
-      C: Converter[Repr]): Converter[T] = (t: T) => G1.from(C.polyConvert(G1.to(t)))
+      C: Converter[Repr]
+    ): Converter[T] = (t: T) => G1.from(C.polyConvert(G1.to(t)))
 
   }
 

@@ -10,7 +10,6 @@ object TuplesApp extends App {
 
   t.head // 23
 
-
   println(t.drop(1))
 
   println(t.split(1))
@@ -26,6 +25,5 @@ object TuplesApp extends App {
   import syntax.zipper._
   val l = (23, ("foo", true), 2.0).toZipper.right.down.put("bar").root.reify
   println(l)
-
 
 }

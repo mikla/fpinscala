@@ -80,7 +80,7 @@ trait ApplicativeLaws[F[_]] {
     F.pure(a).apply(F.pure(f)) == F.pure(f(a)) // =?=
 
   def applicativeInterchange[A, B](a: A, ff: F[A => B]) =
-     F.pure(a).apply(ff) == ff.apply(F.pure((f: A => B) => f(a)))
+    F.pure(a).apply(ff) == ff.apply(F.pure((f: A => B) => f(a)))
 
   def applicativeMap[A, B](fa: F[A], ff: A => B) =
     fa.map(ff) == fa.apply(F.pure(ff))

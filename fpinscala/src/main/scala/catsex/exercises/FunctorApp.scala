@@ -11,6 +11,6 @@ object FunctorApp extends App {
 
   // functor composition
 
-  Functor[List] compose Functor[Option]
+  Functor[List].compose(Functor[Option])
 
 }

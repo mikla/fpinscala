@@ -12,7 +12,7 @@ object Extractors extends App {
   class BasicIntQueue extends IntQueue {
     private val buf = new ArrayBuffer[Int]()
     override def get(): Int = buf.remove(0)
-    override def put(x: Int): Unit = { println("calling concrete"); buf += x}
+    override def put(x: Int): Unit = { println("calling concrete"); buf += x }
   }
 
   trait Doubling extends IntQueue {
@@ -48,7 +48,7 @@ object Extractors extends App {
   object Email extends Function2[String, String, String] {
     override def apply(v1: String, v2: String): String = v1 + "@" + v2
     def unapply(email: String): Option[(String, String)] = {
-      val parts = email split "@"
+      val parts = email.split("@")
       if (parts.length == 2) Some(parts(0), parts(1)) else None
     }
   }
@@ -69,13 +69,12 @@ object Extractors extends App {
   println(reversePairs(List(1, 2, 3, 4, 5)))
 
   def reversePairs[T](li: List[T]): List[T] = {
-    def rev(l: List[T], acc: List[T]): List[T] = {
+    def rev(l: List[T], acc: List[T]): List[T] =
       l match {
         case x :: y :: rest => rev(rest, x :: y :: acc)
         case x :: rest => x :: acc
         case _ => acc
       }
-    }
     rev(li, List.empty).reverse
   }
 

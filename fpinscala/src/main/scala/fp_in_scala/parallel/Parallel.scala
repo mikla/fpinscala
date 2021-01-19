@@ -17,28 +17,26 @@ object Parallel extends App {
   }*/
 
   /**
-   * Avoiding pitfalls of combining unit and get.
-   */
-  def sum2(ints: IndexedSeq[Int]): Par[Int] = {
-    if (ints.size <= 1) Par.unit(ints.headOption getOrElse 0)
-    else  {
+    * Avoiding pitfalls of combining unit and get.
+    */
+  def sum2(ints: IndexedSeq[Int]): Par[Int] =
+    if (ints.size <= 1) Par.unit(ints.headOption.getOrElse(0))
+    else {
       val (l, r) = ints.splitAt(ints.length / 2)
       Par.map2(sum2(l), sum2(r))(_ + _)
     }
-  }
 
   /**
-   * Control parallelism via fork
-   * @param ints
-   * @return
-   */
-  def sum3(ints: IndexedSeq[Int]): Par[Int] = {
-    if (ints.size <= 1) Par.unit(ints.headOption getOrElse 0)
-    else  {
+    * Control parallelism via fork
+    * @param ints
+    * @return
+    */
+  def sum3(ints: IndexedSeq[Int]): Par[Int] =
+    if (ints.size <= 1) Par.unit(ints.headOption.getOrElse(0))
+    else {
       val (l, r) = ints.splitAt(ints.length / 2)
       Par.map2(Par.fork(sum3(l)), Par.fork(sum3(r)))(_ + _)
     }
-  }
 
   def delay[A](fa: Par[A]): Par[A] = es => fa(es)
 

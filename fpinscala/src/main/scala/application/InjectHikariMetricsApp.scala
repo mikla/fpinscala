@@ -12,7 +12,6 @@ object InjectHikariMetricsApp extends App {
     def debug = println(hconf.metrics)
   }
 
-
   val connection = new Connection(new Conf("localhost:5432"))
 
   val accessClass = classOf[Connection]

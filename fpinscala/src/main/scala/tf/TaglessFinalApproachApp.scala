@@ -27,18 +27,16 @@ object TaglessFinalApproachApp extends App {
   }
 
   class LoyaltyPoints[F[_] : Monad](ur: UserRepositoryAlg[F], es: EmailAlg[F]) {
-    def addPoints(userId: UUID, pointsToAdd: Int): F[Either[String, Unit]] = {
+    def addPoints(userId: UUID, pointsToAdd: Int): F[Either[String, Unit]] =
       ur.findUser(userId).flatMap {
         case None => implicitly[Monad[F]].pure(Left("User not found"))
         case Some(user) =>
           val updated = user.copy(loyaltyPoints = user.loyaltyPoints + pointsToAdd)
           for {
             _ <- ur.updateUser(updated)
-            _ <- es.sendEmail(user.email, "Points added!",
-              s"You now have ${updated.loyaltyPoints}")
+            _ <- es.sendEmail(user.email, "Points added!", s"You now have ${updated.loyaltyPoints}")
           } yield Right(())
       }
-    }
   }
 
   trait FutureInterpreter extends UserRepositoryAlg[Future] {
@@ -50,8 +48,7 @@ object TaglessFinalApproachApp extends App {
   }
 
   trait FutureEmailInterpreter extends EmailAlg[Future] {
-    override def sendEmail(email: String, subject: String,
-      body: String): Future[Unit] = {
+    override def sendEmail(email: String, subject: String, body: String): Future[Unit] = {
       println(s"sending email $email")
       Future.successful(())
     }

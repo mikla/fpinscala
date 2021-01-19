@@ -34,14 +34,13 @@ trait AggregateRootBehaviour[A, C, E, R] {
   def processCommandsAndEvents(aggregateState: EventualState[A])(commands: List[C]): Either[R, A] =
     commands.foldLeft(Either.right[R, EventualState[A]](aggregateState)) {
       case (rejectOrState, command) => rejectOrState match {
-        case Left(_) => rejectOrState
-        case Right(state) =>
-          processCommand(state)(command).map(
-            events => events.foldLeft(state) {
-              case (st, e) => applyEvent(st)(e)
-            }
-          )
-      }
+          case Left(_) => rejectOrState
+          case Right(state) =>
+            processCommand(state)(command).map(events =>
+              events.foldLeft(state) {
+                case (st, e) => applyEvent(st)(e)
+              })
+        }
     }.map(_.asInstanceOf[Initialized[A]].state)
 
   /**
@@ -52,14 +51,15 @@ trait AggregateRootBehaviour[A, C, E, R] {
   def processLifecycleCommandSequence(state: A)(commands: C*): CommandReaction =
     commands.foldLeft(Either.right[R, (List[E], A)](List.empty[E] -> state)) {
       case (rejectOrStateAndEvents, command) => rejectOrStateAndEvents match {
-        case Left(_) => rejectOrStateAndEvents
-        case Right((events, accState)) =>
-          processLifecycleCommand(accState)(command).map(
-            newEvents => (events ++ newEvents, newEvents.foldLeft(accState) {
-              case (st, e) => applyLifecycleEvent(st)(e)
-            })
-          )
-      }
+          case Left(_) => rejectOrStateAndEvents
+          case Right((events, accState)) =>
+            processLifecycleCommand(accState)(command).map(newEvents =>
+              (
+                events ++ newEvents,
+                newEvents.foldLeft(accState) {
+                  case (st, e) => applyLifecycleEvent(st)(e)
+                }))
+        }
     }.map(_._1)
 
   def applyLifecycleEventSequence(state: A)(events: E*): A =
@@ -109,8 +109,9 @@ trait AggregateRootBehaviour[A, C, E, R] {
 
   object Constraint {
     def sequence(constraints: List[Constraint]): Constraint =
-      loc => constraints.foldLeft(None: Option[R]) {
-        case (res, constraint) => res.orElse(constraint(loc))
-      }
+      loc =>
+        constraints.foldLeft(None: Option[R]) {
+          case (res, constraint) => res.orElse(constraint(loc))
+        }
   }
 }

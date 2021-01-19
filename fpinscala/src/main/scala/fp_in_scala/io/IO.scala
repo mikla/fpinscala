@@ -1,6 +1,5 @@
 package fp_in_scala.io
 
-
 trait IO { self =>
   def run: Unit
 
@@ -18,5 +17,3 @@ object IO {
   }
 
 }
-
-

@@ -6,7 +6,9 @@ object UnsafeContains extends App {
 
   class A
   class B
-  val x = if (true) new A{} else new B
-  List.empty[A].contains(new B{})
+  val x =
+    if (true) new A {}
+    else new B
+  List.empty[A].contains(new B {})
 
 }

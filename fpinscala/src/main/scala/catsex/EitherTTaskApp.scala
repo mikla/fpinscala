@@ -17,19 +17,14 @@ object EitherTTaskApp extends App {
   def getStatistics(scheduleGroup: Long): Task[Either[Throwable, Map[UserId, EmployeeStats]]] =
     Task.now(Right(Map(UserId("1") -> EmployeeStats(100))))
 
-  def combine(): Task[Either[Throwable, Map[UserId, EmployeeStats]]] = {
-
+  def combine(): Task[Either[Throwable, Map[UserId, EmployeeStats]]] =
     EitherT(scheduleGroups()).flatMap { groups =>
       EitherT(
         Task.gather {
-          groups.map { grId =>
-            getStatistics(grId)
-          }
+          groups.map(grId => getStatistics(grId))
         }.map(_.sequence.map(_.reduce(_ ++ _)))
       )
     }.value
-
-  }
 
   val tlit: List[Either[Throwable, Map[UserId, EmployeeStats]]] = List(Right(Map.empty))
 

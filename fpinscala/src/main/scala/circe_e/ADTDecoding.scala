@@ -1,6 +1,7 @@
 package circe_e
 
 import io.circe._
+import io.circe.generic.JsonCodec
 import io.circe.generic.auto._
 import io.circe.parser._
 import io.circe.syntax._
@@ -26,5 +27,20 @@ object ADTDecoding extends App {
   val event = decode[Event](jsonStr)
 
   println(event)
+
+  sealed trait TaskItemStatus
+  object TaskItemStatus {
+    final case object Pending extends TaskItemStatus
+    final case object Running extends TaskItemStatus
+    final case object Improving extends TaskItemStatus
+    final case object Stopped extends TaskItemStatus
+  }
+
+  @JsonCodec case class Item(
+    id: String,
+    status: TaskItemStatus
+  )
+
+  println(Item("id", TaskItemStatus.Stopped))
 
 }

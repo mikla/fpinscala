@@ -1,7 +1,7 @@
 lazy val commonSettings = Seq(
   organization := "com.fpinscala",
   version := "0.1.0",
-  scalaVersion := "2.13.2"
+  scalaVersion := "2.13.3"
 )
 
 lazy val compilerFlags = Seq(
@@ -9,8 +9,8 @@ lazy val compilerFlags = Seq(
 )
 
 resolvers ++= Seq(
-  "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases",
-  "Akka Snapshot Repository" at "https://repo.akka.io/snapshots/"
+  "Sonatype Releases".at("https://oss.sonatype.org/content/repositories/releases"),
+  "Akka Snapshot Repository".at("https://repo.akka.io/snapshots/")
 )
 
 resolvers += Resolver.sonatypeRepo("releases")
@@ -37,56 +37,40 @@ lazy val compilerSettings = Seq(
 )
 
 lazy val commonDeps = libraryDependencies ++= Seq(
-  compilerPlugin("org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full),
+  compilerPlugin(("org.typelevel" %% "kind-projector" % "0.11.0").cross(CrossVersion.full)),
   "com.chuusai" %% "shapeless" % shapelessVersion,
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
   "org.typelevel" %% "simulacrum" % similacrumVersion,
-
   "org.typelevel" %% "cats-effect" % catsEffectVersion,
-
   //  "io.chrisdavenport" %% "log4cats-core" % log4catsVersion, // Only if you want to Support Any Backend
   "io.chrisdavenport" %% "log4cats-slf4j" % log4catsVersion,
-
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
   "io.circe" %% "circe-parser" % circeVersion,
-
   "org.rudogma" %% "supertagged" % supertaggedVersion,
-
   "org.typelevel" %% "spire" % spireVerison,
-
   "org.typelevel" %% "cats-core" % catsVersion,
   "org.typelevel" %% "cats-macros" % catsVersion,
   "org.typelevel" %% "cats-kernel" % catsVersion,
   "org.typelevel" %% "alleycats-core" % catsVersion,
   "org.typelevel" %% "cats-free" % catsVersion,
-
   "dev.zio" %% "zio" % zioVersion,
   "dev.zio" %% "zio-streams" % zioVersion,
   "dev.zio" %% "zio-test" % zioVersion % "test",
   "dev.zio" %% "zio-test-sbt" % zioVersion % "test",
-
   "org.typelevel" %% "kittens" % kittensVersion,
-
   "io.monix" %% "monix-execution" % monixVersion,
   "io.monix" %% "monix-eval" % monixVersion,
   "io.monix" %% "monix" % monixVersion,
-
   "com.github.pureconfig" %% "pureconfig" % pureConfigVersion,
   "com.github.pureconfig" %% "pureconfig-enumeratum" % pureConfigVersion,
-
   "com.beachape" %% "enumeratum" % enumeratumVersion,
-
   "com.github.julien-truffaut" %% "monocle-core" % monocleVersion,
   "com.github.julien-truffaut" %% "monocle-macro" % monocleVersion,
-
   "eu.timepit" %% "refined" % "0.9.10",
-
   // cassandra driver
   "com.outworkers" %% "phantom-dsl" % "2.50.0",
-
   "com.github.julien-truffaut" %% "monocle-law" % monocleVersion % "test",
-
   "org.scalacheck" %% "scalacheck" % scalaCheckVersion % "test",
   "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
 )

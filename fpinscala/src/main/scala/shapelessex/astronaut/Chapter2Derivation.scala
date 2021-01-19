@@ -18,12 +18,11 @@ object Chapter2Derivation extends App {
   // we can also define Products and Coproducts in terms of tuples and Either
 
   type Rectange2 = (Double, Double)
-  type Circle2 = (Double)
+  type Circle2 = Double
 
   type Shape2 = Either[Rectange2, Circle2]
 
   // but tuples are not suitable for generic programming for several reasons
-
 
   val product: String :: Int :: Boolean :: HNil = "Sunday" :: 1 :: false :: HNil
 

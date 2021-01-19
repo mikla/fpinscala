@@ -11,7 +11,7 @@ trait Penultimate[L] {
 }
 
 object Penultimate {
-  type Aux[L, O] = Penultimate[L] {type Out = O}
+  type Aux[L, O] = Penultimate[L] { type Out = O }
 
   def apply[L](implicit p: Penultimate[L]): Aux[L, p.Out] = p
 

@@ -11,9 +11,8 @@ object EitherApp extends App {
 
   def deserialize(str: String): Either[Throwable, String] = Right(str)
 
-  def traverse: Either[Throwable, Option[String]] = {
+  def traverse: Either[Throwable, Option[String]] =
     proto.map(str => deserialize(str)).sequence[Either[Throwable, ?], String]
-  }
 
   val x: Option[Int] = None
 
@@ -42,8 +41,7 @@ object EitherApp extends App {
   val someOption: Option[Int] = None
   someOption.as(println("not lazy"))
 
-
-  val processed : List[Either[String, Int]] = List(Right(1), Left("error"))
+  val processed: List[Either[String, Int]] = List(Right(1), Left("error"))
 
   println(processed.partition(_.isRight))
   println(processed.flatMap(_.toOption))

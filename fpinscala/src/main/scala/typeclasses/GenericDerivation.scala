@@ -25,5 +25,3 @@ object GenericDerivation extends App {
   implicit def hconsParser[H : Parser]: Parser[H] = ???
 
 }
-
-

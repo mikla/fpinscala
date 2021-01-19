@@ -4,7 +4,7 @@ import java.util.UUID
 
 import cats.data.EitherK
 import cats.free.Free
-import cats.{Id, Inject, InjectK, ~>}
+import cats.{~>, Id, Inject, InjectK}
 
 import scala.language.higherKinds
 
@@ -15,7 +15,6 @@ case class AccountingRecord(id: String, employeeId: String, hoursWorked: Long)
 sealed trait EmployeeService[A]
 case class CreateEmployee(employee: Employee) extends EmployeeService[Employee]
 case class DeleteEmployee(employeeId: String) extends EmployeeService[Unit]
-
 
 sealed trait AccountingInfoService[A]
 case class GetAccountingInfo(employeeId: String) extends AccountingInfoService[List[AccountingRecord]]
@@ -40,7 +39,9 @@ class AccountingInfoServiceComponent[F[_]](implicit I: InjectK[AccountingInfoSer
 }
 
 object AccountingInfoServiceComponent {
-  implicit def accountingService[F[_]](implicit I: InjectK[AccountingInfoService, F]): AccountingInfoServiceComponent[F] =
+  implicit def accountingService[F[_]](implicit
+    I: InjectK[AccountingInfoService, F]
+  ): AccountingInfoServiceComponent[F] =
     new AccountingInfoServiceComponent[F]
 }
 
@@ -72,8 +73,10 @@ object DependencyInjectionApp extends App {
   type Application[A] = EitherK[EmployeeService, AccountingInfoService, A]
 
   def program(
-    implicit E: EmployeeServiceComponent[Application],
-    A: AccountingInfoServiceComponent[Application]): Free[Application, Long] = {
+    implicit
+    E: EmployeeServiceComponent[Application],
+    A: AccountingInfoServiceComponent[Application]
+  ): Free[Application, Long] = {
 
     import E._, A._
 
@@ -85,7 +88,7 @@ object DependencyInjectionApp extends App {
     } yield hours.map(_.hoursWorked).sum
   }
 
-  val interpreter: Application ~> Id = ConsoleEmployeeServiceInterpreter or ConsoleAccountingServiceInterpreter
+  val interpreter: Application ~> Id = ConsoleEmployeeServiceInterpreter.or(ConsoleAccountingServiceInterpreter)
 
 //  val evaled: Unit = program.foldMap(interpreter)
 

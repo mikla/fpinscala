@@ -12,5 +12,4 @@ object Test {
 //  val handler: Handler[LocationEventHandler :+: EmployeeEventHandler :+: CNil, Aggregate] =
 //    locationHandler :++: employeeHandler :++: CNilHandler()
 
-
 }

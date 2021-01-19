@@ -11,7 +11,7 @@ object TaskBatchingApp extends App {
   def removeRequests(userId: Int): Task[Int] =
     Task.deferFuture(Future(println(s"Removing request for user $userId"))).map(_ => userId)
 
-  val employeeList = (1 to 100)
+  val employeeList = 1 to 100
 
   val removal = Task.sequence {
     employeeList.grouped(10).map { batch =>

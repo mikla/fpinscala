@@ -19,7 +19,7 @@ object CoproductApp extends App {
 
   // coproduct supports mapping given a poly function
 
-  val mappedIsb = isb map sizeM
+  val mappedIsb = isb.map(sizeM)
 
   println(mappedIsb)
 

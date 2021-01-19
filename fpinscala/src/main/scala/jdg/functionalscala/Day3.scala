@@ -11,7 +11,7 @@ object Day3 extends App {
   import zio.console._
   import zio.stm._
 
-  class Lock private(tref: TRef[Boolean]) {
+  class Lock private (tref: TRef[Boolean]) {
     def acquire: UIO[Unit] = (for {
       v <- tref.get
       _ <- if (v) STM.retry else tref.set(true)
@@ -43,7 +43,7 @@ object Day3 extends App {
       ref2 <- Ref.make(0)
       fiber1 <- swap(ref1, ref2).repeat(Schedule.recurs(100)).fork
       fiber2 <- swap(ref2, ref1).repeat(Schedule.recurs(100)).fork
-      _ <- (fiber1 zip fiber2).join
+      _ <- fiber1.zip(fiber2).join
       value <- ref1.get.zipWith(ref2.get)(_ + _)
     } yield value
   }
@@ -64,7 +64,7 @@ object Day3 extends App {
       ref2 <- TRef.make(0).commit
       fiber1 <- swap(ref1, ref2).repeat(Schedule.recurs(100)).fork
       fiber2 <- swap(ref2, ref1).repeat(Schedule.recurs(100)).fork
-      _ <- (fiber1 zip fiber2).join
+      _ <- fiber1.zip(fiber2).join
       value <- ref1.get.zipWith(ref2.get)(_ + _).commit
     } yield value
   }
@@ -72,6 +72,7 @@ object Day3 extends App {
   // Implement TicTacToe
 
   object sharding extends App {
+
     /**
       * Create N workers reading from a Queue, if one of them fails,
       * then wait for the other ones to process the current item, but
@@ -80,7 +81,7 @@ object Day3 extends App {
     def shard[R, E, A](queue: Queue[A], n: Int, worker: A => ZIO[R, E, Unit]): ZIO[R, E, Nothing] = {
       if (n <= 0) ZIO.dieMessage(s"Expect n > 0")
       else {
-        val queueWorkers = ZIO.uninterruptible(ZIO.interruptible(queue.take) flatMap worker).forever
+        val queueWorkers = ZIO.uninterruptible(ZIO.interruptible(queue.take).flatMap(worker)).forever
         val workers = ZIO.forkAll(List.fill(n)(queueWorkers))
         for {
           fiber <- workers
@@ -236,9 +237,8 @@ object Day3 extends App {
      */
 
     override def run(args: List[String]): ZIO[zio.ZEnv, Nothing, ExitCode] =
-      stream map (_ => ExitCode.success)
+      stream.map(_ => ExitCode.success)
   }
-
 
   object dependencies {
 
@@ -289,12 +289,10 @@ object Day3 extends App {
       * Define a `UserStore` in terms of a `Database`.
       */
     lazy val userService: ZIO[Database, Nothing, UserStore] =
-      ZIO.accessM[Database](
-        env =>
-          UIO {
-            ???
-          }
-      )
+      ZIO.accessM[Database](env =>
+        UIO {
+          ???
+        })
 
     /**
       * EXERCISE 4
@@ -323,6 +321,5 @@ object Day3 extends App {
     }
     case class UserProfile(name: String, age: Int, address: String)
   }
-
 
 }

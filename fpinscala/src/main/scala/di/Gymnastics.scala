@@ -10,9 +10,8 @@ case class Id[A](a: A) {
   def flatMap[B](f: A => Reader[B]): Reader[B] = Reader(c => f(rd(c)) rd c)
 }*/
 
-
 // Hostname + port context
-case class  CReader[A](rd: (String, Int) => A) {
+case class CReader[A](rd: (String, Int) => A) {
   def map[B](f: A => B): CReader[B] = ???
   def flatMap[B](f: A => CReader[B]): CReader[B] = ???
 }
@@ -23,19 +22,17 @@ object CReader {
 
 case class State[Cx, A](run: Cx => (A, Cx)) {
   def map[B](f: A => B): State[Cx, B] =
-    State(x => {
+    State { x =>
       val (a, t) = run(x)
       (f(a), t)
-    })
+    }
 
   def flatMap[B](f: A => State[Cx, B]): State[Cx, B] =
-    State(x => {
+    State { x =>
       val (a, t) = run(x)
-      f(a) run t
-    })
+      f(a).run(t)
+    }
 
 }
 
-object Gymnastics extends App {
-
-}
+object Gymnastics extends App {}

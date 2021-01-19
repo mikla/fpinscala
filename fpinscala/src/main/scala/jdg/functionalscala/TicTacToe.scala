@@ -20,7 +20,7 @@ object TicTacToe extends App {
     case object O extends Mark
   }
 
-  final case class Board private(value: Vector[Vector[Option[Mark]]]) {
+  final case class Board private (value: Vector[Vector[Option[Mark]]]) {
 
     /**
       * Retrieves the mark at the specified row/col.
@@ -64,25 +64,16 @@ object TicTacToe extends App {
         wonBy(0, 1, 1, 0, mark) ||
         wonBy(0, 2, 1, 0, mark)
 
-    private final def wonBy(row0: Int,
-      col0: Int,
-      rowInc: Int,
-      colInc: Int,
-      mark: Mark): Boolean =
+    private final def wonBy(row0: Int, col0: Int, rowInc: Int, colInc: Int, mark: Mark): Boolean =
       extractLine(row0, col0, rowInc, colInc).collect { case Some(v) => v }.toList == List
         .fill(3)(mark)
 
-    private final def extractLine(row0: Int,
-      col0: Int,
-      rowInc: Int,
-      colInc: Int): Iterable[Option[Mark]] =
+    private final def extractLine(row0: Int, col0: Int, rowInc: Int, colInc: Int): Iterable[Option[Mark]] =
       for {
         row <- (row0 to (row0 + rowInc * 2))
         col <- (col0 to (col0 + colInc * 2))
       } yield value(row)(col)
   }
-
-
 
   def gameLoop = ??? // for {
 //    _ <- readUserInput retry until isCorrect
@@ -90,8 +81,6 @@ object TicTacToe extends App {
 //    _ <- if(endGame) printGameResult else generateAIInput
 //  } yield 0
 
-
   override def run(args: List[String]): ZIO[zio.ZEnv, Nothing, ExitCode] = ???
-
 
 }

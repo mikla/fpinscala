@@ -20,4 +20,3 @@ object CacheSuite {
   }
 
 }
-

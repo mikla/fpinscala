@@ -33,12 +33,12 @@ object MonoidInstances {
   }
 
   def optionMonoid[A] = new Monoid[Option[A]] {
-    override def op(a: Option[A], b: Option[A]): Option[A] = a orElse b
+    override def op(a: Option[A], b: Option[A]): Option[A] = a.orElse(b)
     override def zero: Option[A] = None
   }
 
   def endoMonoid[A]: Monoid[A => A] = new Monoid[(A) => A] {
-    override def op(a: A => A, b: A => A): A => A = a compose b
+    override def op(a: A => A, b: A => A): A => A = a.compose(b)
     override def zero: A => A = identity
   }
 

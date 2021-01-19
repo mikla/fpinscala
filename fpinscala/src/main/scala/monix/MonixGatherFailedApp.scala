@@ -8,9 +8,11 @@ import scala.concurrent.duration.Duration
 
 object MonixGatherFailedApp extends App {
 
-  val list = List(Task(1), Task(throw new Exception("faiiled")).onErrorRecover {
-    case _ => 2
-  })
+  val list = List(
+    Task(1),
+    Task(throw new Exception("faiiled")).onErrorRecover {
+      case _ => 2
+    })
 
   println(
     Await.result(

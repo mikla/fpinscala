@@ -59,29 +59,54 @@ object FixPointApp extends App {
   // How we can construct?
 
   val p: PProf =
-    PProf("Hilber", 1887, List(
-      PProf("Ackeman", 1025, Nil),
-      PProf("Curry", 1930, Nil),
-      PProf("Weyl", 1908, List(
-        PProf("Mac Lane", 1934, List(
-          PProf("Howard", 1956, Nil),
-          PProf("Awodey", 1997, Nil)
-        ))
-      ))
-    ))
+    PProf(
+      "Hilber",
+      1887,
+      List(
+        PProf("Ackeman", 1025, Nil),
+        PProf("Curry", 1930, Nil),
+        PProf(
+          "Weyl",
+          1908,
+          List(
+            PProf(
+              "Mac Lane",
+              1934,
+              List(
+                PProf("Howard", 1956, Nil),
+                PProf("Awodey", 1997, Nil)
+              ))
+          ))
+      )
+    )
 
   val p1: IdProf =
-    Cofree(1, ProfF("Hilber", 1887, List(
-      Cofree(2, ProfF("Ackeman", 1025, Nil)),
-      Cofree(3, ProfF("Curry", 1930, Nil)),
-      Cofree(4, ProfF("Weyl", 1908, List(
-        Cofree(5, ProfF("Mac Lane", 1934, List(
-          Cofree(6, ProfF("Howard", 1956, Nil)),
-          Cofree(7, ProfF("Awodey", 1997, Nil))
-        ))
-        ))
-      ))
-    )))
+    Cofree(
+      1,
+      ProfF(
+        "Hilber",
+        1887,
+        List(
+          Cofree(2, ProfF("Ackeman", 1025, Nil)),
+          Cofree(3, ProfF("Curry", 1930, Nil)),
+          Cofree(
+            4,
+            ProfF(
+              "Weyl",
+              1908,
+              List(
+                Cofree(
+                  5,
+                  ProfF(
+                    "Mac Lane",
+                    1934,
+                    List(
+                      Cofree(6, ProfF("Howard", 1956, Nil)),
+                      Cofree(7, ProfF("Awodey", 1997, Nil))
+                    ))))))
+        )
+      )
+    )
 
   // Lets parse something to Fix
 

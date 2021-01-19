@@ -17,10 +17,11 @@ object FutureComposition extends App {
     override def map[A, B](fa: Option[A])(f: (A) => B): Option[B] = fa.map(f)
   }
 
-  val futureOptionFunctor = futureFunctor compose optionFunctor
+  val futureOptionFunctor = futureFunctor.compose(optionFunctor)
 
-  implicit class MapFunctorPimp[T](future: Future[Option[T]])
-    (implicit functor: Functor[({type f[X] = Future[Option[X]]})#f]) {
+  implicit class MapFunctorPimp[T](future: Future[Option[T]])(implicit
+    functor: Functor[({ type f[X] = Future[Option[X]] })#f]
+  ) {
 
     def mapF[U](f: T => U): Future[Option[U]] = functor.map(future)(f)
   }

@@ -5,7 +5,6 @@ import cats.implicits._
 
 object SameNameImplicitApp extends App {
 
-
   implicitly[Semigroupal[Order]]
 
   val catsSemigroupalForOrder = ""

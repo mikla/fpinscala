@@ -32,7 +32,7 @@ object MonadTransformer5 extends App {
     c <- wrap(fc(b))
   } yield a + b + c
 
-  computation.run onComplete println
+  computation.run.onComplete(println)
 
   StdIn.readLine()
 

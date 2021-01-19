@@ -18,7 +18,7 @@ object CacheApp extends App {
 
   val mapOfSuites: TrieMap[Long, CacheSuite[MutableCache]] = TrieMap()
 
-  class SomeFacadeImpl(locationSuitesCache:  TrieMap[Long, _ <: CacheSuite[Cache]]) {
+  class SomeFacadeImpl(locationSuitesCache: TrieMap[Long, _ <: CacheSuite[Cache]]) {
     def show = println(locationSuitesCache.values.map(_.mutableEmployeesCache.state.toString()))
   }
 

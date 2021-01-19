@@ -40,13 +40,12 @@ object MonadTransformer3 extends App {
     override def run: Future[Option[A]] = Future.failed(t)
   }
 
-  def wrap[A](f: Future[Option[A]]): Wrapper[A] = {
-    f.value map {
+  def wrap[A](f: Future[Option[A]]): Wrapper[A] =
+    f.value.map {
       case Success(Some(v)) => new SomeWrapper[A](v)
       case Failure(t) => new FailedWrapper[A](t)
       case _ => new NoneWrapper[A]()
-    } getOrElse NoneWrapper[A]()
-  }
+    }.getOrElse(NoneWrapper[A]())
 
   val computation = for {
     a <- wrap(fa(1))
@@ -54,7 +53,7 @@ object MonadTransformer3 extends App {
     c <- wrap(fc(b))
   } yield a + b + c
 
-  computation.run onComplete println
+  computation.run.onComplete(println)
 
   StdIn.readLine()
 

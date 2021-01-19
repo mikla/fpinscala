@@ -46,9 +46,6 @@ object CassandraConnectionApp extends App {
 
   println(result)
 
-
   val x = Employee("", "", true)
-
-
 
 }

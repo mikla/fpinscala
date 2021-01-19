@@ -20,9 +20,7 @@ object MonixMapToEitherApp extends App {
 
   val taskFailed: Task[Int] = Task.deferFuture(Future.failed(new Exception("failed")))
 
-  val res1failed = taskFailed.map(Right(_)).onErrorHandle {e =>
-      println(e.getMessage)
-  }
+  val res1failed = taskFailed.map(Right(_)).onErrorHandle(e => println(e.getMessage))
 
   val res2failed: Task[Either[Error, Int]] = taskFailed.map(Right(_))
 

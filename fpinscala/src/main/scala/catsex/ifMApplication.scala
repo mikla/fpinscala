@@ -16,7 +16,7 @@ object ifMApplication extends App {
     )
   }
 
-  def log[F[_]: Monad] = for {
+  def log[F[_] : Monad] = for {
     _ <- println("logger").pure[F].whenA(true)
   } yield ()
 

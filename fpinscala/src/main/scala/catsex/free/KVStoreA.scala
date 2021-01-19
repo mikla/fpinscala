@@ -7,7 +7,6 @@ case class Put[T](key: String, value: T) extends KVStoreA[Unit]
 case class Get[T](key: String) extends KVStoreA[Option[T]]
 case class Delete(key: String) extends KVStoreA[Unit]
 
-
 object KVStore {
   import cats.free.Free.liftF
 
@@ -29,6 +28,3 @@ object KVStore {
     } yield ()
 
 }
-
-
-

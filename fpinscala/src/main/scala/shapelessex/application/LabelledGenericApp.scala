@@ -23,7 +23,8 @@ object Info extends Low {
   }
 
   implicit def infoHCons[K <: Symbol, H, T <: HList](
-    implicit key: Witness.Aux[K],
+    implicit
+    key: Witness.Aux[K],
     sh: Lazy[Show[H]],
     st: Lazy[Info[T]]
   ): Info[FieldType[K, H] :: T] = new Info[FieldType[K, H] :: T] {

@@ -22,14 +22,11 @@ object JMXTestConnection extends App {
 //
 
   // helpers
-  private def attributes(name: ObjectName) = {
+  private def attributes(name: ObjectName) =
     server.getMBeanInfo(name).getAttributes.toList.map(attribute(name, _)).mkString("\n")
-  }
-  private def attribute(name: ObjectName, attr: MBeanAttributeInfo) = {
+  private def attribute(name: ObjectName, attr: MBeanAttributeInfo) =
     s"- ${attr.getName} - ${attr.getDescriptor} - (${attr.getType}) = ${attributeValue(name, attr)}"
-  }
-  private def attributeValue(name: ObjectName, attr: MBeanAttributeInfo) = {
+  private def attributeValue(name: ObjectName, attr: MBeanAttributeInfo) =
     // it's possible getAttribute throws an exception, see the output below
     Try(server.getAttribute(ObjectName.getInstance(name), attr.getName))
-  }
 }

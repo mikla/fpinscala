@@ -1,7 +1,8 @@
 package shapelessex
 
-import java.util.UUID
+import cats.{Order, Show}
 
+import java.util.UUID
 import shapeless.{::, Generic, HNil}
 
 import scala.language.implicitConversions
@@ -46,5 +47,16 @@ object AutoUUIDGeneratorApp extends App {
   //  println(WorkTypeId.generate())
   //  println(AbsenceTypeId.generate())
   //  println(implicitly[UUIDGenerator[NotId]].generate())
+
+}
+
+object ManualUUIDConstructorApp extends App {
+
+  abstract class UUIDBasedIdGenerator[Id](construct: UUID => Id) {}
+
+  case class Id(value: UUID) extends AnyVal
+//
+//  object Id extends UUIDBasedIdGenerator[Id](Id(_)) //  super constructor cannot be passed a self reference unless parameter is declared by-name
+//
 
 }

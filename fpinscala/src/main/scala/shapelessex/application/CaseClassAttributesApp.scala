@@ -1,11 +1,10 @@
 package shapelessex.application
 
-
 import shapeless._
 import shapeless.poly._
 import shapeless.record._
 import shapeless.ops.record._
-import shapeless.ops.hlist.{Mapper,ToTraversable}
+import shapeless.ops.hlist.{Mapper, ToTraversable}
 import shapeless.tag._
 
 final case class Message(id: Int, title: String, body: String)
@@ -14,7 +13,6 @@ trait ToAttributes[T] {
   def toAttributes(v: T): Seq[String]
 }
 
-
 object Attributes {
 
   object symbolName extends Poly1 {
@@ -22,7 +20,8 @@ object Attributes {
   }
 
   implicit def familyFormat[T, Repr <: HList, KeysRepr <: HList, MapperRepr <: HList](
-    implicit gen: LabelledGeneric.Aux[T, Repr],
+    implicit
+    gen: LabelledGeneric.Aux[T, Repr],
     keys: Keys.Aux[Repr, KeysRepr],
     mapper: Mapper.Aux[symbolName.type, KeysRepr, MapperRepr],
     traversable: ToTraversable.Aux[MapperRepr, List, String]
@@ -43,9 +42,6 @@ object CaseClassAttributesApp extends App {
   println(attributes)
   val L = LabelledGeneric[Message].to(message)
 
-  attributes.foreach { attr =>
-    println(L('id))
-  }
+  attributes.foreach(attr => println(L('id)))
 
 }
-

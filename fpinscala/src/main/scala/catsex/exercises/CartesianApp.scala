@@ -5,7 +5,7 @@ import cats.implicits._
 
 object CartesianApp extends App {
 
- println(List(1) *> List(2, 3))
+  println(List(1) *> List(2, 3))
 
   val x: Option[Int] = Some(1)
   val y: Option[Int] = Some(2)
@@ -16,6 +16,5 @@ object CartesianApp extends App {
   }
 
   (x, y).mapN(_ + _)
-
 
 }

@@ -5,8 +5,4 @@ package stuff.hackerrank.sorting
   *
   * https://www.hackerrank.com/challenges/crush/problem
   */
-object ArrayManipulationApp extends App {
-
-
-
-}
+object ArrayManipulationApp extends App {}

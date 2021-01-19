@@ -3,7 +3,6 @@ package application
 import application.cache.{Cache, MutableCache}
 import model.Employee
 
-
 object ReferenceByPointerApp extends App {
 
   case class Suites(map: Map[Long, Suite])

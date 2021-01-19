@@ -24,7 +24,7 @@ object syntax {
     override def apply(a: A): B =
       genB.from(inter.apply(genA.to(a)))
 
-}
+  }
 
 }
 
@@ -32,6 +32,5 @@ object Chapter6CaseClassMigration extends App {
   import syntax._
 
   println(Employee("Name", 1, manager = true).migrateTo[EmployeeVer2])
-
 
 }

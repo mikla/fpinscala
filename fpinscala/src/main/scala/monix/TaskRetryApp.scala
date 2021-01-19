@@ -31,7 +31,6 @@ object TaskRetryApp extends App {
     maxFailures = 1,
     resetTimeout = 2.seconds,
     maxResetTimeout = 5.seconds,
-
     onRejected = Task {
       println("Task rejected in Open or HalfOpen")
     },
@@ -44,7 +43,7 @@ object TaskRetryApp extends App {
     onOpen = Task {
       println("Switched to Open, all incoming tasks rejected for the next 10 seconds")
     },
-    exponentialBackoffFactor = 2,
+    exponentialBackoffFactor = 2
   )
 
   //  (for {
@@ -68,9 +67,7 @@ object TaskRetryApp extends App {
 //        case scala.util.Success(value) => println(value)
 //      }
 
-  def protectWithRetry2[F[_], A](task: F[A], cb: CircuitBreaker[F])
-    (implicit F: Async[F]): F[A] = {
-
+  def protectWithRetry2[F[_], A](task: F[A], cb: CircuitBreaker[F])(implicit F: Async[F]): F[A] =
     cb.protect(task).recoverWith {
       case _: ExecutionRejectedException =>
         println("-")
@@ -80,18 +77,17 @@ object TaskRetryApp extends App {
           protectWithRetry2(task, cb)
         }
     }
-  }
 
-  def protectWithRetry[F[_], A](task: F[A], cb: CircuitBreaker[F], delay: FiniteDuration)
-    (implicit F: Async[F], timer: Timer[F]): F[A] = {
-
+  def protectWithRetry[F[_], A](task: F[A], cb: CircuitBreaker[F], delay: FiniteDuration)(implicit
+    F: Async[F],
+    timer: Timer[F]
+  ): F[A] =
     cb.protect(task).recoverWith {
       case _: ExecutionRejectedException =>
         // Sleep, then retry
         println(delay)
         timer.sleep(delay).flatMap(_ => protectWithRetry(task, cb, delay * 2))
     }
-  }
 
   //  (for {
   //    cb <- circuitBreaker

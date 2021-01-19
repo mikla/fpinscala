@@ -47,7 +47,8 @@ object FreeApproachApp extends App {
   def addPoints(u: UUID, points: Int)(
     implicit
     users: Users[UserAndEmailAlg],
-    emails: Emails[UserAndEmailAlg]): Free[UserAndEmailAlg, Either[String, Unit]] =
+    emails: Emails[UserAndEmailAlg]
+  ): Free[UserAndEmailAlg, Either[String, Unit]] =
     users.findUser(u).flatMap {
       case None =>
         Free.pure(Left("can't update"))
@@ -55,8 +56,7 @@ object FreeApproachApp extends App {
         val updated = user.copy(loyaltyPoints = user.loyaltyPoints + points)
         for {
           _ <- users.updateUser(updated)
-          _ <- emails.sendEmail(user.email, "Points added!",
-            s"You now have ${updated.loyaltyPoints}")
+          _ <- emails.sendEmail(user.email, "Points added!", s"You now have ${updated.loyaltyPoints}")
         } yield Right(())
     }
 
@@ -84,7 +84,7 @@ object FreeApproachApp extends App {
     }
   }
 
-  val futureUserOrEmailInterpreter = futureUserInterpreter or futureEmailInterpreter
+  val futureUserOrEmailInterpreter = futureUserInterpreter.or(futureEmailInterpreter)
 
   val res: Future[Either[String, Unit]] =
     addPoints(UUID.randomUUID(), 10).foldMap(futureUserOrEmailInterpreter)

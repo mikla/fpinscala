@@ -30,7 +30,7 @@ object ConcurrentHashMapApp extends App {
     (LocationId(2), "location"),
     (LocationId(3), "schedule"),
     (LocationId(3), "log"),
-    (LocationId(3), "location"),
+    (LocationId(3), "location")
   )
 
   Task.gatherUnordered(projections.map(start)).runToFuture

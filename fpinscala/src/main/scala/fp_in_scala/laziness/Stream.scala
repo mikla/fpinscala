@@ -5,24 +5,22 @@ sealed trait Stream[+A] {
     this.foldRight(None: Option[A])((a, b) => Some(a))
 
   def toList: List[A] = {
-    def loop(stream: () => Stream[A], acc: List[A]): List[A] = {
+    def loop(stream: () => Stream[A], acc: List[A]): List[A] =
       stream() match {
         case Empty => acc
         case Cons(h, t) => loop(t, h() :: acc)
       }
-    }
     loop(() => this, List.empty).reverse
   }
 
   def take(n: Int): Stream[A] = {
-    def loop(stream: () => Stream[A], iter: Int, acc: Stream[A]): Stream[A] = {
+    def loop(stream: () => Stream[A], iter: Int, acc: Stream[A]): Stream[A] =
       if (iter < n)
         stream() match {
           case Empty => throw new Exception("not enough elements in stream")
           case Cons(h, t) => loop(t, iter + 1, Cons(h, () => acc))
         }
       else acc
-    }
     loop(() => this, 0, Empty).reverse
   }
 
@@ -32,23 +30,21 @@ sealed trait Stream[+A] {
   }
 
   def reverse: Stream[A] = {
-    def loop(stream: () => Stream[A], acc: Stream[A]): Stream[A] = {
+    def loop(stream: () => Stream[A], acc: Stream[A]): Stream[A] =
       stream() match {
         case Empty => acc
         case Cons(h, t) => loop(t, Cons(h, () => acc))
       }
-    }
     loop(() => this, Empty)
   }
 
   def drop(n: Int): Stream[A] = {
-    def loop(stream: Stream[A], iter: Int, acc: Stream[A]): Stream[A] = {
+    def loop(stream: Stream[A], iter: Int, acc: Stream[A]): Stream[A] =
       if (iter < n) loop(stream.tail, iter + 1, acc)
       else stream match {
         case Empty => acc
         case Cons(h, t) => loop(stream.tail, iter + 1, Cons(h, () => acc))
       }
-    }
     loop(this, 0, Empty).reverse
   }
 
@@ -58,12 +54,11 @@ sealed trait Stream[+A] {
   }
 
   def takeWhile(p: A => Boolean): Stream[A] = {
-    def loop(stream: Stream[A], acc: Stream[A]): Stream[A] = {
+    def loop(stream: Stream[A], acc: Stream[A]): Stream[A] =
       stream.headOption.map { h =>
         if (p(h)) loop(stream.tail, Cons(() => h, () => acc))
         else acc
-      } getOrElse Empty
-    }
+      }.getOrElse(Empty)
     loop(this, Empty)
   }
 
@@ -77,17 +72,15 @@ sealed trait Stream[+A] {
     case Cons(h, t) => Some(h())
   }
 
-  def takeWhileViaFoldRight(p: A => Boolean): Stream[A] = {
+  def takeWhileViaFoldRight(p: A => Boolean): Stream[A] =
     this.foldRight(Empty: Stream[A])((a, b) => if (p(a)) Cons(() => a, () => b) else b)
-  }
 
   def exists(p: A => Boolean): Boolean = {
-    def loop(stream: Stream[A]): Boolean = {
+    def loop(stream: Stream[A]): Boolean =
       stream match {
         case Empty => false
         case Cons(h, t) => p(h()) || loop(t())
       }
-    }
     loop(this)
   }
 
@@ -135,16 +128,16 @@ sealed trait Stream[+A] {
   }
 
   /**
-  def zipAll[B](s: Stream[B]): Stream[(Option[A], Option[B])] = Stream.unfold((this, s)) {
-    case (Cons(h, t), Cons(hh, tt)) => Some((Some(h()) -> Some(hh()), t() -> tt()))
-    case (Empty, Cons(hh, tt)) => Some(Option.empty[A] -> Some(hh()), Stream.empty[A] -> tt())
-    case (Cons(h, t), Empty) => Some(Some(h()) -> Option.empty[B], t() -> Stream.empty[B])
-    case (Empty, Empty) => None
-  }
-  **/
+    *  def zipAll[B](s: Stream[B]): Stream[(Option[A], Option[B])] = Stream.unfold((this, s)) {
+    *    case (Cons(h, t), Cons(hh, tt)) => Some((Some(h()) -> Some(hh()), t() -> tt()))
+    *    case (Empty, Cons(hh, tt)) => Some(Option.empty[A] -> Some(hh()), Stream.empty[A] -> tt())
+    *    case (Cons(h, t), Empty) => Some(Some(h()) -> Option.empty[B], t() -> Stream.empty[B])
+    *    case (Empty, Empty) => None
+    *  }
+    */
 
-  def zipAll[B](s2: Stream[B]): Stream[(Option[A],Option[B])] =
-    zipWithAll(s2)((_,_))
+  def zipAll[B](s2: Stream[B]): Stream[(Option[A], Option[B])] =
+    zipWithAll(s2)((_, _))
 
   def zipWithAll[B, C](s2: Stream[B])(f: (Option[A], Option[B]) => C): Stream[C] =
     Stream.unfold((this, s2)) {
@@ -154,27 +147,25 @@ sealed trait Stream[+A] {
       case _ => None
     }
 
-  def startsWith[B >: A](s: Stream[B]): Boolean = {
+  def startsWith[B >: A](s: Stream[B]): Boolean =
     (this, s) match {
       case (Cons(h, t), Cons(hh, tt)) if h() == hh() => t().startsWith(tt())
       case (Cons(h, t), Empty) => true
       case _ => false
     }
-  }
 
   def tails: Stream[Stream[A]] = Stream.unfold(this) {
     case Empty => None
-    case s => Some((s, s drop 1))
-  } append Stream(Empty)
-
+    case s => Some((s, s.drop(1)))
+  }.append(Stream(Empty))
 
   def hasSubsequence[B >: A](s: Stream[B]): Boolean =
-    this.tails exists (_ startsWith s)
+    this.tails.exists(_.startsWith(s))
 
-  def scanRight[B](z: B)(f: (A, => B) => B): Stream[B] = this.foldRight(z -> Stream(z))((a, b) => {
+  def scanRight[B](z: B)(f: (A, => B) => B): Stream[B] = this.foldRight(z -> Stream(z)) { (a, b) =>
     val b2 = f(a, b._1)
     (b2, Stream.cons(b2, b._2))
-  })._2
+  }._2
 
 }
 
@@ -203,12 +194,11 @@ object Stream {
     Stream(0, 1).append(loop(0, 1))
   }
 
-  def fibsViaUnfold: Stream[Int] = {
-    Stream(0, 1).append(unfold((0, 1))(s => {
+  def fibsViaUnfold: Stream[Int] =
+    Stream(0, 1).append(unfold((0, 1)) { s =>
       lazy val nFib = s._1 + s._2
       Some(nFib, (s._2, nFib))
-    }))
-  }
+    })
 
   def fromViaUnfold(n: Int): Stream[Int] = unfold(n)(s => Some(s, s + 1))
 
@@ -220,4 +210,3 @@ object Stream {
   }
 
 }
-
