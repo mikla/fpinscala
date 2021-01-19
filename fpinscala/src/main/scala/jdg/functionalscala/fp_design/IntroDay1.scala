@@ -15,8 +15,7 @@ object IntroDay1 extends App {
   def shard[R, E, A](
     queue: Queue[A],
     count: Int,
-    worked: A => ZIO[R, E, A]
-  ) = ???
+    worked: A => ZIO[R, E, A]) = ???
 
   case class CardNumber(value: String Refined MatchesRegex[W.`"^4[0-9]{12}(?:[0-9]{3})?$"`.T])
   case class SecurityCode(value: Int Refined Greater[W.`99`.T] And Less[W.`1000`.T])
@@ -25,7 +24,6 @@ object IntroDay1 extends App {
     number: CardNumber,
     name: NonEmptyString,
     expirationDate: LocalDate,
-    securityCode: SecurityCode
-  )
+    securityCode: SecurityCode)
 
 }

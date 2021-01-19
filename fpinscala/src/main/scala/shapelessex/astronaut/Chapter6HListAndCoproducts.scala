@@ -18,8 +18,7 @@ object Penultimate {
   implicit def hlistPenultimate[L <: HList, M <: HList, O](
     implicit
     init: hlist.Init.Aux[L, M],
-    last: hlist.Last.Aux[M, O]
-  ): Penultimate.Aux[L, O] = new Penultimate[L] {
+    last: hlist.Last.Aux[M, O]): Penultimate.Aux[L, O] = new Penultimate[L] {
     type Out = O
 
     def apply(t: L): O = last.apply(init.apply(t))
@@ -28,8 +27,7 @@ object Penultimate {
   implicit def genericPenultimate[CaseClass, Repr, Elem](
     implicit
     gen: Generic.Aux[CaseClass, Repr],
-    p: Penultimate.Aux[Repr, Elem]
-  ): Penultimate.Aux[CaseClass, Elem] = new Penultimate[CaseClass] {
+    p: Penultimate.Aux[Repr, Elem]): Penultimate.Aux[CaseClass, Elem] = new Penultimate[CaseClass] {
     override type Out = Elem
     override def apply(l: CaseClass): Elem = p.apply(gen.to(l))
   }

@@ -38,8 +38,7 @@ object ADTDecoding extends App {
 
   @JsonCodec case class Item(
     id: String,
-    status: TaskItemStatus
-  )
+    status: TaskItemStatus)
 
   println(Item("id", TaskItemStatus.Stopped))
 

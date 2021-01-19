@@ -35,8 +35,7 @@ object PolyConvAllApp extends App {
     implicit def hlistConverter[H, T <: HList](
       implicit
       PH: Converter[H],
-      PT: Converter[T]
-    ) = new Converter[H :: T] {
+      PT: Converter[T]) = new Converter[H :: T] {
       override def polyConvert(t: H :: T): H :: T = PH.polyConvert(t.head) :: PT.polyConvert(t.tail)
     }
 
@@ -44,8 +43,7 @@ object PolyConvAllApp extends App {
       implicit
       G1: Generic.Aux[T, Repr],
       //    M: Mapper.Aux[toChange.type, Repr, Repr],
-      C: Converter[Repr]
-    ): Converter[T] = (t: T) => G1.from(C.polyConvert(G1.to(t)))
+      C: Converter[Repr]): Converter[T] = (t: T) => G1.from(C.polyConvert(G1.to(t)))
 
   }
 

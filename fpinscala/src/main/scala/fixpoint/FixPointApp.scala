@@ -11,8 +11,7 @@ object FixPointApp extends App {
   case class PProf(
     name: String,
     year: Int,
-    students: List[PProf]
-  )
+    students: List[PProf])
 
   // Problem?
   // How we store this to DB?
@@ -22,8 +21,7 @@ object FixPointApp extends App {
   case class ProfF[A](
     name: String,
     year: Int,
-    students: List[A]
-  )
+    students: List[A])
 
   //  type ProfT = ProfF[Prof]
 

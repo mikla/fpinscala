@@ -11,8 +11,7 @@ object OptionalModelApp extends App {
   case class UserModel[F[_]](
     userId: F[Long],
     name: String,
-    createdAt: LocalDateTime
-  )
+    createdAt: LocalDateTime)
 
   val createModel = UserModel[Option](none, "New User", LocalDateTime.now())
 

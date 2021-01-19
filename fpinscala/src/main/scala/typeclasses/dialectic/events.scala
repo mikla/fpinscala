@@ -34,8 +34,7 @@ object events {
   implicit def inductionCaseNamed[E, Tail](
     implicit
     n: Named[E],
-    t: Named[Tail]
-  ) = new Named[(E, Tail)] {
+    t: Named[Tail]) = new Named[(E, Tail)] {
     override val name: String = s"${n.name}, ${t.name}"
   }
 

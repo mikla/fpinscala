@@ -87,9 +87,7 @@ object ExtractFieldByTypeApp extends App {
   def filterByUserId[E <: Event](
     event: E,
     filter: Filter
-  )(
-    implicit A: UserIdGetter[E]
-  ) = A.userId(event).contains(filter.userId)
+  )(implicit A: UserIdGetter[E]) = A.userId(event).contains(filter.userId)
 
   println {
     // implicit not found!
@@ -106,8 +104,7 @@ object ExtractFieldByTypeApp extends App {
   implicit def eventCCons[H, T <: Coproduct](
     implicit
     sh: UserIdGetter[H],
-    st: UserIdGetter[T]
-  ): UserIdGetter[H :+: T] = new UserIdGetter[H :+: T] {
+    st: UserIdGetter[T]): UserIdGetter[H :+: T] = new UserIdGetter[H :+: T] {
 
     override def userId(t: H :+: T): Option[UserId] = t match {
       case Inl(l) => sh.userId(l)

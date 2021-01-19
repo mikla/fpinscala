@@ -224,9 +224,10 @@ object Day1 extends App {
       "2018-09-20" ->
         "On date 2018-09-20, there were 1 power outages"
     )
-  def groupBy1(events: List[String], by: String => String)(
-    reducer: (String, List[String]) => String
-  ): Map[String, String] = ???
+  def groupBy1(
+    events: List[String],
+    by: String => String
+  )(reducer: (String, List[String]) => String): Map[String, String] = ???
 
   groupBy1(TestData, ByDate)(Reducer) == ExpectedResults
 
@@ -237,9 +238,10 @@ object Day1 extends App {
   // the polymorphic function. Compare to the original.
   //
   object groupBy2 {
-    def apply[Event, Key, C](events: List[Event], by: Event => Key)(
-      reducer: (Key, List[Event]) => C
-    ): Map[Key, C] =
+    def apply[Event, Key, C](
+      events: List[Event],
+      by: Event => Key
+    )(reducer: (Key, List[Event]) => C): Map[Key, C] =
       events.groupBy(by).map { case (key, events) =>
         key -> reducer(key, events)
       }

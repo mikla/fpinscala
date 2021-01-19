@@ -21,8 +21,7 @@ object TFAppEx extends App {
 
   class Controller[F[_] : Monad](
     usersService: UsersService[F],
-    requestsService: RequestsService[F]
-  ) {
+    requestsService: RequestsService[F]) {
 
     def getResults: F[List[Request]] = for {
       users <- usersService.getUsers("riga")

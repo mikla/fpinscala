@@ -9,8 +9,7 @@ case class DomainObject[T](
   first: T,
   second: T,
   non: ArmImpl[T],
-  all: List[T]
-)
+  all: List[T])
 
 object KittensTest extends App {
 

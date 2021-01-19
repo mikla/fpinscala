@@ -21,8 +21,7 @@ object Chapter8 extends App {
     implicit
     gen: Generic.Aux[A, R],
     len: hlist.Length.Aux[R, N],
-    natToInt: nat.ToInt[N]
-  ): SizeOf[A] = new SizeOf[A] {
+    natToInt: nat.ToInt[N]): SizeOf[A] = new SizeOf[A] {
     override def value: Int = natToInt.apply()
   }
 

@@ -39,9 +39,9 @@ class AccountingInfoServiceComponent[F[_]](implicit I: InjectK[AccountingInfoSer
 }
 
 object AccountingInfoServiceComponent {
-  implicit def accountingService[F[_]](implicit
-    I: InjectK[AccountingInfoService, F]
-  ): AccountingInfoServiceComponent[F] =
+  implicit def accountingService[F[_]](
+    implicit
+    I: InjectK[AccountingInfoService, F]): AccountingInfoServiceComponent[F] =
     new AccountingInfoServiceComponent[F]
 }
 
@@ -75,8 +75,7 @@ object DependencyInjectionApp extends App {
   def program(
     implicit
     E: EmployeeServiceComponent[Application],
-    A: AccountingInfoServiceComponent[Application]
-  ): Free[Application, Long] = {
+    A: AccountingInfoServiceComponent[Application]): Free[Application, Long] = {
 
     import E._, A._
 

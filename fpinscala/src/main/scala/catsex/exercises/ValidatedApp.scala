@@ -26,8 +26,7 @@ object ValidatedApp extends App {
     )
 
   def validateCommandProcessingResult(
-    res: CommandProcessingResult
-  ): Validated[List[String], List[UUID]] = res match {
+    res: CommandProcessingResult): Validated[List[String], List[UUID]] = res match {
     case CommandOk(id) => Validated.valid(List(id))
     case CommandFailed(_, reason) => Validated.invalid(List(reason))
   }

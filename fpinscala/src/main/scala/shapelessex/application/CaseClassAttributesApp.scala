@@ -24,8 +24,7 @@ object Attributes {
     gen: LabelledGeneric.Aux[T, Repr],
     keys: Keys.Aux[Repr, KeysRepr],
     mapper: Mapper.Aux[symbolName.type, KeysRepr, MapperRepr],
-    traversable: ToTraversable.Aux[MapperRepr, List, String]
-  ): ToAttributes[T] =
+    traversable: ToTraversable.Aux[MapperRepr, List, String]): ToAttributes[T] =
     new ToAttributes[T] {
       def toAttributes(v: T): Seq[String] = keys().map(symbolName).toList.toSeq
     }

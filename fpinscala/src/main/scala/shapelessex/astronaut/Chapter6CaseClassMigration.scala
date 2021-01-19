@@ -19,8 +19,7 @@ object syntax {
     implicit
     genA: LabelledGeneric.Aux[A, ARepr],
     genB: LabelledGeneric.Aux[B, BRepr],
-    inter: hlist.Intersection.Aux[ARepr, BRepr, BRepr]
-  ): Migration[A, B] = new Migration[A, B] {
+    inter: hlist.Intersection.Aux[ARepr, BRepr, BRepr]): Migration[A, B] = new Migration[A, B] {
     override def apply(a: A): B =
       genB.from(inter.apply(genA.to(a)))
 

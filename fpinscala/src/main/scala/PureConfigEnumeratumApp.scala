@@ -39,8 +39,7 @@ object PureConfigEnumeratumApp extends App {
     start: Greeting,
     end: Greeting,
     overtimes: Overtimes = Overtimes(),
-    enabledLocations: List[Location]
-  )
+    enabledLocations: List[Location])
 
   val conf = parseString(
     """{

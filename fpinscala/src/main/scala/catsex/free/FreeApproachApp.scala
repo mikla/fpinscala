@@ -44,11 +44,12 @@ object FreeApproachApp extends App {
       new Emails
   }
 
-  def addPoints(u: UUID, points: Int)(
-    implicit
+  def addPoints(
+    u: UUID,
+    points: Int
+  )(implicit
     users: Users[UserAndEmailAlg],
-    emails: Emails[UserAndEmailAlg]
-  ): Free[UserAndEmailAlg, Either[String, Unit]] =
+    emails: Emails[UserAndEmailAlg]): Free[UserAndEmailAlg, Either[String, Unit]] =
     users.findUser(u).flatMap {
       case None =>
         Free.pure(Left("can't update"))

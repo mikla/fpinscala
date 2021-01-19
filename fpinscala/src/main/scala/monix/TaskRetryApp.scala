@@ -78,10 +78,13 @@ object TaskRetryApp extends App {
         }
     }
 
-  def protectWithRetry[F[_], A](task: F[A], cb: CircuitBreaker[F], delay: FiniteDuration)(implicit
+  def protectWithRetry[F[_], A](
+    task: F[A],
+    cb: CircuitBreaker[F],
+    delay: FiniteDuration
+  )(implicit
     F: Async[F],
-    timer: Timer[F]
-  ): F[A] =
+    timer: Timer[F]): F[A] =
     cb.protect(task).recoverWith {
       case _: ExecutionRejectedException =>
         // Sleep, then retry

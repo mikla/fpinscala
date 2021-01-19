@@ -11,8 +11,7 @@ object Random {
   implicit def genericRandomCase[A, R <: HList](
     implicit
     gen: Generic.Aux[A, R],
-    rand: Lazy[Random[R]]
-  ): Random[A] = new Random[A] {
+    rand: Lazy[Random[R]]): Random[A] = new Random[A] {
     override def get: A = gen.from(rand.value.get)
   }
 
@@ -23,8 +22,7 @@ object Random {
   implicit def hlistRandom[H, T <: HList](
     implicit
     hRand: Lazy[Random[H]],
-    tRand: Random[T]
-  ): Random[H :: T] = new Random[H :: T] {
+    tRand: Random[T]): Random[H :: T] = new Random[H :: T] {
     override def get = hRand.value.get :: tRand.get
   }
 

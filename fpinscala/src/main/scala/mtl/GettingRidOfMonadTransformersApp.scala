@@ -52,9 +52,9 @@ object GettingRidOfMonadTransformersApp extends App {
   private def tryDeserialize(m: String): Either[Throwable, Map[String, String]] =
     decode[Map[String, String]](m).leftMap(_.fillInStackTrace())
 
-  private def tryDeserializeTF[F[_]](m: String)(
-    implicit M: MonadError[F, Throwable]
-  ): F[Map[String, String]] =
+  private def tryDeserializeTF[F[_]](
+    m: String
+  )(implicit M: MonadError[F, Throwable]): F[Map[String, String]] =
     decode[Map[String, String]](m) match {
       case Right(v) => M.pure(v)
       case Left(err) => M.raiseError(err)
@@ -63,8 +63,9 @@ object GettingRidOfMonadTransformersApp extends App {
   private def periodFromBounds(start: LocalDate, end: LocalDate): Either[Throwable, DatePeriod] =
     Right(DatePeriod(start, end))
 
-  private def periodFromBoundsTF[F[_]](start: LocalDate, end: LocalDate)(
-    implicit M: MonadError[F, Throwable]
-  ): F[DatePeriod] = M.pure(DatePeriod(start, end))
+  private def periodFromBoundsTF[F[_]](
+    start: LocalDate,
+    end: LocalDate
+  )(implicit M: MonadError[F, Throwable]): F[DatePeriod] = M.pure(DatePeriod(start, end))
 
 }

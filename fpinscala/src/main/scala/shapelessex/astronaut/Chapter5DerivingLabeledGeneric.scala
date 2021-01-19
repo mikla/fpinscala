@@ -29,12 +29,10 @@ object JsonEncoder {
   implicit val booleanEncoder: JsonEncoder[Boolean] = instance(JsonBoolean)
 
   implicit def listEncoder[A](
-    implicit enc: JsonEncoder[A]
-  ): JsonEncoder[List[A]] = instance(list => JsonArray(list.map(enc.encode)))
+    implicit enc: JsonEncoder[A]): JsonEncoder[List[A]] = instance(list => JsonArray(list.map(enc.encode)))
 
   implicit def optionEncoder[A](
-    implicit enc: JsonEncoder[A]
-  ): JsonEncoder[Option[A]] = instance(opt => opt.map(enc.encode).getOrElse(JsonNull))
+    implicit enc: JsonEncoder[A]): JsonEncoder[Option[A]] = instance(opt => opt.map(enc.encode).getOrElse(JsonNull))
 
 }
 
@@ -54,8 +52,7 @@ object JsonObjectEncoder {
     implicit
     witness: Witness.Aux[K],
     hEncoder: Lazy[JsonEncoder[H]],
-    tEncoder: JsonObjectEncoder[T]
-  ): JsonObjectEncoder[FieldType[K, H] :: T] = {
+    tEncoder: JsonObjectEncoder[T]): JsonObjectEncoder[FieldType[K, H] :: T] = {
     val fieldName = witness.value.name
     instance { hlist =>
       val head = hEncoder.value.encode(hlist.head)
@@ -67,8 +64,7 @@ object JsonObjectEncoder {
   implicit def genericObjectEncoder[A, H <: HList](
     implicit
     generic: LabelledGeneric.Aux[A, H],
-    hEncoder: Lazy[JsonObjectEncoder[H]]
-  ): JsonEncoder[A] = instance(value => hEncoder.value.encode(generic.to(value)))
+    hEncoder: Lazy[JsonObjectEncoder[H]]): JsonEncoder[A] = instance(value => hEncoder.value.encode(generic.to(value)))
 
 }
 

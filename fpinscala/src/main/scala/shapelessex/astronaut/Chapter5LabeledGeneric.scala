@@ -24,9 +24,9 @@ object Chapter5LabeledGeneric extends App {
 
   field[Cherries](123) // FieldType[Cherries,Int] = 123
 
-  def getFieldName[K, V](value: FieldType[K, V])(
-    implicit witness: Witness.Aux[K]
-  ): K = witness.value
+  def getFieldName[K, V](
+    value: FieldType[K, V]
+  )(implicit witness: Witness.Aux[K]): K = witness.value
 
   println(getFieldName(taggedNumber)) // only for taggged
 

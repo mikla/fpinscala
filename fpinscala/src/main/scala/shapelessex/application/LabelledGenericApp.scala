@@ -26,8 +26,7 @@ object Info extends Low {
     implicit
     key: Witness.Aux[K],
     sh: Lazy[Show[H]],
-    st: Lazy[Info[T]]
-  ): Info[FieldType[K, H] :: T] = new Info[FieldType[K, H] :: T] {
+    st: Lazy[Info[T]]): Info[FieldType[K, H] :: T] = new Info[FieldType[K, H] :: T] {
 
     override def getInfo(t: FieldType[K, H] :: T): Map[String, String] = {
       val head = Map(key.value.name -> sh.value.show(t.head)) // deal with toString()
@@ -42,8 +41,7 @@ object Info extends Low {
 
   implicit def infoCCons[H, T <: Coproduct](
     sh: Info[H],
-    st: Info[T]
-  ): Info[H :+: T] = new Info[H :+: T] {
+    st: Info[T]): Info[H :+: T] = new Info[H :+: T] {
     override def getInfo(t: H :+: T): Map[String, String] = t match {
       case Inl(l) => sh.getInfo(l)
       case Inr(r) => st.getInfo(r)

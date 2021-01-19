@@ -29,8 +29,7 @@ object UUIDConstruct {
   def construct[T](uuid: UUID)(implicit U: UUIDConstruct[T]): T = U.construct(uuid)
 
   implicit def genericUUIDGenerator[T](
-    implicit G: Generic.Aux[T, UUID :: HNil]
-  ): UUIDConstruct[T] = (uuid: UUID) => G.from(uuid :: HNil)
+    implicit G: Generic.Aux[T, UUID :: HNil]): UUIDConstruct[T] = (uuid: UUID) => G.from(uuid :: HNil)
 
 }
 

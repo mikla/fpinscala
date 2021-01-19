@@ -14,8 +14,8 @@ case class CNilHandler[R]() extends Handler[CNil, R] {
 // accepts headHandler and tailHandler
 case class ComposedHandlers[H, T <: Coproduct, R](
   headHandler: Handler[H, R],
-  tailHandler: Handler[T, R]
-) extends Handler[H :+: T, R] {
+  tailHandler: Handler[T, R])
+  extends Handler[H :+: T, R] {
 
   override def handle(o: :+:[H, T]) = ???
 
@@ -56,8 +56,7 @@ object Included {
   }
 
   implicit def includedCase2[B, A, C <: Coproduct](
-    implicit I: A Included C
-  ): Included[A, B :+: C] = new Included[A, B :+: C] {
+    implicit I: A Included C): Included[A, B :+: C] = new Included[A, B :+: C] {
     override def include(a: A) = Inr(I.include(a))
   }
 
