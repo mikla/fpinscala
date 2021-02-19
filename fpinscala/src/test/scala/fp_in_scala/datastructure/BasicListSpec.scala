@@ -1,8 +1,8 @@
 package fp_in_scala.datastructure
 
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
-class BasicListSpec extends FlatSpec {
+class BasicListSpec extends AnyFlatSpec {
 
   "foldLeft Nil:List[Int]" should "return reversed list" in {
 

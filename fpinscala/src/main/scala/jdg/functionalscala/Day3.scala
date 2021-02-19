@@ -69,31 +69,6 @@ object Day3 extends App {
     } yield value
   }
 
-  // Implement TicTacToe
-
-  object sharding extends App {
-
-    /**
-      * Create N workers reading from a Queue, if one of them fails,
-      * then wait for the other ones to process the current item, but
-      * terminate all the workers.
-      */
-    def shard[R, E, A](queue: Queue[A], n: Int, worker: A => ZIO[R, E, Unit]): ZIO[R, E, Nothing] = {
-      if (n <= 0) ZIO.dieMessage(s"Expect n > 0")
-      else {
-        val queueWorkers = ZIO.uninterruptible(ZIO.interruptible(queue.take).flatMap(worker)).forever
-        val workers = ZIO.forkAll(List.fill(n)(queueWorkers))
-        for {
-          fiber <- workers
-          _ <- fiber.join
-        } yield 0
-      }
-      ???
-    }
-
-    def run(args: List[String]) = ???
-  }
-
   object zio_stream extends App {
 
     import zio.stream.Stream

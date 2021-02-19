@@ -1,8 +1,8 @@
 package fp_in_scala.state
 
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
-class StateSpec extends FlatSpec {
+class StateSpec extends AnyFlatSpec {
   "SimpleRNG nonNegativeInt" should ">0 and < Int.MaxINt" in {
     val value = SimpleRNG.nonNegativeInt(SimpleRNG(10))._1
     assert(value >= 0 && value <= Int.MaxValue)

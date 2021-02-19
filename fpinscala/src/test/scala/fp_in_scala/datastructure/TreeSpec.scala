@@ -1,9 +1,9 @@
 package fp_in_scala.datastructure
 
 import fp_in_scala.datastructure.tree.{Branch, Leaf, Tree}
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
-class TreeSpec extends FlatSpec {
+class TreeSpec extends AnyFlatSpec {
 
   "Tree.size" should "return sum of alements" in {
     val tree = Branch(Branch(Branch(Leaf(1), Leaf(2)), Leaf(3)), Leaf(4))

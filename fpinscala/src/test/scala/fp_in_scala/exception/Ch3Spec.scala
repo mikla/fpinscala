@@ -1,8 +1,8 @@
 package fp_in_scala.exception
 
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
-class Ch3Spec extends FlatSpec {
+class Ch3Spec extends AnyFlatSpec {
 
   "traverse test" should "return None" in {
     assert(Ch3Exercises.traverse2(List(1, 2, 4))(r => None) == None)

@@ -1,9 +1,9 @@
 package fp_in_scala.datastructure
 
 import fp_in_scala.datastructure.list.{Cons, List, Nil}
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
-class ListSpec extends FlatSpec {
+class ListSpec extends AnyFlatSpec {
 
   "List folding sum" should "return sum of alements" in {
     val lst = List(1, 2, 3, 4, 5, 6)

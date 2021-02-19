@@ -1,8 +1,8 @@
 package fp_in_scala.exception
 
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
-class OptionSpec extends FlatSpec {
+class OptionSpec extends AnyFlatSpec {
   "Option.orElse" should "have size 0" in {
     val op = SomeType(1)
     assert(op.orElse(SomeType(4)) == SomeType(1))

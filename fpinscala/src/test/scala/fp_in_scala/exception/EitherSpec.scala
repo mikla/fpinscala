@@ -1,8 +1,8 @@
 package fp_in_scala.exception
 
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
-class EitherSpec extends FlatSpec {
+class EitherSpec extends AnyFlatSpec {
 
   "Either map2" should "Right(12)" in {
     assert(Ch3Exercises.map2(Right(10), Right(2))((x, y) => x + y) == Right(12))

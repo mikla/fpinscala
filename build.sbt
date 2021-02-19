@@ -1,7 +1,7 @@
 lazy val commonSettings = Seq(
   organization := "com.fpinscala",
   version := "0.1.0",
-  scalaVersion := "2.13.3"
+  scalaVersion := "2.13.4"
 )
 
 lazy val compilerFlags = Seq(
@@ -16,41 +16,42 @@ resolvers ++= Seq(
 resolvers += Resolver.sonatypeRepo("releases")
 
 val shapelessVersion = "2.3.3"
-val monixVersion = "3.1.0"
-val pureConfigVersion = "0.12.1"
-val catsVersion = "2.1.1"
-val catsEffectVersion = "2.0.0"
-val kittensVersion = "2.0.0"
-val similacrumVersion = "1.0.0"
-val scalaCheckVersion = "1.14.2"
-val scalaTestVersion = "3.0.8"
-val enumeratumVersion = "1.5.13"
-val spireVerison = "0.17.0-M1"
-val log4catsVersion = "1.0.1"
-val circeVersion = "0.12.3"
+val monixVersion = "3.3.0"
+val pureConfigVersion = "0.14.0"
+val catsVersion = "2.3.1"
+val catsEffectVersion = "2.3.1"
+val kittensVersion = "2.2.1"
+val similacrumVersion = "1.0.1"
+val scalaCheckVersion = "1.15.2"
+val scalaTestVersion = "3.2.3"
+val enumeratumVersion = "1.6.1"
+val spireVerison = "0.17.0"
+val log4catsVersion = "1.1.1"
+val circeVersion = "0.13.0"
+val circeDerivatioinVersion = "0.13.0-SNAPSHOT"
 val supertaggedVersion = "1.5"
-val monocleVersion = "2.0.0"
-val zioVersion = "1.0.0-RC21-2"
+val monocleVersion = "2.1.0"
+val zioVersion = "1.0.4"
 
 lazy val compilerSettings = Seq(
   scalacOptions ++= compilerFlags
 )
 
 lazy val commonDeps = libraryDependencies ++= Seq(
-  compilerPlugin(("org.typelevel" %% "kind-projector" % "0.11.0").cross(CrossVersion.full)),
+  compilerPlugin(("org.typelevel" %% "kind-projector" % "0.11.3").cross(CrossVersion.full)),
   "com.chuusai" %% "shapeless" % shapelessVersion,
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
   "org.typelevel" %% "simulacrum" % similacrumVersion,
   "org.typelevel" %% "cats-effect" % catsEffectVersion,
-  //  "io.chrisdavenport" %% "log4cats-core" % log4catsVersion, // Only if you want to Support Any Backend
   "io.chrisdavenport" %% "log4cats-slf4j" % log4catsVersion,
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
+  "io.circe" %% "circe-derivation" % circeDerivatioinVersion,
+  "io.circe" %% "circe-generic-extras" % "0.13.0",
   "io.circe" %% "circe-parser" % circeVersion,
   "org.rudogma" %% "supertagged" % supertaggedVersion,
   "org.typelevel" %% "spire" % spireVerison,
   "org.typelevel" %% "cats-core" % catsVersion,
-  "org.typelevel" %% "cats-macros" % catsVersion,
   "org.typelevel" %% "cats-kernel" % catsVersion,
   "org.typelevel" %% "alleycats-core" % catsVersion,
   "org.typelevel" %% "cats-free" % catsVersion,
@@ -67,9 +68,9 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "com.beachape" %% "enumeratum" % enumeratumVersion,
   "com.github.julien-truffaut" %% "monocle-core" % monocleVersion,
   "com.github.julien-truffaut" %% "monocle-macro" % monocleVersion,
-  "eu.timepit" %% "refined" % "0.9.10",
+  "eu.timepit" %% "refined" % "0.9.20",
   // cassandra driver
-  "com.outworkers" %% "phantom-dsl" % "2.50.0",
+  "com.outworkers" %% "phantom-dsl" % "2.59.0",
   "com.github.julien-truffaut" %% "monocle-law" % monocleVersion % "test",
   "org.scalacheck" %% "scalacheck" % scalaCheckVersion % "test",
   "org.scalatest" %% "scalatest" % scalaTestVersion % "test"

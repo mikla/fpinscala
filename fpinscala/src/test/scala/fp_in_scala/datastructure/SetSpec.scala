@@ -1,8 +1,8 @@
 package fp_in_scala.datastructure
 
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
-class SetSpec extends FlatSpec {
+class SetSpec extends AnyFlatSpec {
 
   "An empty Set" should "have size 0" in {
     assert(Set.empty.size == 0)

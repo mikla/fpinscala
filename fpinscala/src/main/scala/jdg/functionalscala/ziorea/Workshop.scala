@@ -317,8 +317,8 @@ object ComputePi extends App {
       piState <- (Ref.make(0L).zipWith(Ref.make(0L)))(PiState(_, _))
       workers = List.fill(10)(computePi(piState))
       reporter = reportStatus(piState)
-      fiber <- (ZIO.forkAll(workers).zipWith(reporter.fork))(_ zip _)
-      _ <- getStrLn.orDie *> fiber.interrupt
+//      fiber <- (ZIO.forkAll(workers).zipWith(reporter.fork))(_ zip _)
+//      _ <- getStrLn.orDie *> fiber.interrupt
     } yield ExitCode.success
 
   }

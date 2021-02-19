@@ -1,10 +1,11 @@
 package fp_in_scala.parallel
 
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+
 import java.util.concurrent.Executors
 
-import org.scalatest.{Matchers, FlatSpec}
-
-class ParSpec extends FlatSpec with Matchers {
+class ParSpec extends AnyFlatSpec with Matchers {
 
   val PoolSize = 4
   val pool = Executors.newFixedThreadPool(PoolSize)

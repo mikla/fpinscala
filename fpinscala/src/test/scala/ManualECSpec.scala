@@ -1,11 +1,11 @@
+import org.scalatest.matchers.must.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+
 import java.util.concurrent.ConcurrentLinkedQueue
-
-import org.scalatest.{MustMatchers, WordSpec}
-
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration._
 
-class ManualECSpec extends WordSpec with MustMatchers {
+class ManualECSpec extends AnyWordSpec with Matchers {
 
   class ManualEC extends ConcurrentLinkedQueue[Runnable] with ExecutionContext {
 

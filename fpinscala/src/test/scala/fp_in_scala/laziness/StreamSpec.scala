@@ -1,9 +1,9 @@
 package fp_in_scala.laziness
 
-import org.scalatest.FlatSpec
+import org.scalatest.flatspec.AnyFlatSpec
 
 
-class StreamSpec extends FlatSpec {
+class StreamSpec extends AnyFlatSpec {
 
   "Stream.toList" should "List(1, 2, 3)" in {
     assert(Stream(1, 2, 3).toList == List(1, 2, 3))
