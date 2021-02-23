@@ -45,4 +45,11 @@ object DescribeClassFieldsApp extends App {
 
   println(attrs(Settings("Riga", maxValue = 10L, openCutOff = 1, openCutOff1 = 2, openCutOff2 = 4)))
 
+  def describedSimple(settings: Settings): List[(String, Any)] =
+    settings.productElementNames.zipWithIndex.map { case (fieldName, index) =>
+      fieldName -> settings.productElement(index)
+    }.toList
+
+  println(describedSimple(Settings("Riga", maxValue = 10L, openCutOff = 1, openCutOff1 = 2, openCutOff2 = 4)))
+
 }
