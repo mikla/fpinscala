@@ -5,7 +5,10 @@ lazy val commonSettings = Seq(
 )
 
 lazy val compilerFlags = Seq(
-  "-Ymacro-annotations"
+  "-Ymacro-annotations",
+  "-Ywarn-unused:locals",
+  "-Ywarn-unused:params",
+  "-Wunused:params"
 )
 
 resolvers ++= Seq(
@@ -32,6 +35,8 @@ val circeDerivatioinVersion = "0.13.0-SNAPSHOT"
 val supertaggedVersion = "1.5"
 val monocleVersion = "2.1.0"
 val zioVersion = "1.0.4"
+val dtcVersion = "2.4.0"
+val typesafeConfigVersion = "1.4.1"
 
 lazy val compilerSettings = Seq(
   scalacOptions ++= compilerFlags
@@ -39,9 +44,11 @@ lazy val compilerSettings = Seq(
 
 lazy val commonDeps = libraryDependencies ++= Seq(
   compilerPlugin(("org.typelevel" %% "kind-projector" % "0.11.3").cross(CrossVersion.full)),
+  "ru.pavkin" %% "dtc-core" % dtcVersion,
   "com.chuusai" %% "shapeless" % shapelessVersion,
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
   "org.typelevel" %% "simulacrum" % similacrumVersion,
+  "com.typesafe" % "config" % typesafeConfigVersion,
   "org.typelevel" %% "cats-effect" % catsEffectVersion,
   "io.chrisdavenport" %% "log4cats-slf4j" % log4catsVersion,
   "io.circe" %% "circe-core" % circeVersion,

@@ -1,12 +1,10 @@
-import PureConfigEnumeratumApp.Greeting.GoodBye
-import enumeratum.EnumEntry.{Camelcase, CapitalWords, Snakecase, Uppercase}
-import enumeratum.{EnumEntry, _}
-import pureconfig.module.enumeratum._
+package application
+
 import com.typesafe.config.ConfigFactory.parseString
-import pureconfig.{loadConfig, ConfigReader}
+import enumeratum.{Enum, EnumEntry}
+import pureconfig.{ConfigReader, loadConfig}
+import supertagged.{@@, TaggedType}
 import pureconfig.generic.auto._
-import supertagged.TaggedType
-import supertagged.@@
 
 object PureConfigEnumeratumApp extends App {
 
