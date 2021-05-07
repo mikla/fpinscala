@@ -1,7 +1,7 @@
 package cats_effect
 
-import cats.implicits._
 import cats.effect.concurrent.Deferred
+import cats.implicits._
 import monix.eval.Task
 import monix.execution.Scheduler.Implicits.global
 

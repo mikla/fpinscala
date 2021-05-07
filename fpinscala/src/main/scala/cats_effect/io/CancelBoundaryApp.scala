@@ -1,6 +1,5 @@
 package cats_effect.io
 
-import cats.implicits._
 import cats.effect.IO
 
 object CancelBoundaryApp extends App {

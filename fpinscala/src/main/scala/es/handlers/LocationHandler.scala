@@ -11,7 +11,7 @@ class LocationHandler extends EventHandler[Event, Aggregate] {
         case LocationAdded(id, name) =>
           state.copy(locations = state.locations :+ Location(id, name))
 
-        case LocationNameChanged(name) => state
+        case LocationNameChanged(_) => state
       }
   }
 

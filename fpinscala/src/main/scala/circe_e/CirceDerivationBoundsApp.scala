@@ -1,10 +1,6 @@
 package circe_e
 
-import io.circe.derivation._
 import io.circe.generic.extras.Configuration
-import io.circe.parser._
-import io.circe.syntax._
-import io.circe.{Decoder, Encoder}
 
 object CirceDerivationBoundsApp extends App {
 

@@ -1,10 +1,10 @@
 package catsex
 
 import cats.data.EitherT
-import monix.eval.Task
-import shapelessex.application.UserId
 import cats.implicits._
+import monix.eval.Task
 import monix.execution.Scheduler.Implicits.global
+import shapelessex.application.UserId
 
 import scala.io.StdIn
 

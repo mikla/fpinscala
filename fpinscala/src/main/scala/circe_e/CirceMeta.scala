@@ -2,7 +2,7 @@ package circe_e
 
 object CirceMeta extends App {
 
-  import io.circe._, io.circe.parser._
+  import io.circe.parser._
 
   val rawJson: String = """
 {

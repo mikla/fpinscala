@@ -1,10 +1,9 @@
 package catsex
 
-import scala.concurrent.Future
-
 import cats.implicits._
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 object BisequenceApp extends App {
 

@@ -1,6 +1,5 @@
 package fp_in_scala.parser
 
-import scala.language.higherKinds
 
 class ParseError
 

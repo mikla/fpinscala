@@ -1,9 +1,9 @@
 package fptomax
 
+import fptomax.Console._
+import fptomax.Program._
+
 import scala.util.Try
-import Program._
-import Console._
-import Random._
 
 object GameApp extends App {
 

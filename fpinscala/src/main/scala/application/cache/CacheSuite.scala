@@ -1,8 +1,7 @@
 package application.cache
 
-import cats.{Monoid, MonoidK}
+import cats.MonoidK
 import cats.implicits._
-import cats.syntax.monoid._
 import model.Employee
 
 case class LocationsCacheSuites[+C[_] <: Cache[_]](map: Map[Long, CacheSuite[C]])

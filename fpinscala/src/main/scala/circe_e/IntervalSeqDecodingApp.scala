@@ -1,9 +1,7 @@
 package circe_e
 
-import cats.implicits._
-import io.circe.generic.semiauto._
 import io.circe._
-
+import io.circe.generic.semiauto._
 import spire.algebra.Order
 
 object IntervalSeqDecodingApp extends App {

@@ -4,7 +4,6 @@ import cats.implicits._
 import cats.{Functor, Id}
 import model.Employee
 
-import scala.language.higherKinds
 
 trait Lens[S, A] {
 

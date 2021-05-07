@@ -1,7 +1,6 @@
 package cats_effect.io
 
 import cats.effect.{IO, SyncIO}
-import cats.implicits._
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._

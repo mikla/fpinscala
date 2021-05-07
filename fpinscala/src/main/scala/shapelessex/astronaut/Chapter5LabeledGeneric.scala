@@ -1,9 +1,8 @@
 package shapelessex.astronaut
 
-import shapeless.{HNil, Witness}
-import shapeless.labelled.{FieldType, KeyTag}
-import shapeless.labelled.field
+import shapeless.labelled.{FieldType, field}
 import shapeless.syntax.singleton._
+import shapeless.{HNil, Witness}
 
 object Chapter5LabeledGeneric extends App {
 

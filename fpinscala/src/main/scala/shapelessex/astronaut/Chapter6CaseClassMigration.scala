@@ -1,7 +1,7 @@
 package shapelessex.astronaut
 
-import shapeless.ops.hlist
 import shapeless._
+import shapeless.ops.hlist
 
 case class EmployeeVer2(name: String, manager: Boolean)
 

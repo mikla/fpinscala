@@ -1,8 +1,5 @@
 package es.tpesafehandlers
 
-import es.Aggregate
-import es.events.LocationAdded
-import shapeless.{:+:, CNil}
 
 object Test {
 

@@ -3,7 +3,6 @@ package fsis.foldable
 import fsis.monoid.Monoid
 import simulacrum.typeclass
 
-import scala.language.higherKinds
 
 @typeclass trait Foldable[F[_]] {
 

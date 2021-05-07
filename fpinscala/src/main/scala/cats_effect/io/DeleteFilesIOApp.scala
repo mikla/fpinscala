@@ -1,12 +1,10 @@
 package cats_effect.io
 
 import cats.effect.IO
-
 import cats.implicits._
+import io.print._
 
 import scala.io.StdIn
-
-import io.print._
 
 object DeleteFilesIOApp extends App {
 

@@ -1,2 +1,6 @@
 -J-Xmx4G
 -J-XX:+UseG1GC
+-Dmonix.eval.tracing=true
+-Dmonix.eval.stackTracingMode=full
+-Dmonix.eval.traceBufferLogSize=32
+-J-XX:MaxJavaStackTraceDepth=1000000

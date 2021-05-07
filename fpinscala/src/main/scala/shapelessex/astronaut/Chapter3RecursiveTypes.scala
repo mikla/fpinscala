@@ -1,8 +1,8 @@
 package shapelessex.astronaut
 
 import shapelessex.astronaut.core.CsvEncoder
+import shapelessex.astronaut.core.CsvEncoder._
 import shapelessex.astronaut.core.defaultEncoders._
-import CsvEncoder._
 
 object Chapter3RecursiveTypes extends App {
 

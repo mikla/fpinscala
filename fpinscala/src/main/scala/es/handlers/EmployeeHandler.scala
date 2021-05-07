@@ -11,7 +11,7 @@ class EmployeeHandler extends EventHandler[Event, Aggregate] {
         case EmployeeAdded(name, number, isManager) =>
           state.copy(employees = state.employees :+ Employee(name, number, isManager))
 
-        case EmployeeNameChanged(name) => state
+        case EmployeeNameChanged(_) => state
       }
   }
 

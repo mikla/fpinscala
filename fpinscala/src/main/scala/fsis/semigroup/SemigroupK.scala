@@ -2,7 +2,6 @@ package fsis.semigroup
 
 import simulacrum.{op, typeclass}
 
-import scala.language.higherKinds
 
 @typeclass trait SemigroupK[F[_]] {
   self =>

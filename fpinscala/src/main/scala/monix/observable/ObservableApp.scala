@@ -1,6 +1,5 @@
 package monix.observable
 
-import monix.execution.Scheduler.Implicits.global
 import scala.concurrent.duration._
 
 object ObservableApp extends App {

@@ -2,8 +2,6 @@ package typeclasses
 
 import cats.{Functor, Traverse}
 
-import cats.instances.list._
-
 import scala.language.higherKinds
 
 object Limitations extends App {

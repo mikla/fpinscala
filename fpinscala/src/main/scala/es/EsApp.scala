@@ -1,9 +1,9 @@
 package es
 
-import java.util.UUID
-
 import es.events.{EmployeeAdded, LocationAdded}
 import es.handlers.{EmployeeHandler, LocationHandler}
+
+import java.util.UUID
 
 object EsApp extends App {
 

@@ -20,7 +20,7 @@ object GenericDerivation extends App {
     def fl[B](f: A => List[B]): List[B] = m.flatMap(l)(f)
   }
 
-  println(List(1, 2).fl(x => List(1)))
+  println(List(1, 2).fl(_ => List(1)))
 
   implicit def hconsParser[H : Parser]: Parser[H] = ???
 

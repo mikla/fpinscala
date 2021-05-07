@@ -1,6 +1,5 @@
 package stuff
 
-import util.computation
 import util.computation.repeated
 
 object RepeatedComputationApp extends App {

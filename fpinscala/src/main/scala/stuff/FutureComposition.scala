@@ -2,8 +2,8 @@ package stuff
 
 import cats.Functor
 
-import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.ExecutionContext._
+import scala.concurrent.{ExecutionContext, Future}
 
 object FutureComposition extends App {
 

@@ -1,10 +1,8 @@
 package shapelessex
 
-import cats.{Order, Show}
-
-import java.util.UUID
 import shapeless.{::, Generic, HNil}
 
+import java.util.UUID
 import scala.language.implicitConversions
 
 trait WithConstruct[T] {

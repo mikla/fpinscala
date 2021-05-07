@@ -1,6 +1,5 @@
 package circe_e
 
-import cats.syntax.functor._
 import io.circe.derivation._
 import io.circe.generic.extras.Configuration
 import io.circe.generic.extras.semiauto.{deriveConfiguredDecoder, deriveConfiguredEncoder}

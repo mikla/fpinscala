@@ -7,7 +7,7 @@ object MultiplyByThreeApp {
     var t = sc.nextInt()
     var a0 = 0
     while (a0 < t) {
-      var n = sc.nextInt()
+      sc.nextInt()
 
       a0 += 1
     }

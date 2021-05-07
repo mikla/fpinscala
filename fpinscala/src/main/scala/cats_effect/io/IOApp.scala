@@ -1,11 +1,9 @@
 package cats_effect.io
 
-import java.io.BufferedReader
-
-import cats.implicits._
 import cats.effect.IO
 import monix.execution.atomic.AtomicBoolean
 
+import java.io.BufferedReader
 import scala.concurrent.ExecutionContext
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.control.NonFatal

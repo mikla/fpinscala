@@ -1,7 +1,7 @@
 package monix.observable
 
-import monix.reactive.Observable
 import monix.execution.Scheduler.Implicits.global
+import monix.reactive.Observable
 
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration

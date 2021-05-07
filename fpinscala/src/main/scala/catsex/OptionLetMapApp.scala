@@ -1,7 +1,5 @@
 package catsex
 
-import cats.implicits._
-import cats.instances._
 
 object OptionLetMapApp extends App {
 

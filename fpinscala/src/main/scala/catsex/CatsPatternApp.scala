@@ -2,7 +2,6 @@ package catsex
 
 import cats.syntax.all._
 
-import java.time.LocalDateTime
 import scala.util.{Failure, Success, Try}
 
 object CatsPatternApp extends App {

@@ -42,7 +42,7 @@ object Tree {
   def depth[A](tree: Tree[A]): Int = {
     def loop(left: Tree[A], queue: List[(Int, Tree[A])], loopDepth: Int, maxAcc: Int): Int =
       left match {
-        case Leaf(v) =>
+        case Leaf(_) =>
           queue match {
             case Nil => maxAcc
             case x :: xs =>

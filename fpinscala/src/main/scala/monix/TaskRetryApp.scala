@@ -1,7 +1,7 @@
 package monix
 
-import cats.implicits._
 import cats.effect.{Async, Timer}
+import cats.implicits._
 import monix.catnap.CircuitBreaker
 import monix.eval.Task
 import monix.execution.Scheduler.Implicits.{global => scheduler}

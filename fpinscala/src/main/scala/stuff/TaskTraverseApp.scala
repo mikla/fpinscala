@@ -1,15 +1,13 @@
 package stuff
 
-import java.util.UUID
-
+import cats.implicits._
 import monix.eval.Task
 import monix.execution.Scheduler.Implicits.global
 
+import java.util.UUID
 import scala.concurrent.Await
-import scala.util.Random
 import scala.concurrent.duration._
-
-import cats.implicits._
+import scala.util.Random
 
 object TaskTraverseApp extends App {
 

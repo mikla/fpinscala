@@ -4,7 +4,6 @@ import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
 import io.circe.parser._
 import io.circe.syntax._
 import io.circe.{Decoder, Encoder, Json}
-import shapelessex.astronaut.JsonObject
 import util.reflection.safeNameTrimmed
 
 object CirceGenericWithCustomDiscriminatorApp extends App {

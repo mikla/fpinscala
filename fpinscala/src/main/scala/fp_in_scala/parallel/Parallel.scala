@@ -1,8 +1,8 @@
 package fp_in_scala.parallel
 
-import java.util.concurrent.Executors
-
 import parallel.Par
+
+import java.util.concurrent.Executors
 
 object Parallel extends App {
 

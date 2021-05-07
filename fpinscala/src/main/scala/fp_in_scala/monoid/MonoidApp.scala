@@ -1,6 +1,6 @@
 package fp_in_scala.monoid
 
-import MonoidInstances._
+import fp_in_scala.monoid.MonoidInstances._
 
 object MonoidApp extends App with MonoidDefs {
 

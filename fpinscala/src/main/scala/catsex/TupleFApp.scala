@@ -1,6 +1,6 @@
 package catsex
 
-import cats.{Applicative, Id, Monad}
+import cats.Monad
 import cats.implicits._
 
 object TupleFApp extends App {

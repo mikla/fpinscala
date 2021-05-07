@@ -6,9 +6,7 @@ lazy val commonSettings = Seq(
 
 lazy val compilerFlags = Seq(
   "-Ymacro-annotations",
-  "-Ywarn-unused:locals",
-  "-Ywarn-unused:params",
-  "-Wunused:params"
+  "-Wunused"
 )
 
 resolvers ++= Seq(
@@ -18,7 +16,7 @@ resolvers ++= Seq(
 
 resolvers += Resolver.sonatypeRepo("releases")
 
-val shapelessVersion = "2.3.3"
+val shapelessVersion = "2.3.5"
 val monixVersion = "3.3.0"
 val pureConfigVersion = "0.14.0"
 val catsVersion = "2.3.1"
@@ -51,6 +49,7 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "com.typesafe" % "config" % typesafeConfigVersion,
   "org.typelevel" %% "cats-effect" % catsEffectVersion,
   "io.chrisdavenport" %% "log4cats-slf4j" % log4catsVersion,
+  "ch.qos.logback" % "logback-classic" % "1.2.3",
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
   "io.circe" %% "circe-derivation" % circeDerivatioinVersion,
@@ -117,3 +116,5 @@ lazy val macroo = (project in file("macro"))
 addCommandAlias("c", ";compile")
 addCommandAlias("r", ";reload")
 addCommandAlias("rc", ";reload;compile")
+
+logLevel := Level.Debug

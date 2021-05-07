@@ -1,10 +1,9 @@
 package shapelessex.application
 
 import shapeless._
-import shapeless.poly._
-import shapeless.record._
-import shapeless.ops.record._
 import shapeless.ops.hlist.{Mapper, ToTraversable}
+import shapeless.ops.record._
+import shapeless.record._
 import shapeless.tag._
 
 final case class Message(id: Int, title: String, body: String)

@@ -1,17 +1,11 @@
 package tf
 
-import java.util.UUID
-
+import cats.Monad
 import cats.implicits._
-import cats.Monad
-
-import scala.concurrent.{Await, Future}
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration.Duration
-
-import cats.Monad
 import softwaremill.User
 
+import java.util.UUID
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 

@@ -3,7 +3,6 @@ package fsis.traversable
 import fsis.applicative.Applicative
 import simulacrum.typeclass
 
-import scala.language.higherKinds
 
 @typeclass trait Traversable[F[_]] {
   def traverse[G[_] : Applicative, A, B](fa: F[A])(f: A => G[B]): G[F[B]]
@@ -13,7 +12,6 @@ import scala.language.higherKinds
 
 object Traversable {
 
-  import Applicative.ops._
 
   implicit val listTraversable: Traversable[List] = new Traversable[List] {
     override def traverse[G[_] : Applicative, A, B](fa: List[A])(f: A => G[B]): G[List[B]] =

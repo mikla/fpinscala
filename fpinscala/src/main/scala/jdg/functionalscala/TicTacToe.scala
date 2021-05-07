@@ -1,11 +1,8 @@
 package jdg.functionalscala
 
-import zio.App
-import zio._
+import zio.{App, _}
 
 object TicTacToe extends App {
-
-  import zio.console._
 
   sealed trait Mark {
     final def renderChar: Char = this match {

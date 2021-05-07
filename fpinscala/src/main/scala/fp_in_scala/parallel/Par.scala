@@ -1,9 +1,9 @@
 package fp_in_scala.parallel
 
-import java.util.concurrent.atomic.AtomicReference
-import java.util.concurrent.{Callable, CountDownLatch, ExecutorService, TimeUnit}
-
 import parallel.Par
+
+import java.util.concurrent.atomic.AtomicReference
+import java.util.concurrent.{Callable, CountDownLatch, ExecutorService}
 
 object Par {
 
@@ -32,8 +32,8 @@ object Par {
   }
 
   def map2[A, B, C](pa: Par[A], pb: Par[B])(f: (A, B) => C): Par[C] = (es: ExecutorService) => {
-    val af = pa(es)
-    val bf = pb(es)
+    pa(es)
+    pb(es)
 //    UnitFuture(f(af.get, bf.get))
     ???
   }

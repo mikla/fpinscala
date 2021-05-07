@@ -1,6 +1,6 @@
 package catsex
 
-import cats.{Applicative, Monad}
+import cats.Monad
 import cats.implicits._
 
 object ifMApplication extends App {

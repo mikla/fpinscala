@@ -2,7 +2,6 @@ package lenses
 
 import monocle.Lens
 import monocle.macros.GenLens
-import monocle.function.Cons.headOption
 import monocle.std.option._
 
 object OptionalLensesApp extends App {

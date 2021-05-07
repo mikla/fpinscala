@@ -41,7 +41,6 @@ object TypeInfApp extends App {
 
     import PrintableInstances._
     import PrintableSyntax._
-    import Printable._
 
     implicitly[Printable[String]]
 

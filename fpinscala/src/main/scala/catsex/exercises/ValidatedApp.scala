@@ -1,12 +1,11 @@
 package catsex.exercises
 
-import java.util.UUID
-
 import cats.data.Validated
 import cats.instances.list._
 import monix.eval.Task
 import monix.execution.Scheduler.Implicits.global
 
+import java.util.UUID
 import scala.io.StdIn
 
 object ValidatedApp extends App {

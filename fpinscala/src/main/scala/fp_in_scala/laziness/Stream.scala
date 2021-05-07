@@ -43,14 +43,14 @@ sealed trait Stream[+A] {
       if (iter < n) loop(stream.tail, iter + 1, acc)
       else stream match {
         case Empty => acc
-        case Cons(h, t) => loop(stream.tail, iter + 1, Cons(h, () => acc))
+        case Cons(h, _) => loop(stream.tail, iter + 1, Cons(h, () => acc))
       }
     loop(this, 0, Empty).reverse
   }
 
   def tail: Stream[A] = this match {
     case Empty => throw new Exception("Stream.tail is empty")
-    case Cons(h, t) => t()
+    case Cons(_, t) => t()
   }
 
   def takeWhile(p: A => Boolean): Stream[A] = {
@@ -69,7 +69,7 @@ sealed trait Stream[+A] {
 
   def headOption: Option[A] = this match {
     case Empty => None
-    case Cons(h, t) => Some(h())
+    case Cons(h, _) => Some(h())
   }
 
   def takeWhileViaFoldRight(p: A => Boolean): Stream[A] =
@@ -150,7 +150,7 @@ sealed trait Stream[+A] {
   def startsWith[B >: A](s: Stream[B]): Boolean =
     (this, s) match {
       case (Cons(h, t), Cons(hh, tt)) if h() == hh() => t().startsWith(tt())
-      case (Cons(h, t), Empty) => true
+      case (Cons(_, _), Empty) => true
       case _ => false
     }
 

@@ -1,7 +1,7 @@
 package stuff
 
-import cats.implicits._
 import cats.Monad
+import cats.implicits._
 import monix.eval.Task
 import monix.execution.Scheduler.Implicits.global
 

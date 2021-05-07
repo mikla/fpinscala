@@ -1,7 +1,6 @@
 package catsex.free
 
-import catsex.free.KVStore.KVStore
-import catsex.free.KVStore._
+import catsex.free.KVStore.{KVStore, _}
 
 object KVStoreApp extends App {
 

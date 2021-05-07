@@ -1,10 +1,10 @@
 package jdg.functionalscala
 
-import java.time.LocalDate
-
 import eu.timepit.refined.api.Refined
 import eu.timepit.refined.auto._
 import eu.timepit.refined.numeric._
+
+import java.time.LocalDate
 
 object Day1 extends App {
 
@@ -21,7 +21,7 @@ object Day1 extends App {
   object OwnerId {
     def fromString(value: String): Option[OwnerId] =
       if (value.nonEmpty) Some(new OwnerId(value)) else None
-    private def apply(id: String): OwnerId = new OwnerId(id)
+
   }
 
   sealed trait Currency
@@ -197,10 +197,10 @@ object Day1 extends App {
           r(e1).run(input) match {
             case Left(e2) =>
               Left((e1, e2))
-            case Right((input, b)) =>
+            case Right((_, _)) =>
               ???
           }
-        case Right((input, a)) =>
+        case Right((_, _)) =>
           ???
       }
     }

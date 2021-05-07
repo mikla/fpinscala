@@ -4,7 +4,6 @@ import fsis.applicative.Applicative
 import fsis.monoid.Monoid
 import simulacrum.typeclass
 
-import scala.language.higherKinds
 
 @typeclass trait Monad[F[_]] extends Applicative[F] {
   self =>

@@ -1,6 +1,6 @@
 package catsex.free
 
-import cats.{~>, Id}
+import cats.{Id, ~>}
 
 import scala.collection.mutable
 

@@ -1,9 +1,6 @@
 package stuff
 
-import java.util.UUID
-
 import cats.implicits._
-import catsex.exercises.ValidatedApp.{CommandFailed, CommandOk, CommandProcessingResult}
 
 object EitherApp extends App {
 

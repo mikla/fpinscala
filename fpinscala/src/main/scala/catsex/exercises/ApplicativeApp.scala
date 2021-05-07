@@ -1,8 +1,8 @@
 package catsex.exercises
 
-import cats.{Applicative, Apply, Semigroupal}
 import cats.instances.list._
 import cats.instances.option._
+import cats.{Applicative, Semigroupal}
 
 object ApplicativeApp extends App {
 

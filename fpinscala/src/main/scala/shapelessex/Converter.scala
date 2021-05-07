@@ -1,7 +1,6 @@
 package shapelessex
 
 import model.poly.ToChange
-import shapeless.ops.hlist.Mapper
 import shapeless.{::, Generic, HList, HNil, Poly1}
 
 trait Converter[T] {

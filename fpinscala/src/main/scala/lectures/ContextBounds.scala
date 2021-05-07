@@ -1,7 +1,7 @@
 package lectures
 
-import cats.implicits._
 import cats.Monoid
+import cats.implicits._
 
 object ContextBounds extends App {
 
@@ -20,7 +20,7 @@ object ContextBounds extends App {
 
     // At the moment of creation there must be available implicit instance of Monoid[T]
 
-    val c = Calculator(1)
+    Calculator(1)
 
     // When you have more than one bounds after : Like Calculator[T: Zoned: DSTCheck]
     // It means we are expanding this to

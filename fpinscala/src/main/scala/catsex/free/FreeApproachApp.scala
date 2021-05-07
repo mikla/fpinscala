@@ -1,16 +1,13 @@
 package catsex.free
 
-import java.util.UUID
-
-import cats.implicits._
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.language.higherKinds
-
 import cats.InjectK
 import cats.data.EitherK
 import cats.free.Free
+import cats.implicits._
 import softwaremill.User
 
+import java.util.UUID
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 
@@ -70,7 +67,7 @@ object FreeApproachApp extends App {
       case FindUser(id) =>
         /* go and talk to a database */
         Future.successful(Some(User(id, "2mail@emial.com", 10)))
-      case UpdateUser(u) =>
+      case UpdateUser(_) =>
         /* as above */
         Future.successful(())
     }
@@ -78,7 +75,7 @@ object FreeApproachApp extends App {
 
   val futureEmailInterpreter = new (EmailAlg ~> Future) {
     override def apply[A](fa: EmailAlg[A]): Future[A] = fa match {
-      case SendEmail(email, subject, body) =>
+      case SendEmail(email, _, _) =>
         /* use smtp */
         println(s"Sending email to $email")
         Future.successful(())

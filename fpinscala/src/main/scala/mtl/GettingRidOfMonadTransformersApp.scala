@@ -1,14 +1,11 @@
 package mtl
 
-import java.time.LocalDate
-
 import cats.MonadError
-import cats.implicits._
 import cats.data.EitherT
-import io.circe._
-import io.circe.generic.auto._
+import cats.implicits._
 import io.circe.parser._
-import io.circe.syntax._
+
+import java.time.LocalDate
 
 // Domain definition
 

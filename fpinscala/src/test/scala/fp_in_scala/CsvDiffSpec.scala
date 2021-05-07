@@ -3,7 +3,6 @@ package fp_in_scala
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers
 
-import java.io.{BufferedWriter, File, FileWriter}
 import scala.io.Source
 
 class CsvDiffSpec extends AnyFlatSpec with Matchers {

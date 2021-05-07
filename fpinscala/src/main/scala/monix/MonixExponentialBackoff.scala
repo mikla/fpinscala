@@ -2,11 +2,9 @@ package monix
 
 import monix.catnap.CircuitBreaker
 import monix.eval._
-
-import scala.concurrent.duration._
-import monix.catnap.CircuitBreaker
 import monix.execution.Scheduler.Implicits.{global => scheduler}
 
+import scala.concurrent.duration._
 import scala.io.StdIn
 
 object MonixExponentialBackoff extends App {

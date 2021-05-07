@@ -1,9 +1,9 @@
 package shapelessex
 
 import shapeless._
-import poly._
+import shapeless.poly._
+import shapeless.syntax.zipper._
 import shapelessex.PolyApp.size
-import syntax.zipper._
 
 object HListApp extends App {
 

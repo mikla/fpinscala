@@ -1,11 +1,9 @@
 package application.cache
 
-import cats.implicits._
-import CacheSuite._
+import application.cache.CacheSuite._
 import model.Employee
 
 import scala.collection.concurrent.TrieMap
-import scala.collection.mutable
 
 object CacheApp extends App {
 

@@ -1,8 +1,7 @@
 package shapelessex.astronaut
 
-import shapeless.{::, HList, HNil}
 import shapeless.ops.hlist
-import shapeless._
+import shapeless.{::, HList, HNil, _}
 
 // return second last element
 trait Penultimate[L] {

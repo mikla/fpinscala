@@ -2,7 +2,6 @@ package scalafmt
 
 import monix.execution.Scheduler
 
-import java.util.concurrent.TimeoutException
 import scala.concurrent.{ExecutionContext, Future}
 
 object ImpicitsAligning extends App {

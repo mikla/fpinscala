@@ -1,7 +1,7 @@
 package catsex
 
-import cats.implicits._
 import cats.data.EitherT
+import cats.implicits._
 import monix.eval.Task
 
 case class UserId(value: String) extends AnyVal
@@ -22,7 +22,7 @@ trait UserService {
   }
 
   {
-    val x: Task[Either[ServiceError, List[UserId]]] = List(
+    List(
       findUserIdByName("", ""),
       findUserIdByName("", "")
     ).sequence.map(_.sequence)

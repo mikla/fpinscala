@@ -1,11 +1,9 @@
 package catsex
 
+import alleycats.std.all._
 import cats.data.{Validated, ValidatedNel}
 import cats.implicits._
-import cats.Id
-import alleycats.std.all._
 import model.Employee
-import shapelessex.EmployeeId
 import shapelessex.application.UserId
 
 object SequenceUAndPartialUnifiacationExpl extends App {

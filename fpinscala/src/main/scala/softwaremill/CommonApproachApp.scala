@@ -1,10 +1,9 @@
 package softwaremill
 
 import java.util.UUID
-
-import scala.concurrent.{Await, Future}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 
 case class User(id: UUID, email: String, loyaltyPoints: Int)
 

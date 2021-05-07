@@ -1,10 +1,5 @@
 package stuff
 
-import cats.implicits._
-import scala.concurrent.ExecutionContext.Implicits.global
-
-import scala.concurrent.Future
-
 object FutureApp extends App {
 
 //  Future.sequence(List(Future(1)))

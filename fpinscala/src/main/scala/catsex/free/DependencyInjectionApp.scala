@@ -1,12 +1,11 @@
 package catsex.free
 
-import java.util.UUID
-
 import cats.data.EitherK
 import cats.free.Free
-import cats.{~>, Id, Inject, InjectK}
+import cats.{Id, InjectK, ~>}
 
-import scala.language.higherKinds
+import java.util.UUID
+
 
 case class Employee(id: String, name: String, isActive: Boolean)
 
@@ -77,7 +76,8 @@ object DependencyInjectionApp extends App {
     E: EmployeeServiceComponent[Application],
     A: AccountingInfoServiceComponent[Application]): Free[Application, Long] = {
 
-    import E._, A._
+    import A._
+    import E._
 
     for {
       employee <- create(Employee(UUID.randomUUID().toString, "Mikla", isActive = true))

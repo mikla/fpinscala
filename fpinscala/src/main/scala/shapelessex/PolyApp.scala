@@ -1,9 +1,8 @@
 package shapelessex
 
-import shapeless.PolyDefns.~>
-import shapeless.poly._
 import io.print._
 import shapeless.Poly1
+import shapeless.PolyDefns.~>
 
 object PolyApp extends App {
 

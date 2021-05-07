@@ -1,7 +1,6 @@
 package shapelessex.astronaut.core
 
 import shapeless.{:+:, ::, CNil, Coproduct, Generic, HList, HNil, Inl, Inr, Lazy}
-import shapelessex.astronaut.Chapter3RecursiveTypes.Tree
 
 trait CsvEncoder[A] {
   def encode(value: A): List[String]

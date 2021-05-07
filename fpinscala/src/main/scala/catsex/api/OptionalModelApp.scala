@@ -1,10 +1,9 @@
 package catsex.api
 
-import java.time.LocalDateTime
-
-import cats.{Functor, Id}
+import cats.Id
 import cats.implicits._
-import cats.derived._
+
+import java.time.LocalDateTime
 
 object OptionalModelApp extends App {
 

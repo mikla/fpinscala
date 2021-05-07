@@ -1,7 +1,7 @@
 package stuff
 
-import cats.{Functor, Order, Semigroupal}
 import cats.implicits._
+import cats.{Order, Semigroupal}
 
 object SameNameImplicitApp extends App {
 

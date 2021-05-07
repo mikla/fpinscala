@@ -1,5 +1,4 @@
 package stuff
-import cats.Applicative
 
 object TravApp extends App {
 

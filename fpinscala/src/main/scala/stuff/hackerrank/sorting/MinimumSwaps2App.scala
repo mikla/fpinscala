@@ -1,7 +1,5 @@
 package stuff.hackerrank.sorting
 
-import scala.collection.mutable
-
 // Minimum Swaps 2
 /**
   * You are given an unordered array consisting of consecutive integers  [1, 2, 3, ..., n]

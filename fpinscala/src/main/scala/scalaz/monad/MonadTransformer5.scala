@@ -1,7 +1,7 @@
 package scalaz.monad
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import scala.io.StdIn
 
 object MonadTransformer5 extends App {

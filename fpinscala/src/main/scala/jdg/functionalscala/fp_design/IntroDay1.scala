@@ -1,14 +1,14 @@
 package jdg.functionalscala.fp_design
 
-import java.time.LocalDate
-
+import eu.timepit.refined._
 import eu.timepit.refined.api.Refined
 import eu.timepit.refined.boolean.And
-import eu.timepit.refined.numeric.{Greater, Less, Positive}
+import eu.timepit.refined.numeric.{Greater, Less}
 import eu.timepit.refined.string.MatchesRegex
-import zio.{Queue, ZIO}
-import eu.timepit.refined._
 import eu.timepit.refined.types.string.NonEmptyString
+import zio.{Queue, ZIO}
+
+import java.time.LocalDate
 
 object IntroDay1 extends App {
 

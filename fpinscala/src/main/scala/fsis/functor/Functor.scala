@@ -1,6 +1,5 @@
 package fsis.functor
 
-import scala.language.{higherKinds, reflectiveCalls}
 import simulacrum._
 
 @typeclass trait Functor[F[_]] { self =>

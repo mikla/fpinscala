@@ -1,7 +1,7 @@
 package shapelessex.application
 
 import shapeless._
-import syntax.typeable._
+import shapeless.syntax.typeable._
 
 object SafeObjectMapping extends App {
 

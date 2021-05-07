@@ -1,7 +1,7 @@
 package catsex
 
-import cats.{Applicative, FlatMap, Foldable, Id}
 import cats.implicits._
+import cats.{Applicative, Foldable, Id}
 
 object GenericSumApp extends App {
 

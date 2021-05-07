@@ -1,10 +1,9 @@
 package jdg.functionalscala
 
-import java.sql.ResultSet
-
 import zio._
-import zio.stm._
 import zio.stream.{Sink, ZStream}
+
+import java.sql.ResultSet
 
 object Day3 extends App {
 
@@ -124,8 +123,9 @@ object Day3 extends App {
       * terminating when the user enters the command "exit" or "quit".
       */
 
-    import java.io.IOException
     import zio.console.getStrLn
+
+    import java.io.IOException
 
     val stream6: ZStream[Console, IOException, String] = ZStream.unfoldM(()) { _ =>
       getStrLn.map {
@@ -253,7 +253,7 @@ object Day3 extends App {
       */
     def connect(connectionUrl: String): Task[Database] =
       Task.effect {
-        val dbConn = ???
+        ???
 
         ???
       }

@@ -1,11 +1,10 @@
 package stuff
 
+import monix.eval.Task
+import monix.execution.Scheduler.Implicits.global
+
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
-
-import monix.execution.Scheduler.Implicits.global
-import monix.eval.Task
-
 import scala.io.StdIn
 
 object ConcurrentHashMapApp extends App {

@@ -1,11 +1,10 @@
 package catsex
 
 import cats.implicits._
-import monix.eval.Task
 import monix.execution.Scheduler.Implicits.global
 
-import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 
 object TraverseOrderApp extends App {
 

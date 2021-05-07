@@ -1,24 +1,9 @@
 package shapelessex.application
 
 import shapeless._
-import record._
-import syntax.singleton._
-import record._
-import shapeless.labelled.{field, FieldType}
 import shapeless.ops.hlist.{Mapper, ToTraversable}
 import shapeless.ops.record.Keys
-import syntax.singleton._
 import shapeless.tag.Tagged
-import shapelessex.application.Attributes.symbolName
-import shapelessex.application.Attributes.symbolName.at
-import shapeless._
-import record._
-import syntax.singleton._
-import record._
-import shapeless.labelled.{field, FieldType}
-import shapeless.ops.hlist.{Mapper, ToTraversable}
-import shapeless.ops.record.Keys
-import syntax.singleton._
 
 object DescribeClassFieldsApp extends App {
 

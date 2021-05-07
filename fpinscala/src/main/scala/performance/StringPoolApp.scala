@@ -1,7 +1,6 @@
 package performance
 
 import java.io.File
-
 import scala.io.{Source, StdIn}
 
 object StringPoolApp extends App {

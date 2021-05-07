@@ -68,7 +68,7 @@ object List {
   def init[A](l: List[A]): List[A] =
     l match {
       case Nil => Nil
-      case Cons(y, Nil) => Nil
+      case Cons(_, Nil) => Nil
       case Cons(y, ys) => Cons(y, init(ys))
     }
 
@@ -171,7 +171,7 @@ object List {
       l match {
         case Cons(x, xs) =>
           s match {
-            case Cons(sHead, sTail) =>
+            case Cons(_, _) =>
               if (x == s.head) sub1(xs, s.tail, acc = true)
               else if (acc) sub1(l, sub, acc = false)
               else sub1(xs, sub, acc = false)
@@ -190,7 +190,7 @@ object List {
     if (startsWith(list, sub)) true
     else
       list match {
-        case Cons(x, xs) => hasSubsequence(xs, sub)
+        case Cons(_, xs) => hasSubsequence(xs, sub)
         case Nil => false
       }
 

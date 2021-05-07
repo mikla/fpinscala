@@ -1,11 +1,10 @@
 package tf
 
+import cats.implicits._
 import cats.{Applicative, Id, Monad}
 import model.Employee
 import monix.eval.Task
-import cats.implicits._
 import monix.execution.Scheduler.Implicits.global
-import typeclasses.Limitations.MonadError
 
 object TFAppEx extends App {
 

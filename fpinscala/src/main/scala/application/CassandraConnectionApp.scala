@@ -2,7 +2,7 @@ package application
 
 import catsex.free.Employee
 import com.datastax.driver.core.policies.ExponentialReconnectionPolicy
-import com.datastax.driver.core.{ConsistencyLevel, HostDistance, PoolingOptions, SimpleStatement, SocketOptions}
+import com.datastax.driver.core._
 import com.outworkers.phantom.builder.query.QueryOptions
 import com.outworkers.phantom.connectors.ContactPoints
 import monix.eval.Task

@@ -1,6 +1,4 @@
 package stuff
-
-import cats.syntax.all._
 object ScalaForBeginners extends App {
 
   // val x = ???

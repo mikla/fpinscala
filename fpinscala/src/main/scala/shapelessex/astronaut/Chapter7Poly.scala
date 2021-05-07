@@ -1,7 +1,6 @@
 package shapelessex.astronaut
 
-import shapeless.Poly1
-import shapeless._
+import shapeless.{Poly1, _}
 
 object Chapter7Poly extends App {
 

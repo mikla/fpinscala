@@ -1,11 +1,9 @@
 package monix
 
-import java.util.concurrent.TimeUnit
-
 import monix.eval.Task
 import monix.execution.Scheduler.Implicits.global
 
-import scala.concurrent.duration._
+import java.util.concurrent.TimeUnit
 
 object TaskSleepUntilApp extends App {
 

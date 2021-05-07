@@ -1,7 +1,7 @@
 package fp_in_scala.property
 
-import cats.implicits._
 import cats.data.State
+import cats.implicits._
 
 import scala.util.Random
 

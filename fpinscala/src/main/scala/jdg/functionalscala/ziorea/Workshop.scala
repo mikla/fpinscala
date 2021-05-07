@@ -107,6 +107,7 @@ object AlarmApp extends App {
 
   import zio.console._
   import zio.duration._
+
   import java.io.IOException
 
   def parseDouble(line: String): ZIO[Any, NumberFormatException, Double] =
@@ -189,8 +190,9 @@ object Cat extends App {
 
 object CatIncremental extends App {
 
-  import zio.console._
   import zio.blocking._
+  import zio.console._
+
   import java.io._
 
   /**
@@ -248,9 +250,9 @@ object CatIncremental extends App {
 
 object ComputePi extends App {
 
-  import zio.random._
   import zio.console._
   import zio.duration._
+  import zio.random._
 
   /**
     * Some state to keep track of all points inside a circle,
@@ -328,6 +330,7 @@ object Hangman extends App {
 
   import zio.console._
   import zio.random._
+
   import java.io.IOException
 
   /**

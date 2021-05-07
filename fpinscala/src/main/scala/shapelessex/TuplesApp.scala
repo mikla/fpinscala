@@ -1,8 +1,8 @@
 package shapelessex
 
 import shapeless.PolyDefns.~>
-import shapeless.syntax.std.tuple._
 import shapeless._
+import shapeless.syntax.std.tuple._
 
 object TuplesApp extends App {
 
