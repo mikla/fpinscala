@@ -18,7 +18,7 @@ resolvers += Resolver.sonatypeRepo("releases")
 
 val shapelessVersion = "2.3.5"
 val monixVersion = "3.3.0"
-val pureConfigVersion = "0.14.0"
+val pureConfigVersion = "0.12.3"
 val catsVersion = "2.3.1"
 val catsEffectVersion = "2.3.1"
 val kittensVersion = "2.2.1"
