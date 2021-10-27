@@ -109,7 +109,7 @@ object List {
     foldRight(as, (b: B) => b)((a, g) => b => g(f(b, a)))(z)
 
   def length[A](list: List[A]): Int =
-    foldLeft(list, 0)((x, y) => x + 1)
+    foldLeft(list, 0)((x, _) => x + 1)
 
   def reverse[A](list: List[A]): List[A] =
     foldLeft(list, Nil: List[A])((x, y) => Cons(y, x))

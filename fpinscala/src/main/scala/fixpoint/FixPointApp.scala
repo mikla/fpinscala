@@ -46,8 +46,8 @@ object FixPointApp extends App {
 
   case class FreeF[F[_], A, B](resume: Either[A, F[B]])
 
-  type CofreeT[F[_], A] = Fix[CofreeF[F, A, ?]]
-  type FreeT[F[_], A] = Fix[FreeF[F, A, ?]]
+  type CofreeT[F[_], A] = Fix[CofreeF[F, A, *]]
+  type FreeT[F[_], A] = Fix[FreeF[F, A, *]]
 
   // back to Prof / IdProf examples
 

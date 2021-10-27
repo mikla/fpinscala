@@ -2,7 +2,7 @@ package fp_in_scala.laziness
 
 sealed trait Stream[+A] {
   def headOptionViaFoldRight: Option[A] =
-    this.foldRight(None: Option[A])((a, b) => Some(a))
+    this.foldRight(None: Option[A])((a, _) => Some(a))
 
   def toList: List[A] = {
     def loop(stream: () => Stream[A], acc: List[A]): List[A] =

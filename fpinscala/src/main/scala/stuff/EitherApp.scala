@@ -9,7 +9,7 @@ object EitherApp extends App {
   def deserialize(str: String): Either[Throwable, String] = Right(str)
 
   def traverse: Either[Throwable, Option[String]] =
-    proto.map(str => deserialize(str)).sequence[Either[Throwable, ?], String]
+    proto.map(str => deserialize(str)).sequence[Either[Throwable, *], String]
 
   val x: Option[Int] = None
 

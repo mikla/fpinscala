@@ -1,8 +1,10 @@
 package application
 
+import scala.annotation.nowarn
+
 object InjectHikariMetricsApp extends App {
 
-  class Conf(url: String) {
+  class Conf(@nowarn url: String) {
     var metrics: String = _
     def setMetrics(m: String) = metrics = m
     def validate() = println(metrics)

@@ -1,13 +1,13 @@
 package application
 
 import catsex.free.Employee
-import com.datastax.driver.core.policies.ExponentialReconnectionPolicy
-import com.datastax.driver.core._
-import com.outworkers.phantom.builder.query.QueryOptions
-import com.outworkers.phantom.connectors.ContactPoints
+//import com.datastax.driver.core.policies.ExponentialReconnectionPolicy
+//import com.datastax.driver.core._
+//import com.outworkers.phantom.builder.query.QueryOptions
+//import com.outworkers.phantom.connectors.ContactPoints
 import monix.eval.Task
 import monix.execution.Scheduler.Implicits.global
-
+/*
 import scala.concurrent.duration._
 
 object CassandraConnectionApp extends App {
@@ -49,3 +49,4 @@ object CassandraConnectionApp extends App {
   val x = Employee("", "", true)
 
 }
+ */

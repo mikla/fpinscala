@@ -13,6 +13,4 @@ object TaggedApp extends App {
   val width = Width @@ 5
   val height = Height @@ ""
 
-  width == height
-
 }

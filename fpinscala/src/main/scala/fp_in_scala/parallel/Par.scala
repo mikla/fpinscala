@@ -4,6 +4,7 @@ import parallel.Par
 
 import java.util.concurrent.atomic.AtomicReference
 import java.util.concurrent.{Callable, CountDownLatch, ExecutorService}
+import scala.annotation.nowarn
 
 object Par {
 
@@ -31,7 +32,7 @@ object Par {
     ref.get
   }
 
-  def map2[A, B, C](pa: Par[A], pb: Par[B])(f: (A, B) => C): Par[C] = (es: ExecutorService) => {
+  def map2[A, B, C](pa: Par[A], pb: Par[B])(@nowarn f: (A, B) => C): Par[C] = (es: ExecutorService) => {
     pa(es)
     pb(es)
 //    UnitFuture(f(af.get, bf.get))

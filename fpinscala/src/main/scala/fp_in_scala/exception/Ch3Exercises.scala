@@ -17,7 +17,7 @@ object Ch3Exercises {
 
   def Try[A](a: => A): Option[A] =
     try Some(a)
-    catch { case e: Exception => None }
+    catch { case _: Exception => None }
 
   def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] =
     a.flatMap(aa => b.map(bb => f(aa, bb)))

@@ -1,5 +1,7 @@
 package typeclasses
 
+import scala.annotation.nowarn
+
 trait Equality[L, R] {
   def equals(left: L, right: R): Boolean
 }
@@ -7,6 +9,7 @@ trait Equality[L, R] {
 object EqualityApp extends App {
 
   implicit def sameTypeEquality[T] = new Equality[T, T] {
+    @nowarn
     override def equals(left: T, right: T): Boolean = left.equals(right)
   }
 

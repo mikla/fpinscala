@@ -2,10 +2,10 @@ package jdg.functionalscala.ziorea
 
 import java.nio.charset.StandardCharsets
 import java.util.concurrent.TimeUnit
-
 import jdg.functionalscala.ziorea.Hangman.GuessResult.{Correct, Incorrect, Lost, Unchanged, Won}
 import zio._
 
+import java.io.IOException
 import scala.io.Source
 
 object HelloWorld extends App {
@@ -17,8 +17,8 @@ object HelloWorld extends App {
     *
     * Implement a simple "Hello World" program using the effect returned by `putStrLn`.
     */
-  def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] =
-    putStrLn("Hello, World").as(ExitCode.success)
+  def run(args: List[String]): ZIO[Console, Nothing, ExitCode] = ???
+//    putStrLn("Hello, World").as(ExitCode.success)
 
 }
 
@@ -27,10 +27,10 @@ object ErrorConversion extends App {
 
   import zio.console._
 
-  val failed: ZIO[Console, String, Unit] =
-    putStrLn("About to fail...") *>
-      ZIO.fail("Uh oh!") *>
-      putStrLn("This will NEVER be printed!")
+  val failed: ZIO[Console, String, Unit] = ???
+//    putStrLn("About to fail...") *>
+//      ZIO.fail("Uh oh!") *>
+//      putStrLn("This will NEVER be printed!")
 
   /**
     * EXERCISE 2
@@ -53,9 +53,10 @@ object PromptName extends App {
     * Implement a simple program that asks the user for their name (using
     * `getStrLn`), and then prints it out to the user (using `putStrLn`).
     */
-  def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] =
+  def run1(args: List[String]): ZIO[ZEnv, IOException, ExitCode] =
     putStrLn("Name?") *>
       getStrLn.flatMap(name => putStrLn(s"Good, " + name)).fold(_ => ExitCode.failure, _ => ExitCode.success)
+  override def run(args: List[String]): URIO[zio.ZEnv, ExitCode] = ???
 }
 
 object ZIOTypes {
@@ -83,7 +84,7 @@ object NumberGuesser extends App {
   import zio.console._
   import zio.random._
 
-  def analyzeAnswer(random: Int, guess: String): ZIO[Console, Nothing, Unit] =
+  def analyzeAnswer(random: Int, guess: String): ZIO[Console, IOException, Unit] =
     if (random.toString == guess.trim) putStrLn("You guessed correctly!")
     else putStrLn(s"You did not guess correctly. The answer was $random")
 
@@ -181,11 +182,12 @@ object Cat extends App {
     * contents of the specified file to standard output.
     */
 
-  def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] =
+  def run1(args: List[String]): ZIO[ZEnv, IOException, ExitCode] =
     args match {
 //      case file :: Nil => (readFile(file) >>= putStrLn).fold(_ => ExitCode.failure, _ => ExitCode.success)
       case _ => putStrLn("Usafe: cat <file>").as(ExitCode.failure)
     }
+  override def run(args: List[String]): URIO[zio.ZEnv, ExitCode] = ???
 }
 
 object CatIncremental extends App {
@@ -381,7 +383,7 @@ object Hangman extends App {
     _ <- if (loop) gameLoop(ref) else ZIO.unit
   } yield ()
 
-  def renderState(state: State): ZIO[Console, Nothing, Unit] = {
+  def renderState(state: State): ZIO[Console, IOException, Unit] = {
 
     /**
       * f     n  c  t  o
@@ -565,6 +567,7 @@ object TicTacToe extends App {
   /**
     * The entry point to the game will be here.
     */
-  def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] =
+  def run1(args: List[String]) =
     putStrLn(TestBoard).as(ExitCode.success)
+  override def run(args: List[String]): URIO[zio.ZEnv, ExitCode] = ???
 }

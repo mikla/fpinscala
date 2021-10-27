@@ -22,7 +22,7 @@ object Tree {
     loop(tree, Nil, z)
   }
 
-  def size[A](tree: Tree[A]): Int = Tree.foldLeft(tree, 0)((x, y) => x + 1)
+  def size[A](tree: Tree[A]): Int = Tree.foldLeft(tree, 0)((x, _) => x + 1)
 
   def reduce[B >: A, A](tree: Tree[A])(f: (B, B) => B): B = {
     def loop(left: Tree[A], queue: List[Tree[A]], acc: B => B): B =
@@ -72,7 +72,7 @@ object Tree {
   }
 
   def sizeViaFold[A](t: Tree[A]): Int =
-    fold(t)(a => 1)(_ + _)
+    fold(t)(_ => 1)(_ + _)
 
   def depthViaFold[A](t: Tree[A]): Int =
     fold(t)(a => 0)((d1, d2) => 1 + (d1.max(d2)))
