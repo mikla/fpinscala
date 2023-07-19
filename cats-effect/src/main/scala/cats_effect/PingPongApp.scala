@@ -1,13 +1,13 @@
 package cats_effect
 
-import cats.effect.concurrent.Ref
-import cats.effect.{ExitCode, IO, IOApp}
+import cats.effect.{ExitCode, IO, IOApp, Ref}
 import cats.implicits._
 
 object PingPong extends IOApp {
   private def print(x: Next): IO[Unit] = IO {
     println(s"${Thread.currentThread.getId}: $x")
   }
+
   private def go(mine: Next, ref: Ref[IO, Next]): IO[Unit] =
     for {
       access <- ref.access
@@ -28,6 +28,7 @@ object PingPong extends IOApp {
   case object Pong extends Next {
     val other: Next = Ping
   }
+
   override def run(args: List[String]): IO[ExitCode] = for {
     ref <- Ref.of[IO, Next](Ping)
     pingFiber <- go(Ping, ref).foreverM.start

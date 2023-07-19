@@ -1,4 +1,4 @@
-package stuff
+package monix
 
 import cats.Monad
 import cats.implicits._

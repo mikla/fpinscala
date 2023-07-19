@@ -1,10 +1,9 @@
-package catsex
+package monix
 
 import cats.data.EitherT
 import cats.implicits._
 import monix.eval.Task
 import monix.execution.Scheduler.Implicits.global
-import shapelessex.application.UserId
 
 import scala.io.StdIn
 
@@ -20,7 +19,7 @@ object EitherTTaskApp extends App {
   def combine(): Task[Either[Throwable, Map[UserId, EmployeeStats]]] =
     EitherT(scheduleGroups()).flatMap { groups =>
       EitherT(
-        Task.gather {
+        Task.parSequence {
           groups.map(grId => getStatistics(grId))
         }.map(_.sequence.map(_.reduce(_ ++ _)))
       )
@@ -38,4 +37,5 @@ object EitherTTaskApp extends App {
 
   StdIn.readLine()
 
+  case class UserId(str: String)
 }

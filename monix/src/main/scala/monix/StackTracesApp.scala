@@ -1,9 +1,9 @@
 package monix
 
 import cats.syntax.all._
+import com.sun.org.slf4j.internal.LoggerFactory
 import monix.eval.Task
 import monix.execution.Scheduler.Implicits.global
-import org.slf4j.LoggerFactory
 
 import scala.util.control.NonFatal
 
@@ -12,7 +12,7 @@ object StackTracesApp extends App {
   def logger = LoggerFactory.getLogger(this.getClass)
 
   println("- About to log!")
-  logger.info("vikas")
+  logger.warn("vikas")
 
   class Builder(rows: List[String]) {
     def build: Report = new Report {
@@ -21,6 +21,7 @@ object StackTracesApp extends App {
   }
 
   trait Err
+
   trait Report
 
   case class Id(id: Int) {
@@ -41,7 +42,7 @@ object StackTracesApp extends App {
       logger.error("failed", e)
   }
 
-//  val x = 5
-//  if (x > 4) Task.raiseError(new Exception(">")).runSyncUnsafe()
+  //  val x = 5
+  //  if (x > 4) Task.raiseError(new Exception(">")).runSyncUnsafe()
 
 }

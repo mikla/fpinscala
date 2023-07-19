@@ -1,4 +1,4 @@
-package catsex
+package monix
 
 import cats.implicits._
 import monix.execution.Scheduler.Implicits.global

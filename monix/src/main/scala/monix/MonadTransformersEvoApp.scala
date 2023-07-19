@@ -1,4 +1,4 @@
-package catsex
+package monix
 
 import cats.data.EitherT
 import cats.implicits._

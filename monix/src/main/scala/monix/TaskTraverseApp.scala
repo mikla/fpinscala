@@ -1,4 +1,4 @@
-package stuff
+package monix
 
 import cats.implicits._
 import monix.eval.Task

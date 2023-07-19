@@ -1,11 +1,11 @@
 lazy val commonSettings = Seq(
   organization := "com.fpinscala",
   version := "0.1.0",
-  scalaVersion := "2.13.6"
+  scalaVersion := "2.13.11"
 )
 
 lazy val compilerFlags = Seq(
-"-Ymacro-annotations",
+  "-Ymacro-annotations",
 )
 
 resolvers ++= Seq(
@@ -13,30 +13,41 @@ resolvers ++= Seq(
   "Akka Snapshot Repository".at("https://repo.akka.io/snapshots/")
 )
 
-resolvers += Resolver.sonatypeRepo("releases")
+resolvers ++= Resolver.sonatypeOssRepos("releases")
+resolvers += MavenCache("local-maven", file("/Users/user/.ivy2/"))
 
-val shapelessVersion = "2.3.7"
-val monixVersion = "3.4.0"
-val enumeratumVersion = "1.7.0"
-val pureConfigVersion = "0.17.0"
-val catsVersion = "2.6.1"
-val catsEffectVersion = "2.3.3"
+ThisBuild / libraryDependencySchemes ++= Seq(
+  "io.circe" %% "circe-core" % VersionScheme.Always,
+  "io.circe" %% "circe-generic" % VersionScheme.Always // IDEA fails to import project.
+)
+
+val shapelessVersion = "2.3.10"
+val monixVersion = "3.4.1"
+val enumeratumVersion = "1.7.2"
+val pureConfigVersion = "0.17.4"
+val catsVersion = "2.9.0"
+val catsEffectVersion = "3.5.1"
 val kittensVersion = "2.3.2"
-val similacrumVersion = "1.0.1"
-val scalaCheckVersion = "1.15.4"
+val scalaCheckVersion = "1.17.0"
 val scalaTestVersion = "3.2.3"
-val spireVerison = "0.17.0"
-val log4catsVersion = "1.3.1"
-val circeVersion = "0.14.1"
+val spireVerison = "0.18.0"
+val log4catsVersion = "2.6.0"
+val circeVersion = "0.14.5"
 val circeDerivatioinVersion = "0.13.0-M5"
 val supertaggedVersion = "1.5"
-val monocleVersion = "2.1.0"
+val monocleVersion = "3.2.0"
 val zioVersion = "1.0.12"
-val dtcVersion = "2.4.0"
-val typesafeConfigVersion = "1.4.1"
+val dtcVersion = "2.6.0"
+val typesafeConfigVersion = "1.4.2"
+val refinedVersion = "0.11.0"
 
 lazy val compilerSettings = Seq(
   scalacOptions ++= compilerFlags
+)
+
+val catsEffectDeps = libraryDependencies ++= Seq(
+  "org.typelevel" %% "cats-effect" % catsEffectVersion,
+  "org.typelevel" %% "log4cats-slf4j" % log4catsVersion
 )
 
 lazy val commonDeps = libraryDependencies ++= Seq(
@@ -44,16 +55,12 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "ru.pavkin" %% "dtc-core" % dtcVersion,
   "com.chuusai" %% "shapeless" % shapelessVersion,
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
-  "org.typelevel" %% "simulacrum" % similacrumVersion,
   "com.typesafe" % "config" % typesafeConfigVersion,
-  "org.typelevel" %% "cats-effect" % catsEffectVersion,
-  "org.typelevel" %% "log4cats-slf4j"   % log4catsVersion,
-  "ch.qos.logback" % "logback-classic" % "1.2.6",
-
+  "ch.qos.logback" % "logback-classic" % "1.4.8",
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
   "io.circe" %% "circe-derivation" % circeDerivatioinVersion,
-  "io.circe" %% "circe-generic-extras" % "0.13.0",
+  "io.circe" %% "circe-generic-extras" % "0.14.3",
   "io.circe" %% "circe-parser" % circeVersion,
   "org.rudogma" %% "supertagged" % supertaggedVersion,
   "org.typelevel" %% "spire" % spireVerison,
@@ -66,20 +73,13 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "dev.zio" %% "zio-test" % zioVersion % "test",
   "dev.zio" %% "zio-test-sbt" % zioVersion % "test",
   "org.typelevel" %% "kittens" % kittensVersion,
-  "io.monix" %% "monix-execution" % monixVersion,
-  "io.monix" %% "monix-eval" % monixVersion,
-  "io.monix" %% "monix" % monixVersion,
   "com.github.pureconfig" %% "pureconfig" % pureConfigVersion,
   "com.github.pureconfig" %% "pureconfig-enumeratum" % pureConfigVersion,
   "com.beachape" %% "enumeratum" % enumeratumVersion,
-  "com.github.julien-truffaut" %% "monocle-core" % monocleVersion,
-  "com.github.julien-truffaut" %% "monocle-macro" % monocleVersion,
-  "eu.timepit" %% "refined" % "0.9.27",
-
-  // cassandra driver
-//  "com.outworkers" %% "phantom-dsl" % "2.59.0",
-
-  "com.github.julien-truffaut" %% "monocle-law" % monocleVersion % "test",
+  "dev.optics" %% "monocle-core" % monocleVersion,
+  "dev.optics" %% "monocle-macro" % monocleVersion,
+  "eu.timepit" %% "refined" % refinedVersion,
+  "dev.optics" %% "monocle-law" % monocleVersion % "test",
   "org.scalacheck" %% "scalacheck" % scalaCheckVersion % "test",
   "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
 )
@@ -114,6 +114,26 @@ lazy val macroo = (project in file("macro"))
   .settings(compilerSettings: _*)
   .settings(commonDeps)
   .dependsOn(common)
+
+lazy val monix = (project in file("monix"))
+  .settings(commonSettings)
+  .settings(compilerSettings: _*)
+  .settings(commonDeps)
+  .dependsOn(common)
+  .settings(
+    libraryDependencies ++= Seq(
+      "io.monix" %% "monix-execution" % monixVersion,
+      "io.monix" %% "monix-eval" % monixVersion,
+      "io.monix" %% "monix" % monixVersion
+    )
+  )
+
+lazy val catsEffect = (project in file("cats-effect"))
+  .settings(commonSettings)
+  .settings(compilerSettings: _*)
+  .settings(commonDeps)
+  .dependsOn(common)
+  .settings(catsEffectDeps)
 
 addCommandAlias("c", ";compile")
 addCommandAlias("r", ";reload")

@@ -3,7 +3,8 @@ package fsis.applicative
 import fsis.functor.Functor
 import simulacrum.typeclass
 
-@typeclass trait Applicative[F[_]] extends Functor[F] { self =>
+trait Applicative[F[_]] extends Functor[F] {
+  self =>
 
   def pure[A](a: A): F[A]
 
@@ -38,6 +39,7 @@ import simulacrum.typeclass
   def compose[G[_]](implicit G: Applicative[G]): Applicative[Lambda[X => F[G[X]]]] =
     new Applicative[Lambda[X => F[G[X]]]] {
       def pure[A](a: A): F[G[A]] = self.pure(G.pure(a))
+
       def apply[A, B](fga: F[G[A]])(ff: F[G[A => B]]): F[G[B]] = {
         val x: F[G[A] => G[B]] = self.map(ff)(gab => G.flip(gab))
         self.apply(fga)(x)
@@ -69,21 +71,20 @@ object Applicative {
 }
 
 trait ApplicativeLaws[F[_]] {
-  import Applicative.ops._
 
   implicit def F: Applicative[F]
 
   def applicativeIdentity[A](fa: F[A]) =
-    fa.apply(F.pure((a: A) => a)) == fa // =?=
+    F.apply(fa)(F.pure((a: A) => a)) == fa
 
   def applicativeHomomorphism[A, B](a: A, f: A => B) =
-    F.pure(a).apply(F.pure(f)) == F.pure(f(a)) // =?=
+    F.apply(F.pure(a))(F.pure(f)) == F.pure(f(a))
 
   def applicativeInterchange[A, B](a: A, ff: F[A => B]) =
-    F.pure(a).apply(ff) == ff.apply(F.pure((f: A => B) => f(a)))
+    F.apply(F.pure(a))(ff) == F.apply(ff)(F.pure((f: A => B) => f(a)))
 
   def applicativeMap[A, B](fa: F[A], ff: A => B) =
-    fa.map(ff) == fa.apply(F.pure(ff))
+    F.map(fa)(ff) == F.apply(fa)(F.pure(ff))
 
 }
 

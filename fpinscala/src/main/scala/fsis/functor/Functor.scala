@@ -1,8 +1,6 @@
 package fsis.functor
 
-import simulacrum._
-
-@typeclass trait Functor[F[_]] { self =>
+trait Functor[F[_]] { self =>
   def map[A, B](fa: F[A])(f: A => B): F[B]
 
   def lift[A, B](f: A => B): F[A] => F[B] = fa => map(fa)(f)

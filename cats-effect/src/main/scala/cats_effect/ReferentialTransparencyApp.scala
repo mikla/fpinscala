@@ -1,14 +1,14 @@
-package catsex.effect
+package cats_effect
 
 import cats.effect.IO
 
 object ReferentialTransparencyApp extends App {
 
-  def f(x: Any, y: Any) = {}
+  def f(x: Any, y: Any): Unit = {}
 
   f(println("1"), println("1"))
 
-  val x = println(2)
+  val x: Unit = println(2)
   f(x, x)
 
   def putStr(line: String): IO[Unit] =

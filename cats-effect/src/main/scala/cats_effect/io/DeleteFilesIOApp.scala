@@ -1,6 +1,7 @@
 package cats_effect.io
 
 import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import cats.implicits._
 import io.print._
 

@@ -1,6 +1,7 @@
 package cats_effect
 
 import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 
 object StackSafeIO extends App {
 

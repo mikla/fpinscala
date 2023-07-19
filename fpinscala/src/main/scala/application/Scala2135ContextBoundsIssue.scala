@@ -2,8 +2,8 @@ package application
 
 import cats.Monoid
 import cats.implicits.catsSyntaxSemigroup
-import catsex.UserId
 import dtc.TimePoint
+import shapelessex.application.UserId
 
 object Scala2135ContextBoundsIssue extends App {
 

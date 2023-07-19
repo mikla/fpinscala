@@ -1,4 +1,4 @@
-package catsex.exercises
+package monix
 
 import cats.data.Validated
 import cats.instances.list._

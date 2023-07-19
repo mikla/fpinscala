@@ -1,4 +1,4 @@
-package stuff
+package monix
 
 import monix.eval.Coeval
 
