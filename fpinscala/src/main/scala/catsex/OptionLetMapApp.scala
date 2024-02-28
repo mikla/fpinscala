@@ -1,5 +1,6 @@
 package catsex
 
+import cats.syntax.all._
 
 object OptionLetMapApp extends App {
 
@@ -15,5 +16,14 @@ object OptionLetMapApp extends App {
   val x = someValue.map(_ / 2).letMap(expr => s"$expr – that's my team number. Team $expr!")
 
   println(x)
+
+  val opt1: Option[(String, String)] = None
+  val opt2: Option[(String, String)] = Some("key2" -> "value2")
+
+  val r = Map("key0" -> "value0") |+| Map.from(opt1) |+| Map.from(opt2)
+
+  println(r)
+
+  println(Map("k0" -> "v0") ++ Map("k1" -> "v1"))
 
 }

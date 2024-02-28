@@ -5,7 +5,7 @@ lazy val commonSettings = Seq(
 )
 
 lazy val compilerFlags = Seq(
-  "-Ymacro-annotations",
+  "-Ymacro-annotations"
 )
 
 resolvers ++= Seq(
@@ -40,6 +40,7 @@ val zioVersion = "1.0.12"
 val dtcVersion = "2.6.0"
 val typesafeConfigVersion = "1.4.2"
 val refinedVersion = "0.11.0"
+val sttpVersion = "4.0.0-M6"
 
 lazy val compilerSettings = Seq(
   scalacOptions ++= compilerFlags
@@ -79,6 +80,10 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "dev.optics" %% "monocle-core" % monocleVersion,
   "dev.optics" %% "monocle-macro" % monocleVersion,
   "eu.timepit" %% "refined" % refinedVersion,
+  "com.softwaremill.sttp.client4" %% "core" % sttpVersion,
+  "com.softwaremill.sttp.client4" %% "async-http-client-backend-cats" % sttpVersion,
+  "com.softwaremill.sttp.client4" %% "circe" % sttpVersion,
+  "io.minio" % "minio" % "8.5.8",
   "dev.optics" %% "monocle-law" % monocleVersion % "test",
   "org.scalacheck" %% "scalacheck" % scalaCheckVersion % "test",
   "org.scalatest" %% "scalatest" % scalaTestVersion % "test"

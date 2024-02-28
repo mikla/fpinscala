@@ -1,45 +1,41 @@
+<!-- https://www.playframework.com/documentation/latest/SettingsLogger -->
 <configuration>
+
     <conversionRule conversionWord="coloredLevel" converterClass="play.api.libs.logback.ColoredLevel"/>
 
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${application.logDir}/application.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${application.logDir}/application.log.%d{yyyy-MM-dd}</fileNamePattern>
-        </rollingPolicy>
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/app.log</file>
         <encoder>
-            <pattern>%date %level %logger %X{akkaSource}: %message%n%xException{full}</pattern>
+            <pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
         </encoder>
     </appender>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%date %coloredLevel %logger{15} [%X{akkaSource}]: %message%n%xException{5}</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %level %logger{15} - %message%n%rEx{full}</pattern>
         </encoder>
     </appender>
 
-    <appender name="ASYNC_STDOUT" class="ch.qos.logback.classic.AsyncAppender">
+    <appender name="NO_STACKTRACE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} shortenedEx - 1</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNCSTDOUT" class="ch.qos.logback.classic.AsyncAppender">
         <appender-ref ref="STDOUT"/>
     </appender>
 
-    <appender name="ASYNC_FILE" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="FILE"/>
-    </appender>
+    <logger name="application.NotificationService" level="ERROR" additivity="false">
+        <appender-ref ref="NO_STACKTRACE"/>
+    </logger>
 
-    <logger name="play"/>
-    <logger name="application"/>
-    <logger name="io.netty.handler.logging" level="INFO"/>
-    <logger name="akka.persistence.inmemory" level="INFO"/>
-    <logger name="akka"/>
-    <logger name="actor"/>
-    <logger name="slick" level="INFO"/>
-    <logger name="freeslick" level="INFO"/>
-    <logger name="access-log" additivity="false">
-        <appender-ref ref="ACCESS"/>
+    <logger name="CustomErrorHandler" level="ERROR" additivity="false">
+        <appender-ref ref="NO_STACKTRACE"/>
     </logger>
 
     <root level="INFO">
-        <appender-ref ref="ASYNC_STDOUT"/>
-        <appender-ref ref="ASYNC_FILE"/>
+        <appender-ref ref="NO_STACKTRACE"/>
     </root>
 
 </configuration>
