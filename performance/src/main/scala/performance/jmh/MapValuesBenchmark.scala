@@ -27,7 +27,7 @@ class MapValuesBenchmark {
     employees.mapValues(_.toString()).values
 
   def mapValuesForceBench(employees: Map[String, List[Employee]]) =
-    employees.mapValues(_.toString()).view.force.values
+    employees.mapValues(_.toString()).view.values
 
   def mapBench(employees: Map[String, List[Employee]]) =
     employees.map {

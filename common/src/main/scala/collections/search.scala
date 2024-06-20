@@ -21,15 +21,12 @@ object search {
     bsf(list, target, 0, list.length - 1)
   }
 
-  class BinarySearchImpl[A, Repr](val coll: SeqOps[A, Seq, Repr]) {
+  class BinarySearchImpl[A](val coll: Array[A]) {
     def binarySearch(e: A)(implicit o: Ordering[A]): Option[A] =
       coll.search(e)(o) match {
         case Found(_) => Some(e)
         case _ => None
       }
   }
-
-//  implicit def binarySearch[Repr, A](coll: Repr)
-//    (implicit fr: IsSeq[Repr]): BinarySearchImpl[fr.A, Repr] = new BinarySearchImpl(fr(coll))
 
 }

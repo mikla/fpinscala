@@ -1,7 +1,7 @@
 fpinscala
 =========
 
-This repos is just a playground for functional stuff that I have discovered.
+These repos are just a playground for functional stuff that I have discovered.
 
 Inspired by:
 

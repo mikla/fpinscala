@@ -20,36 +20,34 @@ class CollectionSearch {
 
   @Benchmark
   def findOnListWithoutWithCatsEq: Map[UUID, Int] =
-    universalIds.mapValues(lid => legacyIds.find(_ === lid)).flattenValues[Int]
+    universalIds.mapValues(lid => legacyIds.find(_ === lid)).toMap.flattenValues[Int]
 
   @Benchmark
   def findOnListWithoutCatsEq: Map[UUID, Int] =
-    universalIds.mapValues(lid => legacyIds.find(_ == lid)).flattenValues[Int]
+    universalIds.mapValues(lid => legacyIds.find(_ == lid)).toMap.flattenValues[Int]
 
   @Benchmark
   def customBinarySearchOnSortedArray: Map[UUID, Int] = {
     val sortedArray = legacyIds.sorted.toArray
-    universalIds.mapValues(lid => binarySearchFunctional(sortedArray, lid)).flattenValues[Int]
+    universalIds.mapValues(lid => binarySearchFunctional(sortedArray, lid)).toMap.flattenValues[Int]
   }
 
   @Benchmark
   def findOnVector: Map[UUID, Int] = {
     val vector = legacyIds.toVector
-    universalIds.mapValues(lid => vector.find(_ == lid)).flattenValues[Int]
+    universalIds.mapValues(lid => vector.find(_ == lid)).toMap.flattenValues[Int]
   }
 
   @Benchmark
   def scalaBuiltInBinarySearchOnSortedArray: Map[UUID, Int] = {
     val array = legacyIds.toArray.sorted
-    universalIds.mapValues(lid => array.binarySearch(lid)).flattenValues[Int]
+    universalIds.mapValues(lid => new BinarySearchImpl(array).binarySearch(lid)).toMap.flattenValues[Int]
   }
 
   @Benchmark
   def useMap: Map[UUID, Int] = {
     val m = legacyIds.map(e => (e, e)).toMap
-    universalIds.mapValues { lid =>
-      m.get(lid)
-    }.flattenValues[Int]
+    universalIds.mapValues(lid => m.get(lid)).toMap.flattenValues[Int]
   }
 
 }

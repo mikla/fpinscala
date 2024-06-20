@@ -84,6 +84,7 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "com.softwaremill.sttp.client4" %% "async-http-client-backend-cats" % sttpVersion,
   "com.softwaremill.sttp.client4" %% "circe" % sttpVersion,
   "io.minio" % "minio" % "8.5.8",
+  "ai.catboost" % "catboost-prediction" % "1.2.2",
   "dev.optics" %% "monocle-law" % monocleVersion % "test",
   "org.scalacheck" %% "scalacheck" % scalaCheckVersion % "test",
   "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
@@ -97,7 +98,22 @@ lazy val fpinscala = (project in file("fpinscala"))
   .settings(compilerSettings: _*)
   .settings(commonSettings)
   .settings(commonDeps)
+  .settings(libraryDependencies ++= Seq("com.scylladb" % "java-driver-core" % "4.15.0.0"))
   .dependsOn(common, macroo)
+
+lazy val dockerApp = (project in file("docker-app"))
+  .enablePlugins(JavaAppPackaging)
+  .settings(dockerBaseImage := "openjdk:11")
+  .settings {
+    Universal / javaOptions ++= {
+      val source = file(s"${sourceDirectory.value}/main/resources/app.jvmopts")
+      if (source.exists()) Utils.readJavaOptions(source) else sys.error(s"Could not find $source")
+    }
+  }
+  .settings(compilerSettings: _*)
+  .settings(commonSettings)
+  .settings(commonDeps)
+  .dependsOn(common)
 
 lazy val dependentTypes = (project in file("dependent-types"))
   .settings(commonSettings)

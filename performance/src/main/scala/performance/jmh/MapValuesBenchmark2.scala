@@ -27,7 +27,7 @@ class MapValuesBenchmark2 {
     employees.mapValues(_.toString()).values.size
 
   def mapValuesForceBench(employees: Input) =
-    employees.mapValues(_.toString()).view.force.values.size
+    employees.mapValues(_.toString()).view.values.size
 
   def mapBench(employees: Input) =
     employees.map {
