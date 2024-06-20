@@ -21,7 +21,7 @@ object AppF extends App {
     println("App started. Waiting 20 seconds before loading the model.")
     Thread.sleep(20000)
 
-    val inputStream = getClass.getResourceAsStream("/optimal-bid-discovery_latest-1.cbm")
+    val inputStream = getClass.getResourceAsStream("/latest-1.cbm")
     val modelx = CatBoostModel.loadModel(inputStream)
     println(modelx.getMetadata.size())
     inputStream.close()
