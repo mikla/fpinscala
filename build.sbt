@@ -104,12 +104,12 @@ lazy val fpinscala = (project in file("fpinscala"))
 lazy val dockerApp = (project in file("docker-app"))
   .enablePlugins(JavaAppPackaging)
   .settings(dockerBaseImage := "openjdk:11")
-  .settings {
-    Universal / javaOptions ++= {
-      val source = file(s"${sourceDirectory.value}/main/resources/app.jvmopts")
-      if (source.exists()) Utils.readJavaOptions(source) else sys.error(s"Could not find $source")
-    }
-  }
+//  .settings {
+//    Universal / javaOptions ++= {
+//      val source = file(s"${sourceDirectory.value}/main/resources/app.jvmopts")
+//      if (source.exists()) Utils.readJavaOptions(source) else sys.error(s"Could not find $source")
+//    }
+//  }
   .settings(compilerSettings: _*)
   .settings(commonSettings)
   .settings(commonDeps)
