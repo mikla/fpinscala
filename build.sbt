@@ -1,20 +1,21 @@
 lazy val commonSettings = Seq(
   organization := "com.fpinscala",
   version := "0.1.0",
-  scalaVersion := "2.13.11"
+  scalaVersion := "2.13.18"
 )
+
+// Virtual threads (cats-effect/jmm examples) need JDK 21+. The project is pinned to JDK 25 in .sdkmanrc.
+Global / onLoad := (Global / onLoad).value.andThen { state =>
+  val jdk = sys.props("java.specification.version")
+  require(jdk.toInt >= 21, s"JDK 21+ required, running on $jdk. Run `sdk env` to switch to the JDK from .sdkmanrc.")
+  state
+}
 
 lazy val compilerFlags = Seq(
   "-Ymacro-annotations"
 )
 
-resolvers ++= Seq(
-  "Sonatype Releases".at("https://oss.sonatype.org/content/repositories/releases"),
-  "Akka Snapshot Repository".at("https://repo.akka.io/snapshots/")
-)
-
 resolvers ++= Resolver.sonatypeOssRepos("releases")
-resolvers += MavenCache("local-maven", file("/Users/user/.ivy2/"))
 
 ThisBuild / libraryDependencySchemes ++= Seq(
   "io.circe" %% "circe-core" % VersionScheme.Always,
@@ -26,14 +27,14 @@ val monixVersion = "3.4.1"
 val enumeratumVersion = "1.7.2"
 val pureConfigVersion = "0.17.4"
 val catsVersion = "2.9.0"
-val catsEffectVersion = "3.5.1"
+val catsEffectVersion = "3.7.1"
 val kittensVersion = "2.3.2"
 val scalaCheckVersion = "1.17.0"
 val scalaTestVersion = "3.2.3"
-val spireVerison = "0.18.0"
+val spireVersion = "0.18.0"
 val log4catsVersion = "2.6.0"
 val circeVersion = "0.14.5"
-val circeDerivatioinVersion = "0.13.0-M5"
+val circeDerivationVersion = "0.13.0-M5"
 val supertaggedVersion = "1.5"
 val monocleVersion = "3.2.0"
 val zioVersion = "1.0.12"
@@ -52,7 +53,7 @@ val catsEffectDeps = libraryDependencies ++= Seq(
 )
 
 lazy val commonDeps = libraryDependencies ++= Seq(
-  compilerPlugin(("org.typelevel" %% "kind-projector" % "0.13.2").cross(CrossVersion.full)),
+  compilerPlugin(("org.typelevel" %% "kind-projector" % "0.13.4").cross(CrossVersion.full)),
   "ru.pavkin" %% "dtc-core" % dtcVersion,
   "com.chuusai" %% "shapeless" % shapelessVersion,
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
@@ -60,11 +61,11 @@ lazy val commonDeps = libraryDependencies ++= Seq(
   "ch.qos.logback" % "logback-classic" % "1.4.8",
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
-  "io.circe" %% "circe-derivation" % circeDerivatioinVersion,
+  "io.circe" %% "circe-derivation" % circeDerivationVersion,
   "io.circe" %% "circe-generic-extras" % "0.14.3",
   "io.circe" %% "circe-parser" % circeVersion,
   "org.rudogma" %% "supertagged" % supertaggedVersion,
-  "org.typelevel" %% "spire" % spireVerison,
+  "org.typelevel" %% "spire" % spireVersion,
   "org.typelevel" %% "cats-core" % catsVersion,
   "org.typelevel" %% "cats-kernel" % catsVersion,
   "org.typelevel" %% "alleycats-core" % catsVersion,
@@ -104,20 +105,10 @@ lazy val fpinscala = (project in file("fpinscala"))
 lazy val dockerApp = (project in file("docker-app"))
   .enablePlugins(JavaAppPackaging)
   .settings(dockerBaseImage := "openjdk:11")
-//  .settings {
-//    Universal / javaOptions ++= {
-//      val source = file(s"${sourceDirectory.value}/main/resources/app.jvmopts")
-//      if (source.exists()) Utils.readJavaOptions(source) else sys.error(s"Could not find $source")
-//    }
-//  }
   .settings(compilerSettings: _*)
   .settings(commonSettings)
   .settings(commonDeps)
   .dependsOn(common)
-
-lazy val dependentTypes = (project in file("dependent-types"))
-  .settings(commonSettings)
-  .settings(libraryDependencies ++= Seq())
 
 lazy val performance = (project in file("performance"))
   .enablePlugins(JmhPlugin)
@@ -155,9 +146,12 @@ lazy val catsEffect = (project in file("cats-effect"))
   .settings(commonDeps)
   .dependsOn(common)
   .settings(catsEffectDeps)
+  .settings(
+    // Fresh JVM per run: IOApp expects it, and virtual-thread scheduler properties only apply before first use.
+    run / fork := true,
+    run / connectInput := true
+  )
 
 addCommandAlias("c", ";compile")
 addCommandAlias("r", ";reload")
 addCommandAlias("rc", ";reload;compile")
-
-logLevel := Level.Debug
